@@ -1,0 +1,102 @@
+{
+    //------------------//
+    //- Global VS-Code -//
+    //------------------//
+    "window.menuBarVisibility": "toggle",
+    "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
+    
+    "workbench.colorTheme": "Atom One Dark",
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.colorCustomizations": {
+        "activityBar.foreground": "#fffd",
+        "activityBar.background": "#101517",
+
+        "activityBar.activeBorder": "#d557",
+        "activityBar.activeBackground": "#151a1c",
+
+
+        "statusBar.background": "#101517",
+        "statusBar.debuggingBackground": "#d55",
+
+
+        "minimap.background": "#151a1c",
+        
+
+        "scrollbar.shadow": "#000a",
+
+
+        "sideBarSectionHeader.background": "#101517",
+        "sideBar.background": "#151a1c",
+
+
+        "tab.activeBackground": "#000",
+        "tab.inactiveBackground": "#121719",
+        "tab.unfocusedActiveBackground": "#1a1c1d",
+        "tab.hoverBackground": "#aaa1",
+
+
+        "editor.background": "#161b1d",
+        "editorCursor.foreground": "#d0656d",
+        "editorGroupHeader.tabsBackground": "#121719",
+        
+
+        "breadcrumb.background": "#000",
+        "breadcrumbPicker.background": "#000",
+             
+        
+        "panel.background": "#161b1d",
+        
+
+        "debugConsole.infoForeground": "#d55",
+        
+        
+        "terminal.ansiBlack"         :   "#2d3234",
+        "terminal.ansiRed"           :   "#cc6666",
+        "terminal.ansiGreen"         :   "#b5bd68",
+        "terminal.ansiYellow"        :   "#f0c674",
+        "terminal.ansiBlue"          :   "#81a2be",
+        "terminal.ansiMagenta"       :   "#b294bb",
+        "terminal.ansiCyan"          :   "#8abeb7",
+        "terminal.ansiWhite"         :   "#c5c8c6",
+
+        "terminal.ansiBrightBlack"   :   "#666666",
+        "terminal.ansiBrightRed"     :   "#d54e53",
+        "terminal.ansiBrightGreen"   :   "#b9ca4a",
+        "terminal.ansiBrightYellow"  :   "#e7c547",
+        "terminal.ansiBrightBlue"    :   "#7aa6da",
+        "terminal.ansiBrightMagenta" :   "#c397d8",
+        "terminal.ansiBrightCyan"    :   "#70c0b1",
+        "terminal.ansiBrightWhite"   :   "#eaeaea",
+    },
+    
+    "editor.cursorBlinking": "phase",
+    "editor.fontSize": 14,
+    "editor.fontFamily": "Source Code Pro",
+    "editor.renderFinalNewline": false,
+    
+    "terminal.external.linuxExec": "alacritty",
+    "terminal.integrated.fontFamily": "Hack Nerd Font",
+    "terminal.integrated.fontSize": 13,
+    
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+
+    "explorer.confirmDelete": false,
+
+    "security.workspace.trust.untrustedFiles": "open",
+
+
+    //----------------//
+    //-  Extensions  -//
+    //----------------//
+    "indentOneSpace.workOnSingleLine": false,
+    "indentOneSpace.cramReversed": true,
+    "indentOneSpace.onlyCompleteRange": true,
+    
+    "vscode-pets.theme": "forest",
+    "vscode-pets.position": "explorer",
+
+    "color-highlight.matchWords": true,
+    "color-highlight.matchRgbWithNoFunction": true,
+}
+
