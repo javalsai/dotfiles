@@ -1,3 +1,7 @@
+# Preview
+![example](../.images/terminal.png)
+<sup>The image appearance also depends on my alacritty config that I'll upload soon</sup>
+
 # Installation
 * Install [zsh](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH), [oh-my-zsh](https://ohmyz.sh/) and [powerlevel9k](https://github.com/Powerlevel9k/powerlevel9k).
 * Copy `.zshrc` file to `~`.

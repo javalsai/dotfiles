@@ -1,3 +1,6 @@
+# Preview
+![example](../.images/vscodium.png)
+
 # Installation
 * Install VSCodium if you don't have it (it should work in vscode too).
 * Press Ctrl + Shift + P and type "Preferences: Open Settings (JSON)".
