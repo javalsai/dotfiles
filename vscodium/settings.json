@@ -2,14 +2,15 @@
     //------------------//
     //- Global VS-Code -//
     //------------------//
+
     "window.menuBarVisibility": "toggle",
     "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
-    
-    "workbench.colorTheme": "Atom One Dark",
     "workbench.iconTheme": "vscode-icons",
+    "workbench.colorTheme": "Atom One Dark",
     "workbench.colorCustomizations": {
         "activityBar.foreground": "#fffd",
         "activityBar.background": "#101517",
+
 
         "activityBar.activeBorder": "#d557",
         "activityBar.activeBackground": "#151a1c",
@@ -20,7 +21,7 @@
 
 
         "minimap.background": "#151a1c",
-        
+
 
         "scrollbar.shadow": "#000a",
 
@@ -38,18 +39,18 @@
         "editor.background": "#161b1d",
         "editorCursor.foreground": "#d0656d",
         "editorGroupHeader.tabsBackground": "#121719",
-        
+
 
         "breadcrumb.background": "#000",
         "breadcrumbPicker.background": "#000",
-             
-        
+
+
         "panel.background": "#161b1d",
-        
+
 
         "debugConsole.infoForeground": "#d55",
-        
-        
+
+
         "terminal.ansiBlack"         :   "#2d3234",
         "terminal.ansiRed"           :   "#cc6666",
         "terminal.ansiGreen"         :   "#b5bd68",
@@ -68,23 +69,59 @@
         "terminal.ansiBrightCyan"    :   "#70c0b1",
         "terminal.ansiBrightWhite"   :   "#eaeaea",
     },
-    
+
     "editor.cursorBlinking": "phase",
+    "editor.cursorSmoothCaretAnimation": "on",
     "editor.fontSize": 14,
-    "editor.fontFamily": "Source Code Pro",
-    "editor.renderFinalNewline": false,
-    
+    "editor.fontFamily": "'Source Code Pro', 'Hack Nerd Font', 'Iosevka'",
+    "editor.foldingImportsByDefault": true,
+    "editor.formatOnPaste": true,
+    "editor.linkedEditing": true,
+    "editor.renderFinalNewline": "off",
+    "editor.renderWhitespace": "trailing",
+    "editor.semanticHighlighting.enabled": true,
+    "editor.stickyScroll.enabled": true,
+
+    "editor.suggest.showWords": false,
+    "editor.suggest.insertMode": "insert",
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+
+    "git.confirmSync": false,
+    "git.enableCommitSigning": true,
+    "git.openRepositoryInParentFolders": "never",
+
     "terminal.external.linuxExec": "alacritty",
     "terminal.integrated.fontFamily": "Hack Nerd Font",
     "terminal.integrated.fontSize": 13,
-    
+    "terminal.integrated.scrollback": 10000,
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "terminal.integrated.env.linux": {
+        "EDITOR": "codium --wait"
+    } ,
+
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "files.associations": {
+        "*.ejs": "html",
+        "*.env": "ini",
+    },
+    "files.exclude": {
+        "**/node_modules/": true
+    },
+
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "html.format.templating": true,
+    "emmet.includeLanguages": {
+        "ejs": "html",
+    },
 
     "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
 
     "security.workspace.trust.untrustedFiles": "open",
 
+    "debug.onTaskErrors": "abort",
 
     //----------------//
     //-  Extensions  -//
@@ -92,11 +129,99 @@
     "indentOneSpace.workOnSingleLine": false,
     "indentOneSpace.cramReversed": true,
     "indentOneSpace.onlyCompleteRange": true,
-    
+
     "vscode-pets.theme": "forest",
     "vscode-pets.position": "explorer",
 
     "color-highlight.matchWords": true,
     "color-highlight.matchRgbWithNoFunction": true,
-}
 
+    "haskell.manageHLS": "PATH",
+
+    "livePreview.notifyOnOpenLooseFile": false,
+
+    "gitlens.currentLine.enabled": false,
+    "gitlens.hovers.currentLine.over": "line",
+    "gitlens.codeLens.enabled": false,
+    "gitlens.advanced.messages": {
+        "suppressCreatePullRequestPrompt": true
+    },
+
+    "overtype.paste": true,
+    "overtype.perEditor": true,
+    "overtype.secondaryCursorStyle": "underline",
+    "overtype.labelInsertMode": "",
+    "overtype.labelOvertypeMode": "",
+
+    "vsicons.dontShowNewVersionMessage": true,
+
+    "discord.detailsEditing": "✎ `{full_dir_name}/{file_name}` on {git_branch}",
+    "discord.lowerDetailsEditing": "Line {current_line} of {total_lines}",
+
+
+    "better-comments.tags": [
+        {
+            "tag": "!",
+            "color": "#FF2D00",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "?",
+            "color": "#3498DB",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "//",
+            "color": "#474747",
+            "strikethrough": true,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "todo",
+            "color": "#FF8C00",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "*",
+            "color": "#94979d",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+
+        {
+            "tag": "~",
+            "color": "#373737",
+            "strikethrough": true,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        }
+    ],
+    "playwright.reuseBrowser": false,
+    "git.autofetch": true,
+
+    "print.filepathHeadingForIndividuallyPrintedDocuments": false,
+    "print.colourScheme": "Stack Overflow",
+
+    "todo-tree.highlights.enabled": false,
+    "redhat.telemetry.enabled": true,
+}
