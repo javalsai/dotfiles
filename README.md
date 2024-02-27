@@ -3,6 +3,8 @@ They contain dotfiles for my
 * Zsh
 * VSCodium
 * Xmonad
+* Wezterm (likely based off [Aylur's dotfiles](https://github.com/Aylur/dotfiles))
+* Nvim (originated from [Rahul H.](https://builtin.com/software-engineering-perspectives/neovim-configuration))
 
 If I'm missing any file or the instructions are poorly written, plese open an issue.
 
