@@ -39,6 +39,16 @@ require('plugins')
 require('lsp')
 
 vim.cmd([[
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+
+highlight Tab ctermfg=gray guifg=gray
+match Tab /\t\+/
+
+set linebreak
+set list listchars=tab:>\ ,trail:·
+
+
 set autochdir
 let NERDTreeChDirMode=2
 nnoremap <leader>n :NERDTree .<CR>
@@ -47,6 +57,7 @@ nnoremap <leader>n :NERDTree .<CR>
 let g:Hexokinase_highlighters = [ 'virtual' ]
 let g:Hexokinase_optInPatterns = 'full_hex,rgb,rgba,hsl,hsla,colour_names'
 
+inoremap <S-Tab> <C-d>
 
 nnoremap <C-f> :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
@@ -55,7 +66,7 @@ nnoremap <C-l> :call CocActionAsync('jumpDefinition')<CR>
 
 nmap <F8> :TagbarToggle<CR>
 
-:set completeopt-=preview " For No Previews
+set completeopt-=preview " For No Previews
 
 let g:NERDTreeDirArrowExpandable="+"
 let g:NERDTreeDirArrowCollapsible="~"

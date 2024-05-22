@@ -3,6 +3,7 @@
     //- Global VS-Code -//
     //------------------//
 
+    "window.zoomLevel": -0.5,
     "window.menuBarVisibility": "toggle",
     "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
     "workbench.iconTheme": "vscode-icons",
@@ -10,14 +11,13 @@
     "workbench.colorCustomizations": {
         "activityBar.foreground": "#fffd",
         "activityBar.background": "#101517",
-
-
-        "activityBar.activeBorder": "#d557",
-        "activityBar.activeBackground": "#151a1c",
+        "activityBar.activeBorder": "#d55",
+        "activityBar.activeBackground": "#351a1c",
 
 
         "statusBar.background": "#101517",
         "statusBar.debuggingBackground": "#d55",
+        "statusBarItem.remoteBackground": "#d55",
 
 
         "minimap.background": "#151a1c",
@@ -33,7 +33,9 @@
         "tab.activeBackground": "#000",
         "tab.inactiveBackground": "#121719",
         "tab.unfocusedActiveBackground": "#1a1c1d",
-        "tab.hoverBackground": "#aaa1",
+        "tab.hoverBackground": "#4448",
+
+        "list.hoverBackground": "#4448",
 
 
         "editor.background": "#161b1d",
@@ -72,12 +74,15 @@
 
     "editor.cursorBlinking": "phase",
     "editor.cursorSmoothCaretAnimation": "on",
+    "editor.cursorWidth": 3,
     "editor.fontSize": 14,
     "editor.fontFamily": "'Source Code Pro', 'Hack Nerd Font', 'Iosevka'",
     "editor.foldingImportsByDefault": true,
     "editor.formatOnPaste": true,
     "editor.linkedEditing": true,
+    "editor.minimap.renderCharacters": false,
     "editor.renderFinalNewline": "off",
+    "editor.renderLineHighlight": "gutter",
     "editor.renderWhitespace": "trailing",
     "editor.semanticHighlighting.enabled": true,
     "editor.stickyScroll.enabled": true,
@@ -90,11 +95,13 @@
     "git.enableCommitSigning": true,
     "git.openRepositoryInParentFolders": "never",
 
-    "terminal.external.linuxExec": "alacritty",
+    "terminal.external.linuxExec": "wezterm",
+    "terminal.integrated.gpuAcceleration": "on",
+    "terminal.integrated.enableImages": true,
     "terminal.integrated.fontFamily": "Hack Nerd Font",
     "terminal.integrated.fontSize": 13,
     "terminal.integrated.scrollback": 10000,
-    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "terminal.integrated.enableMultiLinePasteWarning": "never",
     "terminal.integrated.env.linux": {
         "EDITOR": "codium --wait"
     } ,
@@ -224,4 +231,5 @@
 
     "todo-tree.highlights.enabled": false,
     "redhat.telemetry.enabled": true,
+    "prisma.showPrismaDataPlatformNotification": false,
 }
