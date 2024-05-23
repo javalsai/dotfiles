@@ -12,7 +12,7 @@ vim.o.number = true
 vim.o.relativenumber = true
 
 -- Syntax
-vim.o.syntax = true
+vim.o.syntax = 'on'
 vim.cmd.filetype 'plugin on'
 
 -- Tabs / Indents
