@@ -9,6 +9,8 @@ They contain dotfiles for my
 
 > [!WARNING]
 > Any screenshot you see is 100% outdated
+So a screenshot of almost everything as of now:
+![all screenshot](./.images/all.png)
 
 If I'm missing any file or the instructions are poorly written, plese open an issue.
 
