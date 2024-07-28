@@ -3,7 +3,7 @@
     //- Global VS-Code -//
     //------------------//
 
-    "window.zoomLevel": -0.5,
+    "window.zoomLevel": -1,
     "window.menuBarVisibility": "toggle",
     "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
     "workbench.iconTheme": "vscode-icons",
@@ -71,6 +71,7 @@
         "terminal.ansiBrightCyan"    :   "#70c0b1",
         "terminal.ansiBrightWhite"   :   "#eaeaea",
     },
+    "workbench.list.smoothScrolling": true,
 
     "editor.cursorBlinking": "phase",
     "editor.cursorSmoothCaretAnimation": "on",
@@ -85,6 +86,7 @@
     "editor.renderLineHighlight": "gutter",
     "editor.renderWhitespace": "trailing",
     "editor.semanticHighlighting.enabled": true,
+    "editor.smoothScrolling": true,
     "editor.stickyScroll.enabled": true,
 
     "editor.suggest.showWords": false,
@@ -104,7 +106,8 @@
     "terminal.integrated.enableMultiLinePasteWarning": "never",
     "terminal.integrated.env.linux": {
         "EDITOR": "codium --wait"
-    } ,
+    },
+    "terminal.integrated.smoothScrolling": true,
 
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
@@ -146,6 +149,8 @@
     "haskell.manageHLS": "PATH",
 
     "livePreview.notifyOnOpenLooseFile": false,
+
+    "ltex.enabled": false,
 
     "gitlens.currentLine.enabled": false,
     "gitlens.hovers.currentLine.over": "line",
@@ -232,4 +237,7 @@
     "todo-tree.highlights.enabled": false,
     "redhat.telemetry.enabled": true,
     "prisma.showPrismaDataPlatformNotification": false,
+    "[typescript]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    },
 }

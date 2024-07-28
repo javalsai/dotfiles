@@ -1,10 +1,14 @@
 # My Dotfiles
 They contain dotfiles for my
-* **nvim** (started from [Rahul H.](https://builtin.com/software-engineering-perspectives/neovim-configuration), highly different now)
+* **nvim**
 * **vscodium** (should *mostly* work on VSC/OSS too)
 * **wezterm** (likely based off [Aylur's dotfiles](https://github.com/Aylur/dotfiles/tree/eww))
-* **xmonad** (wanna move to hyprland soon :o)
+* **xmobar**
+* **xmonad** (wanna move to hyprland soon :o, hate haskell)
 * **zsh**
+
+> [!WARNING]
+> Any screenshot you see is 100% outdated
 
 If I'm missing any file or the instructions are poorly written, plese open an issue.
 

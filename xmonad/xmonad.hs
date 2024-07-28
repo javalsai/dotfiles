@@ -1,82 +1,157 @@
 import XMonad
-import XMonad.Layout.Gaps
-import XMonad.Layout.NoBorders
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.SetWMName
-import XMonad.Util.EZConfig(additionalKeys)
-import Data.Monoid
-import System.Exit
-import System.IO
-
+import System.Directory
+import System.IO (hClose, hPutStr, hPutStrLn)
+import System.Exit (exitSuccess)
 import qualified XMonad.StackSet as W
-import qualified Data.Map        as M
+
+-- Xmonad Actions
+import XMonad.Actions.CopyWindow (kill1)
+import XMonad.Actions.CycleWS (Direction1D (..), WSType (..), moveTo, nextScreen, prevScreen, shiftTo)
+import XMonad.Actions.GridSelect
+import XMonad.Actions.MouseResize
+import XMonad.Actions.Promote
+import XMonad.Actions.RotSlaves (rotAllDown, rotSlavesDown)
+import XMonad.Actions.UpdateFocus
+import XMonad.Actions.WindowGo (runOrRaise)
+import XMonad.Actions.WithAll (killAll, sinkAll)
+import qualified XMonad.Actions.Search as S
+
+-- Xmonad Hooks
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.DynamicLog (PP (..), dynamicLogWithPP, shorten, wrap, xmobarColor, xmobarPP)
+import XMonad.Hooks.EwmhDesktops -- for some fullscreen events, also for xcomposite in obs.
+import XMonad.Hooks.ManageDocks (ToggleStruts (..), avoidStruts, docks, manageDocks)
+import XMonad.Hooks.ManageHelpers (doCenterFloat, doFullFloat, isFullscreen)
+import XMonad.Hooks.ServerMode
+import XMonad.Hooks.SetWMName
+import XMonad.Hooks.StatusBar
+import XMonad.Hooks.StatusBar.PP
+import XMonad.Hooks.WorkspaceHistory
+
+-- Xmonad Layouts
+import XMonad.Layout.Accordion
+import XMonad.Layout.GridVariants (Grid (Grid))
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.SimplestFloat
+import XMonad.Layout.Spiral
+import XMonad.Layout.Tabbed
+import XMonad.Layout.ThreeColumns
+import XMonad.Layout.Gaps
+-- Xmonad Layouts Modifiers
+import XMonad.Layout.LayoutModifier
+import XMonad.Layout.LimitWindows (limitWindows, increaseLimit, decreaseLimit)
+import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
+import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR, NOBORDERS))
+import XMonad.Layout.NoBorders
+import XMonad.Layout.Fullscreen
+import XMonad.Layout.Renamed
+import XMonad.Layout.ResizableTile(MirrorResize (MirrorShrink, MirrorExpand) )
+import XMonad.Layout.ShowWName
+import XMonad.Layout.Simplest
+import XMonad.Layout.Spacing
+import XMonad.Layout.SubLayouts
+import XMonad.Layout.WindowArranger (windowArrange, WindowArrangerMsg(..))
+import XMonad.Layout.WindowNavigation
+import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(Toggle))
+import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
+
+-- Xmonad Utils
+import XMonad.Util.Dmenu
+import XMonad.Util.Cursor
+import XMonad.Util.EZConfig
+import XMonad.Util.NamedActions
+import XMonad.Util.NamedScratchpad
+import XMonad.Util.Run (runProcessWithInput, safeSpawn, spawnPipe)
+import XMonad.Util.SpawnOnce
+
+-- Data
+import Data.Char (isSpace, toUpper)
+import qualified Data.Map as M
+import Data.Maybe (fromJust, isJust)
+import Data.Monoid
+import Data.Tree
 
 
 -----------------------------------------------------------------------
 ----------------------- Global Config Variables -----------------------
 -----------------------------------------------------------------------
--- Default Applications
-myTerminal      =  "alacritty"
-myBrowser       =  "firefox"
-myExplorer      =  "dolphin"
+myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=9:antialias=true:hinting=true"
 
--- Mouse Behaviour
-myFocusFollowsMouse     =  False
-myClickJustFocuses      =  False
+myTerminal = "wezterm start --class wezterm"
+myBrowser = "firefox "
 
--- Key bindings
-myModMask               =  mod4Mask
+myModMask = mod4Mask
+
+myFocusFollowsMouse = False
+myClickJustFocuses = False
 
 -- Workspaces
-myWorkspaces            =  ["Ter","Int","Mus","Alt-1","Soc","Gam","Hig","Aca","Alt-2"]
+myWorkspaces = ["\xf120","\xf269","\xf1bc","Alt-1","\xf130","\xf7b3","\xeac4","\xf1ad","Alt-2"]
 
 -- Window Borders
-myBorderWidth           =  3
-myNormalBorderColor     =  "#DD9944"
-myFocusedBorderColor    =  "#DD5555"
+myBorderWidth = 3
+myNormColor = "#DD9944"
+myFocusColor = "#DD5555"
 
+windowCount :: X (Maybe String)
+windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 -----------------------------------------------------------------------
 -------- Key bindings. Add, modify or remove key bindings here --------
 -----------------------------------------------------------------------
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     --- Use Shortcuts ---
-    ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf),
-    ((modm              , xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\""),
-    ((modm .|. shiftMask, xK_p     ), spawn "gmrun"),
-    ((modm .|. shiftMask, xK_c     ), kill),
-    ((modm              , xK_space ), sendMessage NextLayout),
-    ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf),
-    ((modm              , xK_n     ), refresh),
+    ((modm .|. shiftMask , xK_Return), spawn $ XMonad.terminal conf),
+    ((modm               , xK_p     ), spawn "nice -n 1 rofi -show drun"),
+    ((modm .|. shiftMask , xK_p     ), spawn "nice -n 1 rofi -show run"),
+    ((modm               , xK_f     ), spawn "nice -n 1 rofi -show filebrowser"),
+    ((modm               , xK_Tab   ), spawn "rofi -show window"),
+    ((modm .|. mod1Mask  , xK_period), spawn "rofimoji"),
+    ((modm               , xK_minus ), spawn "dunstctl context"),
+    ((modm .|. mod1Mask  , xK_comma ), spawn "xdotool type $(unipicker --command 'rofi -dmenu')"),
+    ((modm .|. shiftMask , xK_c     ), kill),
+    ((modm               , xK_space ), sendMessage NextLayout),
+    ((modm .|. shiftMask , xK_space ), setLayout $ XMonad.layoutHook conf),
+    ((modm               , xK_n     ), refresh),
 
     --- Focus Windows ---
-    ((mod1Mask          , xK_Tab   ), windows W.focusDown),
-    ((modm              , xK_j     ), windows W.focusDown),
-    ((modm              , xK_k     ), windows W.focusUp  ),
-    ((modm              , xK_m     ), windows W.focusMaster  ),
-    ((modm              , xK_Return), windows W.swapMaster),
+    ((modm               , xK_F1    ), focusUnderPointer), -- mouse macro
+    ((mod1Mask           , xK_Tab   ), windows W.focusDown),
+    ((modm               , xK_j     ), windows W.focusDown),
+    ((modm               , xK_k     ), windows W.focusUp  ),
+    ((modm               , xK_m     ), windows W.focusMaster  ),
+    ((modm               , xK_Return), windows W.swapMaster),
 
     -- Swap Focused Windows --
-    ((modm .|. shiftMask, xK_j     ), windows W.swapDown  ),
-    ((modm .|. shiftMask, xK_k     ), windows W.swapUp    ),
+    ((modm .|. shiftMask , xK_j     ), windows W.swapDown  ),
+    ((modm .|. shiftMask , xK_k     ), windows W.swapUp    ),
 
     --- Windows Sizes and Positions ---
-    ((modm              , xK_h     ), sendMessage Shrink),
-    ((modm              , xK_l     ), sendMessage Expand),
-    ((modm              , xK_t     ), withFocused $ windows . W.sink),
+    ((modm               , xK_h     ), sendMessage Shrink),
+    ((modm .|. shiftMask , xK_h     ), sendMessage MirrorShrink),
+    ((modm               , xK_l     ), sendMessage Expand),
+    ((modm .|. shiftMask , xK_l     ), sendMessage MirrorExpand),
+    ((modm               , xK_t     ), withFocused $ windows . W.sink),
 
     -- Number of Windows in Master Area --
-    ((modm              , xK_comma ), sendMessage (IncMasterN 1)),
-    ((modm              , xK_period), sendMessage (IncMasterN (-1))),
+    ((modm               , xK_comma ), sendMessage (IncMasterN 1)),
+    ((modm               , xK_period), sendMessage (IncMasterN (-1))),
+
+    -- Picom Stuff --
+    ((modm               , xK_a     ), spawn "picom-trans -ct"), -- toggle transparency
 
     --- Direct XMonad Stuff ---
-    ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess)),
-    ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart"),
+    ((modm .|. shiftMask , xK_q     ), io exitSuccess),
+    ((modm               , xK_q     ), spawn "xmonad --recompile && xmonad --restart; killall xmobar; xmobar; notify-send \"xmonad and xmobar restarted\""),
 
     --- Xrandr Brightness ---
-    ((modm .|. shiftMask, xK_m     ), spawn "DISPLAY=:0 xrandr --output HDMI-A-0 --brightness $(($(xrandr --verbose | grep -i brightness | cut -f2 -d ' ' | head -n1) + .1))"),
-    ((modm .|. shiftMask, xK_n     ), spawn "DISPLAY=:0 xrandr --output HDMI-A-0 --brightness $(($(xrandr --verbose | grep -i brightness | cut -f2 -d ' ' | head -n1) - .1))")
+    ((modm .|. mod1Mask                  , xK_space       ), spawn "bright s+100"),
+    ((modm .|. mod1Mask                  , xK_KP_Add      ), spawn "bright +5"),
+    ((modm .|. mod1Mask                  , xK_KP_Subtract ), spawn "bright -5"),
+    ((modm .|. mod1Mask .|. shiftMask    , xK_KP_Add      ), spawn "bright +2"),
+    ((modm .|. mod1Mask .|. shiftMask    , xK_KP_Subtract ), spawn "bright -2"),
+    ((modm .|. mod1Mask .|. controlMask  , xK_KP_Add      ), spawn "bright +15"),
+    ((modm .|. mod1Mask .|. controlMask  , xK_KP_Subtract ), spawn "bright -15")
     ]
     ++
 
@@ -102,7 +177,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
 myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm, button1), (\w -> focus w >> mouseMoveWindow w
                                      >> windows W.shiftMaster)),
-    
+
     ((modm, button2), (\w -> focus w >> windows W.shiftMaster)),
 
     ((modm, button3), (\w -> focus w >> mouseResizeWindow w
@@ -113,12 +188,17 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $ [
 ------------------------------- Layouts -------------------------------
 -----------------------------------------------------------------------
 
-myLayout = smartBorders tiled ||| Mirror tiled ||| noBorders Full
-  where
-    tiled   = Tall nmaster delta ratio
-    nmaster = 1
-    ratio   = 1/2
-    delta   = 3/100
+-- myLayout = spacingWithEdge 10 (gaps [(U, 18), (R, 15), (D, 18), (L, 15)] (smartBorders tiled)) |||
+--            spacingWithEdge 10 (gaps [(U, 18), (R, 15), (D, 18), (L, 15)] (Mirror (smartBorders tiled))) |||
+--            fullscreenFull (gaps [(U, 20)] (noBorders Full))
+
+myLayout = lessBorders OnlyScreenFloat $
+  spacingWithEdge 10 (gaps [(U, 18), (R, 15), (D, 18), (L, 15)] (tiled ||| Mirror tiled)) ||| fullscreenFull (noBorders Full)
+    where
+      tiled   = ResizableTall nmaster delta ratio []
+      nmaster = 1
+      ratio   = 1/2
+      delta   = 3/100
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -135,7 +215,9 @@ myLayout = smartBorders tiled ||| Mirror tiled ||| noBorders Full
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 --
-myManageHook = composeAll
+myManageHook = do
+  XMonad.Layout.Fullscreen.fullscreenManageHook
+  composeAll
     [ className =? "MPlayer"        --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
@@ -152,7 +234,7 @@ myManageHook = composeAll
 -- It will add EWMH event handling to your custom event hooks by
 -- combining them with ewmhDesktopsEventHook.
 --
-myEventHook = mempty
+myEventHook = XMonad.Layout.Fullscreen.fullscreenEventHook
 
 ------------------------------------------------------------------------
 -- Status bars and logging
@@ -166,7 +248,7 @@ myEventHook = mempty
 -- It will add EWMH logHook actions to your custom log hook by
 -- combining it with ewmhDesktopsLogHook.
 --
-myLogHook = return ()
+myLogHook = dynamicLogXinerama
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -182,14 +264,25 @@ myLogHook = return ()
 -- It will add initialization of EWMH support to your custom startup
 -- hook by combining it with ewmhDesktopsStartup.
 --
-myStartupHook = setWMName "LG3D"
+myStartupHook = do
+    setWMName "LG3D"
+    setDefaultCursor xC_left_ptr
+
+    spawn "xscreensaver -no-splash &"
+    spawn "unclutter -idle 10 -root &"
+    spawn "xmobar &"
+    spawn "dunst"
+    spawn "picom --daemon --experimental-backends &"
+
+    spawn "/home/javalsai/.screenlayout/test.sh && nitrogen --restore" -- set the functionality in `xorg.conf` and remove after-setup-configurations that just take time (or move to WL)
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad defaults
+-- main = xmonad $ fullscreenSupport $ ewmhFullscreen . ewmh $ defaults
+main = xmonad . fullscreenSupport . ewmhFullscreen . ewmh =<< xmobar defaults
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
@@ -207,8 +300,8 @@ defaults = def {
         -- numlockMask deprecated in 0.9.1
         -- numlockMask        = myNumlockMask,
         workspaces         = myWorkspaces,
-        normalBorderColor  = myNormalBorderColor,
-        focusedBorderColor = myFocusedBorderColor,
+        normalBorderColor  = myNormColor,
+        focusedBorderColor = myFocusColor,
 
       -- key bindings
         keys               = myKeys,
@@ -222,49 +315,55 @@ defaults = def {
         startupHook        = myStartupHook
     }
     `additionalKeys`
-    [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock"),
+    [ ((mod4Mask .|. shiftMask, xK_z), spawn "dunstctl is-paused > /tmp/dnst; dunstctl set-paused true; xscreensaver-command -lock; cat /tmp/dnst | xargs dunstctl set-paused; rm /tmp/dnst;"),
 
       -- https://github.com/freedesktop/xorg-x11proto/blob/master/XF86keysym.h
       -- 0x1008FF11: <XF86XK_AudioLowerVolume>
-      ((0                          , 0x1008FF11), spawn "amixer -q sset Master 5%-"),
-      ((controlMask                , 0x1008FF11), spawn "amixer -q sset Master 10%-"),
-      ((shiftMask                  , 0x1008FF11), spawn "amixer -q sset Master 2%-"),
+      ((0                          , 0x1008FF11), spawn "volume -5"),
+      ((controlMask                , 0x1008FF11), spawn "volume -10"),
+      ((shiftMask                  , 0x1008FF11), spawn "volume -2"),
 
       -- 0x1008FF13: <XF86XK_AudioRaiseVolume>
-      ((0                          , 0x1008FF13), spawn "amixer -q sset Master 5%+"),
-      ((controlMask                , 0x1008FF13), spawn "amixer -q sset Master 10%+"),
-      ((shiftMask                  , 0x1008FF13), spawn "amixer -q sset Master 2%+"),
+      ((0                          , 0x1008FF13), spawn "volume 5"),
+      ((controlMask                , 0x1008FF13), spawn "volume 10"),
+      ((shiftMask                  , 0x1008FF13), spawn "volume 2"),
 
       -- 0x1008FF12: <XF86XK_AudioMute>
       ((0                          , 0x1008FF12), spawn "amixer set Master toggle"),
 
       -- 0x1008FF14: <XF86XK_AudioPlay>
-      ((0                          , 0x1008FF14), spawn "playerctl --ignore-player=$(cat ~/.config/user/player/ignore) play-pause"),
-      ((mod1Mask                   , 0x1008FF14), spawn "playerctl        --player=$(cat ~/.config/user/player/player) play-pause"),
+      ((0                          , 0x1008FF14), spawn "playerctl        --player=$(cat ~/.config/user/player/player) play-pause"),
+      ((mod1Mask                   , 0x1008FF14), spawn "playerctl --ignore-player=$(cat ~/.config/user/player/ignore) play-pause"),
+      ((controlMask                , 0x1008FF14), spawn "playerctl        --all-players                                play-pause"),
+      ((controlMask .|. shiftMask  , 0x1008FF14), spawn "playerctl        --all-players                                play"),
+      ((controlMask .|. mod1Mask   , 0x1008FF14), spawn "playerctl        --all-players                                pause"),
 
       -- 0x1008FF16: <XF86XK_AudioPrev>
-      ((0                          , 0x1008FF16), spawn "playerctl --ignore-player=$(cat ~/.config/user/player/ignore) previous"),
-      ((mod1Mask                   , 0x1008FF16), spawn "playerctl        --player=$(cat ~/.config/user/player/player) previous"),
-      ((controlMask                , 0x1008FF16), spawn "playerctl --ignore-player=$(cat ~/.config/user/player/ignore) position 15-"),
-      ((controlMask .|. mod1Mask   , 0x1008FF16), spawn "playerctl        --player=$(cat ~/.config/user/player/player) position 15-"),
-      ((shiftMask                  , 0x1008FF16), spawn "playerctl --ignore-player=$(cat ~/.config/user/player/ignore) position 5-"),
-      ((shiftMask .|. mod1Mask     , 0x1008FF16), spawn "playerctl        --player=$(cat ~/.config/user/player/player) position 5-"),
+      ((0                          , 0x1008FF16), spawn "playerctl        --player=$(cat ~/.config/user/player/ignore) previous"),
+      ((mod1Mask                   , 0x1008FF16), spawn "playerctl --ignore-player=$(cat ~/.config/user/player/player) previous"),
+      ((controlMask                , 0x1008FF16), spawn "playerctl        --player=$(cat ~/.config/user/player/ignore) position 15-"),
+      ((controlMask .|. mod1Mask   , 0x1008FF16), spawn "playerctl --ignore-player=$(cat ~/.config/user/player/player) position 15-"),
+      ((shiftMask                  , 0x1008FF16), spawn "playerctl        --player=$(cat ~/.config/user/player/ignore) position 5-"),
+      ((shiftMask .|. mod1Mask     , 0x1008FF16), spawn "playerctl --ignore-player=$(cat ~/.config/user/player/player) position 5-"),
 
       -- 0x1008FF17: <XF86XK_AudioNext>
-      ((0                          , 0x1008FF17), spawn "playerctl --ignore-player=$(cat ~/.config/user/player/ignore) next"),
-      ((mod1Mask                   , 0x1008FF17), spawn "playerctl        --player=$(cat ~/.config/user/player/player) next"),
-      ((controlMask                , 0x1008FF17), spawn "playerctl --ignore-player=$(cat ~/.config/user/player/ignore) position 15+"),
-      ((controlMask .|. mod1Mask   , 0x1008FF17), spawn "playerctl        --player=$(cat ~/.config/user/player/player) position 15+"),
-      ((shiftMask                  , 0x1008FF17), spawn "playerctl --ignore-player=$(cat ~/.config/user/player/ignore) position 5+"),
-      ((shiftMask .|. mod1Mask     , 0x1008FF17), spawn "playerctl        --player=$(cat ~/.config/user/player/player) position 5+"),
+      ((0                          , 0x1008FF17), spawn "playerctl        --player=$(cat ~/.config/user/player/player) next"),
+      ((mod1Mask                   , 0x1008FF17), spawn "playerctl --ignore-player=$(cat ~/.config/user/player/ignore) next"),
+      ((controlMask                , 0x1008FF17), spawn "playerctl        --player=$(cat ~/.config/user/player/ignore) position 15+"),
+      ((controlMask .|. mod1Mask   , 0x1008FF17), spawn "playerctl --ignore-player=$(cat ~/.config/user/player/player) position 15+"),
+      ((shiftMask                  , 0x1008FF17), spawn "playerctl        --player=$(cat ~/.config/user/player/ignore) position 5+"),
+      ((shiftMask .|. mod1Mask     , 0x1008FF17), spawn "playerctl --ignore-player=$(cat ~/.config/user/player/player) position 5+"),
 
       -- <Print>: <Print>
       -- To Clipboard
-      ((0                          , xK_Print), spawn "scrot '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f && rm $f'"),    -- fullscreen screenshot
+      ((0                          , xK_Print), spawn "scrot    '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f && rm $f'"),    -- fullscreen screenshot
       ((controlMask                , xK_Print), spawn "scrot -u '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f && rm $f'"), -- focused window
-      ((shiftMask                  , xK_Print), spawn "scrot -s '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f && rm $f'"), -- manual select
+      ((shiftMask                  , xK_Print), spawn "scrot -s --freeze '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f && rm $f'"), -- manual select
       -- To File
       ((mod1Mask                   , xK_Print), spawn "scrot"),    -- fullscreen screenshot
       ((controlMask .|. mod1Mask   , xK_Print), spawn "scrot -u"), -- focused window
-      ((shiftMask .|. mod1Mask     , xK_Print), spawn "scrot -s") -- manual select
+      ((shiftMask .|. mod1Mask     , xK_Print), spawn "scrot -s --freeze"),  -- manual select
+
+      -- 0x1008FF2F: <XF86XK_Sleep>
+      ((0                          , 0x1008FF2F), spawn "systemctl hibernate")
     ]

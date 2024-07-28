@@ -19,7 +19,8 @@ Plug('petertriho/nvim-scrollbar')
 Plug('catppuccin/nvim', { [ 'as' ] = 'catppuccin' })
 
 Plug('ryanoasis/vim-devicons')
-Plug('vim-airline/vim-airline')
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'nvim-tree/nvim-web-devicons'
 
 Plug('rrethy/vim-hexokinase', { [ 'do' ] = 'make hexokinase' })
 
@@ -36,15 +37,20 @@ Plug('hrsh7th/cmp-path')
 Plug('hrsh7th/cmp-cmdline')
 Plug('hrsh7th/nvim-cmp')
 
+Plug('b0o/schemastore.nvim')
+
 -- Langs
 Plug('leafgarland/typescript-vim')
 Plug('saecki/crates.nvim', { [ 'tag' ] = 'stable' })
 
 -- Misc
 Plug('ahmedkhalf/project.nvim')
-Plug('vimsence/vimsence')
+-- Plug('vimsence/vimsence')
 Plug('lambdalisue/suda.vim')
 Plug('NMAC427/guess-indent.nvim')
+Plug('akinsho/git-conflict.nvim')
+Plug 'goolord/alpha-nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 Plug('nvim-lua/plenary.nvim')
 
@@ -58,6 +64,22 @@ vim.call('plug#end')
 -- ]])
 
 -- require("scrollbar").setup()
+
+local telescope = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', telescope.find_files, {})
+vim.keymap.set('n', '<leader>fg', telescope.live_grep, {})
+vim.keymap.set('n', '<leader>fb', telescope.buffers, {})
+vim.keymap.set('n', '<leader>fh', telescope.help_tags, {})
+
+require('lualine').setup {}
+
+local alpha = require('alpha')
+if alpha then
+    alpha.setup(require'alpha.themes.theta'.config)
+end
+
+
+require('git-conflict').setup {}
 
 require('guess-indent').setup {}
 

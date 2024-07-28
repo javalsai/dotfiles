@@ -7,9 +7,10 @@ vim.o.hlsearch = true
 vim.o.showmatch = true
 vim.o.incsearch = true
 
--- Line Numbers
+-- Line Behaviour
 vim.o.number = true
 vim.o.relativenumber = true
+vim.o.scrolloff = 3
 
 -- Syntax
 vim.o.syntax = 'on'
@@ -49,7 +50,6 @@ set linebreak
 set list listchars=tab:>\ ,trail:·
 
 
-set autochdir
 let NERDTreeChDirMode=2
 nnoremap <leader>n :NERDTree .<CR>
 
@@ -95,4 +95,8 @@ inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"
 inoremap <expr> <Esc> pumvisible() ? " <BS>" : "<Esc>"
 
 " require("scrollbar.handlers").setup()
+
+nnoremap <silent> <leader>f <cmd>lua vim.lsp.buf.format()<CR>
 ]])
+
+vim.api.nvim_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
