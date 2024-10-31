@@ -4,6 +4,7 @@
 !/.gitignore
 !/.profile
 !/.zshenv
+!/.sh-utls
 
 !/.config/
 !/.config/*/
