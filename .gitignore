@@ -6,19 +6,15 @@
 !/.zshenv
 
 !/.config/
+!/.config/*/
 
-!/.config/VSCodium/
-!/.config/VSCodium/User/
+!/.config/VSCodium/product.json
+!/.config/VSCodium/User/keybindings.json
 !/.config/VSCodium/User/settings.json
-
-!/.config/hypr/
-!/.config/hypr/*
-
-!/.config/nvim/
+!/.config/hypr/**
+!/.config/kitty/**
 !/.config/nvim/**
-
-!/.config/wezterm/
-!/.config/wezterm/*
-
-!/.config/zsh/
-!/.config/zsh/.zshrc
+!/.config/wezterm/**
+!/.config/zsh/**
+/.config/zsh/.zsh_history
+/.config/zsh/.zcompdump*
