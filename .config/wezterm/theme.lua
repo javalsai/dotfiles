@@ -45,7 +45,8 @@ return {
   scrollbar_thumb = fg,
   split = black,
   ansi = {
-    '#2d3234',
+    -- bg,
+    '#4d5254',
     '#cc6666',
     '#b5bd68',
     '#f0c674',
@@ -55,7 +56,7 @@ return {
     '#c5c8c6',
   },
   brights = {
-    '#373635',
+    '#676665',
     '#d54e53',
     '#b9ca4a',
     '#e7c547',

@@ -52,7 +52,12 @@ POWERLEVEL9K_STATUS_HIDE_SIGNAME=false
   POWERLEVEL9K_DIR_ETC_FOREGROUND=0
   POWERLEVEL9K_DIR_DEFAULT_FOREGROUND=0
 
-## OS icon ##
+  POWERLEVEL9K_SHORTEN_DIR_LENGTH=4
+  POWERLEVEL9K_SHORTEN_DELIMITER=".."
+  POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
+
+  ## OS icon ##
+  POWERLEVEL9K_LINUX_ICON=$'\uF31F'
   POWERLEVEL9K_OS_ICON_FOREGROUND=81
   POWERLEVEL9K_OS_ICON_BACKGROUND=235
 
@@ -87,8 +92,8 @@ alias zshconfig="$EDITOR ~/.zshrc"
 
 # Necesary namings
 alias kys="exit"
-alias please="sudo"
-alias fucking="sudo"
+alias please="doas"
+alias fucking="doas"
 
 # Misc Utils
 alias fuckyou="%&|"
@@ -98,6 +103,8 @@ alias weather="curl -s https://wttr.in/Granada --output - | head -n 7 | tail -n 
 alias -- '+x'="chmod +x"
 alias b64=base64
 alias edit="$EDITOR" # I just nvim tho
+alias mommy="cargo mommy"
+alias ado="doas "
 
 # Overrides
 alias cat="bat -pp"
@@ -109,11 +116,18 @@ alias wget="wget --hsts-file ~/.local/share/wget/hsts"
 if command -v macchina &> /dev/null; then
   alias macchina="macchina -o host -o kernel -o distribution -o packages -o terminal -o shell -o uptime -o resolution -o processor-load -o memory"
 fi
+mkdir -p -m 700 "$HOME/.local/state/paru/.gnupg/"
+alias paru="GNUPGHOME=$HOME/.local/state/paru/.gnupg/ paru"
+alias nv=nvim
 
 if command -v thefuck &> /dev/null; then
   eval $(thefuck --alias FUCK)
   eval $(thefuck --alias)
 fi
+
+mkdir -p "$HOME/.local/state/"
+export _Z_DATA="$HOME/.local/state/.z"
+[[ -r "/usr/share/z/z.sh" ]] && . /usr/share/z/z.sh
 
 
 ### Welcome Screen ###

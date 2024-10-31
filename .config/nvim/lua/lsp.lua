@@ -10,24 +10,37 @@ lspconfig.bashls.setup {}
 lspconfig.tsserver.setup {}
 
 -- Lua
-lspconfig.lua_ls.setup {
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { 'vim' }
-      }
-    }
-  }
-}
+-- lspconfig.lua_ls.setup {
+--   settings = {
+--     Lua = {
+--       diagnostics = {
+--         globals = { 'vim' }
+--       }
+--     }
+--   }
+-- }
 
 -- C/CPP/...
 lspconfig.clangd.setup {}
 
 -- Rust
 lspconfig.rust_analyzer.setup {
-  -- Server-specific settings. See `:help lspconfig-setup`
+  flags = flags,
+  capabilities = capabilities,
+  on_attach = on_attach,
   settings = {
-    ['rust-analyzer'] = {},
+    ["rust-analyzer"] = {
+      cargo = {
+        allFeatures = true,
+      },
+      checkOnSave = {
+        allFeatures = true,
+        extraArgs = { "--all-features" }
+      },
+      check = {
+        allTargets = true,
+      },
+    },
   },
 }
 

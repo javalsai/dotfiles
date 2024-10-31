@@ -1,31 +1,33 @@
 local vim = vim
+vim.loader.enable()
 local Plug = vim.fn['plug#']
 
 --- PLUGINS ---
 
 vim.call('plug#begin')
 
-Plug('tpope/vim-surround')                        -- Surrounding ysw
-Plug('preservim/nerdtree')                        -- NerdTree
-Plug('tpope/vim-commentary')                      -- For Commenting gcc & gc
-Plug('lifepillar/pgsql.vim')                      -- PSQL Pluging needs :SQLSetType pgsql.vim
-Plug('preservim/tagbar')                          -- Tagbar for code navigation
-Plug('terryma/vim-multiple-cursors')              -- CTRL + N for multiple cursors
+Plug('tpope/vim-surround')           -- Surrounding ysw
+Plug('preservim/nerdtree')           -- NerdTree
+Plug('tpope/vim-commentary')         -- For Commenting gcc & gc
+Plug('lifepillar/pgsql.vim')         -- PSQL Pluging needs :SQLSetType pgsql.vim
+Plug('preservim/tagbar')             -- Tagbar for code navigation
+Plug('terryma/vim-multiple-cursors') -- CTRL + N for multiple cursors
 -- Plug 'pechorin/any-jump.vim'
-Plug('akinsho/toggleterm.nvim', { ['tag'] = '*'})
+Plug('akinsho/toggleterm.nvim', { ['tag'] = '*' })
 Plug('petertriho/nvim-scrollbar')
 
 -- Theming
-Plug('catppuccin/nvim', { [ 'as' ] = 'catppuccin' })
+Plug('catppuccin/nvim', { ['as'] = 'catppuccin' })
 
 Plug('ryanoasis/vim-devicons')
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 
-Plug('rrethy/vim-hexokinase', { [ 'do' ] = 'make hexokinase' })
+Plug('rrethy/vim-hexokinase', { ['do'] = 'make hexokinase' })
 
 -- LSP
 Plug('neovim/nvim-lspconfig')
+-- Plug('Maan2003/lsp_lines.nvim')
 
 -- Completion
 Plug 'hrsh7th/cmp-vsnip'
@@ -41,7 +43,7 @@ Plug('b0o/schemastore.nvim')
 
 -- Langs
 Plug('leafgarland/typescript-vim')
-Plug('saecki/crates.nvim', { [ 'tag' ] = 'stable' })
+Plug('saecki/crates.nvim', { ['tag'] = 'stable' })
 
 -- Misc
 Plug('ahmedkhalf/project.nvim')
@@ -75,9 +77,14 @@ require('lualine').setup {}
 
 local alpha = require('alpha')
 if alpha then
-    alpha.setup(require'alpha.themes.theta'.config)
+    alpha.setup(require 'alpha.themes.theta'.config)
 end
 
+-- require("lsp_lines").setup {}
+-- vim.diagnostic.config({ virtual_text = false })
+-- vim.diagnostic.config({ virtual_lines = true })
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+-- vim.o.updatetime=1000
 
 require('git-conflict').setup {}
 
@@ -117,7 +124,7 @@ cmp.setup {
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         -- ['<C-e>'] = cmp.mapping.abort(),
-        ['<Esc>'] =cmp.mapping.abort(),
+        ['<Esc>'] = cmp.mapping.abort(),
         -- ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         ['<Tab>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     },

@@ -16,6 +16,7 @@ return {
   hide_tab_bar_if_only_one_tab = true,
 
   enable_scroll_bar = false;
+  enable_wayland = false,
   window_padding = {
     top    = '3px',
     right  = '3px',
