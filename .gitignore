@@ -16,6 +16,7 @@
 !/.config/kitty/**
 !/.config/nvim/**
 !/.config/wezterm/**
+!/.config/waybar/**
 !/.config/zsh/**
 /.config/zsh/.zsh_history
 /.config/zsh/.zcompdump*

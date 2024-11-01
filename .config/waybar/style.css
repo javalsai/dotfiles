@@ -1,0 +1,282 @@
+@import "theme.css";
+
+window#waybar {
+    font-family: Ubuntu, 'Font Awesome 6 Free', 'Font Awesome 6 Brands', 'Hack Nerd Font', monospace;
+    font-size: 15px;
+    border-radius: 0;
+    margin: 5px;
+    background-color: @crust;
+    color: @text;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+#window,
+#workspaces {
+    margin: 0 4px;
+}
+
+#workspaces {
+    background: transparent;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    border: none;
+    color: @overlay2;
+}
+
+#workspaces button:hover {
+    background: none;
+    background-color: alpha(@primary, 0.3);
+}
+
+#workspaces button.visible {
+    color: @primary;
+    font-weight: bold;
+}
+
+#workspaces button.urgent {
+    color: @yellow;
+}
+
+#mode {
+    background-color: @teal;
+}
+
+#scratchpad {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#scratchpad.empty {
+    background-color: transparent;
+}
+
+#idle_inhibitor {
+    color: @flamingo;
+}
+
+#wireplumber {
+    color: @mauve;
+}
+
+#wireplumber.muted {
+    color: @red;
+}
+
+#power-profiles-daemon {
+    padding-right: 15px;
+}
+
+#power-profiles-daemon.performance {
+    color: @red;
+}
+
+#power-profiles-daemon.balanced {
+    color: @blue;
+}
+
+#power-profiles-daemon.power-saver {
+    color: @green;
+}
+
+#bluetooth
+{
+    color: @blue;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#power-profiles-daemon,
+#bluetooth,
+#custom-media,
+#custom-gpu,
+#custom-notification, 
+#custom-workspaces {
+    padding: 0 6px;
+}
+
+#clock {
+    color: @pink;
+}
+
+#battery {
+}
+
+#battery.charging, #battery.plugged {
+    color: @green;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+/* Using steps() instead of linear as a timing function to limit cpu usage */
+#battery.critical:not(.charging) {
+    color: @err;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/* ??? */
+/*fr*/
+label:focus {
+    background-color: #000000; 
+}
+
+#cpu {
+    color: @teal;
+}
+
+#memory {
+    color: @lavender;
+}
+
+#disk {
+    color: #964B00;
+}
+
+#backlight {
+    color: @peach;
+}
+
+#network {
+    color: @sapphire;
+}
+
+#network.disconnected {
+    color: @err;
+    min-width: 100px;
+}
+
+#pulseaudio {
+    color: @yellow;
+}
+
+#pulseaudio.muted {
+    background-color: #90b1b1;
+    color: #2a5c45;
+}
+
+#custom-media {
+    color: #66cc99;
+    min-width: 100px;
+}
+
+#custom-media.custom-spotify {
+    color: #66cc99;
+}
+
+#custom-media.custom-vlc {
+    color: #ffa000;
+}
+
+#temperature {
+    color: @yellow;
+}
+
+#temperature.critical {
+    color: @err;
+}
+
+#tray {
+    color: @subtext0;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    color: @err;
+}
+
+/*#mpd {*/
+/*    color: #66cc99;*/
+/*}*/
+/**/
+/*#mpd.disconnected {*/
+/*    color: #f53c3c;*/
+/*}*/
+/**/
+/*#mpd.stopped {*/
+/*    color: #90b1b1;*/
+/*}*/
+/**/
+/*#mpd.paused {*/
+/*    color: #51a37a;*/
+/*}*/
+
+#language {
+    color: @subtext1;
+    padding: 0 5px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+
+#keyboard-state {
+    color: @subtext0;
+    padding: 0 0px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+
+#keyboard-state > label {
+    padding: 0 5px;
+}
+
+#keyboard-state > label.locked {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#privacy {
+    padding: 0;
+}
+
+#privacy-item {
+    padding: 0 10px;
+    color: @text;
+}
+
+#privacy-item.screenshare {
+    color: @peach;
+}
+
+#privacy-item.audio-in {
+    color: @green;
+}
+
+#privacy-item.audio-out {
+    color: @blue;
+}
+
+#custom-notification {
+}
