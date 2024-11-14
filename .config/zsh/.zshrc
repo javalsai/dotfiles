@@ -103,8 +103,8 @@ alias weather="curl -s https://wttr.in/Granada --output - | head -n 7 | tail -n 
 alias -- '+x'="chmod +x"
 alias b64=base64
 alias edit="$EDITOR" # I just nvim tho
-alias mommy="cargo mommy"
-alias ado="doas "
+alias mommy="cargo mommy" # no commentary
+alias ado="doas " # alises with doas
 
 # Overrides
 alias cat="bat -pp"
@@ -117,8 +117,11 @@ if command -v macchina &> /dev/null; then
   alias macchina="macchina -o host -o kernel -o distribution -o packages -o terminal -o shell -o uptime -o resolution -o processor-load -o memory"
 fi
 mkdir -p -m 700 "$HOME/.local/state/paru/.gnupg/"
-alias paru="GNUPGHOME=$HOME/.local/state/paru/.gnupg/ paru"
+alias paru="GNUPGHOME=$HOME/.local/state/paru/.gnupg/ paru" # like leave my gpg keyring alone ffs
+alias pgpg="GNUPGHOME=$HOME/.local/state/paru/.gnupg/ gpg"
 alias nv=nvim
+alias h="GIT_DIR=.dotfiles.git " # can put dotfiles in home with .git as .dotfiles.git
+                                 # and manage with h alias
 
 if command -v thefuck &> /dev/null; then
   eval $(thefuck --alias FUCK)
