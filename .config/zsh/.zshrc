@@ -105,6 +105,7 @@ alias b64=base64
 alias edit="$EDITOR" # I just nvim tho
 alias mommy="cargo mommy" # no commentary
 alias ado="doas " # alises with doas
+alias xo=xdg-open
 
 # Overrides
 alias cat="bat -pp"
