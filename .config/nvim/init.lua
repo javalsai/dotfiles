@@ -32,8 +32,11 @@ vim.o.mouse = "a"
 vim.o.ttyfast = true
 vim.o.lazyredraw = false
 
+-- Idk
 vim.opt.wildmode:append { "longest", "list" }
 vim.opt.clipboard:append { "unnamedplus" }
+
+vim.o.cmdheight = 0
 
 -- Modules
 require('plugins')
