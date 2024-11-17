@@ -37,48 +37,66 @@ vim.opt.wildmode:append { "longest", "list" }
 vim.opt.clipboard:append { "unnamedplus" }
 
 vim.o.cmdheight = 0
+vim.o.showcmdloc = 'statusline'
 
--- Modules
-require('plugins')
-require('lsp')
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 vim.cmd([[
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
+  highlight ExtraWhitespace ctermbg=red guibg=red
+  match ExtraWhitespace /\s\+$/
 
-highlight Tab ctermfg=gray guifg=gray
-match Tab /\t\+/
+  highlight Tab ctermfg=gray guifg=gray
+  match Tab /\t\+/
 
-set linebreak
-set list listchars=tab:>\ ,trail:·
+  set linebreak
+  set list listchars=tab:>\ ,trail:·
 
+  let NERDTreeChDirMode=2
 
-let NERDTreeChDirMode=2
-nnoremap <leader>n :NERDTree .<CR>
+  inoremap <S-Tab> <C-d>
 
-
-let g:Hexokinase_highlighters = [ 'virtual' ]
-let g:Hexokinase_optInPatterns = 'full_hex,rgb,rgba,hsl,hsla,colour_names'
-
-inoremap <S-Tab> <C-d>
-
-nnoremap <C-f> :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-l> :call CocActionAsync('jumpDefinition')<CR>
-
-nmap <F8> :TagbarToggle<CR>
-
-set completeopt-=preview " For No Previews
-
-let g:NERDTreeDirArrowExpandable="+"
-let g:NERDTreeDirArrowCollapsible="~"
-
-" Coc config
-inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"
-inoremap <expr> <Esc> pumvisible() ? " <BS>" : "<Esc>"
+  set completeopt-=preview " For No Previews
 ]])
 
-vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.format()<CR>', { noremap = true, silent = true })
+-- lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out,                            "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
+vim.opt.rtp:prepend(lazypath)
+
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\ "
+vim.api.nvim_set_keymap('n', 'F', '<cmd>lua vim.lsp.buf.format()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'Z', '<Cmd>lua vim.diagnosis.open_float()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap(
+  'n',
+  '<leader>K',
+  '<Cmd>lua vim.diagnostic.open_float(nil, {focus=false})<CR>',
+  { noremap = true, silent = true }
+)
+
+-- Setup lazy.nvim
+-- require("lazy").setup({
+--   spec = {
+--     -- import your plugins
+--     { import = "plugins" },
+--   },
+--   -- Configure any other settings here. See the documentation for more details.
+--   -- colorscheme that will be used when installing plugins.
+--   install = { colorscheme = { "habamax" } },
+--   -- automatically check for plugin updates
+--   checker = { enabled = true },
+-- })
+require("lazy").setup("plugins")
