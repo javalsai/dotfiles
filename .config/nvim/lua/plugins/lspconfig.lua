@@ -14,7 +14,7 @@ return {
     lspconfig.bashls.setup {}
 
     -- TS
-    lspconfig.tsserver.setup {}
+    lspconfig.ts_ls.setup {}
 
     -- Lua
     lspconfig.lua_ls.setup {
