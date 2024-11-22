@@ -12,11 +12,13 @@
 !/.config/VSCodium/product.json
 !/.config/VSCodium/User/keybindings.json
 !/.config/VSCodium/User/settings.json
+!/.config/dunst/**
 !/.config/hypr/**
 !/.config/kitty/**
 !/.config/nvim/**
 !/.config/wezterm/**
 !/.config/waybar/**
+!/.config/wofi/**
 !/.config/zsh/**
 /.config/zsh/.zsh_history
 /.config/zsh/.zcompdump*

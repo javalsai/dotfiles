@@ -1,0 +1,8 @@
+allow_images = true
+allow_markup = true
+insensitive = true
+columns = 2
+single_click = true
+no_actions = true
+term = wezterm
+prompt = ​ Search
