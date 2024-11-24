@@ -84,16 +84,23 @@ return {
       }
     }
 
+    -- XML
+    lspconfig.lemminx.setup {}
+
     -- HTML
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    local html_capabilities = vim.lsp.protocol.make_client_capabilities()
+    html_capabilities.textDocument.completion.completionItem.snippetSupport = true
 
     lspconfig.html.setup {
-      capabilities = capabilities,
+      capabilities = html_capabilities,
     }
 
     -- CSS
-    lspconfig.cssls.setup {}
+    local css_capabilities = vim.lsp.protocol.make_client_capabilities()
+    css_capabilities.textDocument.completion.completionItem.snippetSupport = true
+    lspconfig.cssls.setup {
+      capabilities = css_capabilities,
+    }
 
     --- OTHER
     -- Biome
