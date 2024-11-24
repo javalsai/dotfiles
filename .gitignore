@@ -9,6 +9,8 @@
 !/.config/
 !/.config/*/
 
+!/.config/user-dirs.dirs
+
 !/.config/VSCodium/product.json
 !/.config/VSCodium/User/keybindings.json
 !/.config/VSCodium/User/settings.json
