@@ -1,0 +1,20 @@
+[user]
+	email = jvssxxi@gmail.com
+	name = javalsai
+[core]
+	editor = $EDITOR
+[safe]
+	directory = /opt/WALC
+	directory = /opt/better-discord
+	directory = /home/javalsai/tmp/web-root
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = /home/javalsai/.ssh/allowed_signers
+	defaultKeyCommand = sh -c 'echo key::$(local-ssh-key)'
+[commit]
+	gpgsign = true
+[init]
+	defaultBranch = master
+[merge]
+	conflictStyle = zdiff3

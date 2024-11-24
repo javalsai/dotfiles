@@ -2,12 +2,16 @@
 **
 
 !/.gitignore
+!/.gitconfig
+
 !/.profile
 !/.zshenv
 !/.sh-utls
 
 !/.config/
 !/.config/*/
+!/.local/
+!/.local/bin/
 
 !/.config/user-dirs.dirs
 
@@ -24,3 +28,5 @@
 !/.config/zsh/**
 /.config/zsh/.zsh_history
 /.config/zsh/.zcompdump*
+
+!/.local/bin/local-ssh-key

@@ -1,0 +1,1 @@
+ssh-add -L | grep -qv "The agent has no identities." || ssh-add; ssh-add -L

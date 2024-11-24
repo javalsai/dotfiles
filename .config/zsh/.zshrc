@@ -1,21 +1,21 @@
 ### Profiling ###
 #zmodload zsh/zprof
 
-### Basic declarations ###
-bold=$(tput bold)
-normal=$(tput sgr0)
-
 ### Basic env ###
 setopt extended_glob
 
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
 [ -f "$HOME/.sh-utls" ] && . "$HOME/.sh-utls"
 
-export ZSH="/home/javalsai/.oh-my-zsh"
-export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
+[[ "$(hostname)" == "the-art" ]] && export ZSH="/home/javalsai/.oh-my-zsh"
+[[ "$(hostname)" == "server5" ]] && export ZSH="/usr/share/oh-my-zsh/"
+# i made doas preserve home, so when i `doas -s` i get root owned dumps, added $USER
+# i dont think this works on server5 now tho... as its on /usr...
+export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST-$USER
 
 ### ZSH / OMZ / PL9K headers ###
-ZSH_THEME="powerlevel9k/powerlevel9k"
+[[ "$(hostname)" == "the-art" ]] && ZSH_THEME="powerlevel9k/powerlevel9k"
+[[ "$(hostname)" == "server5" ]] && ZSH_THEME="robbyrussell-custom"
 POWERLEVEL9K_MODE="nerdfont-complete"
 
 ### ZSH / OMZ / PL9K ricing ###
@@ -70,21 +70,26 @@ zstyle ':omz:update' frequency 1
 plugins=(
   git
   rust
-  zsh-syntax-highlighting
-  zsh-autosuggestions
   extract
   archlinux
 )
+if [[ "$(hostname)" == "the-art" ]]; then
+  plugins+=(
+    zsh-syntax-highlighting
+    zsh-autosuggestions
+  )
+else
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 . $ZSH/oh-my-zsh.sh
 
 # automatically start ssh-agent
-export SSH_AUTH_SOCK=~/.ssh/ssh-agent.sock
-ssh-add -l &> /dev/null
-[ $? -ge 2 ] && ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null
-
-#if [ -z "$SSH_AUTH_SOCK" ] ; then
-#  eval `ssh-agent -s` > /dev/null
-#fi
+if [ -z "$SSH_AUTH_SOCK" ] ; then
+  export SSH_AUTH_SOCK=~/.ssh/ssh-agent.sock
+  ssh-add -l &> /dev/null
+  [ $? -ge 2 ] && ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null
+fi
 
 
 ## Example aliases
@@ -142,6 +147,7 @@ fi
 
 ### Bindings ###
 bindkey '^H' backward-kill-word
+bindkey '^[[127;5u' backward-kill-word
 
 # bun completions
 [ -s "/home/javalsai/.bun/_bun" ] && source "/home/javalsai/.bun/_bun"

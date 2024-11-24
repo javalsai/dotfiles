@@ -21,8 +21,10 @@ export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5";
 export JAVA_HOME="/opt/android-studio/jbr"
 export ANDROID_HOME="$HOME/Android/Sdk"
 
-NDK_HOME="$ANDROID_HOME/ndk/$(command ls -1 "$ANDROID_HOME/ndk" | head -n1)"
-export NDK_HOME
+if [[ -d "$ANDROID_HOME/ndk" ]]; then
+    NDK_HOME="$ANDROID_HOME/ndk/$(command ls -1 "$ANDROID_HOME/ndk" | head -n1)"
+    export NDK_HOME
+fi
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -32,13 +34,6 @@ export SSH_ASKPASS='/usr/bin/ksshaskpass'
 export SSH_ASKPASS_REQUIRE=prefer
 
 export EDITOR=${EDITOR:-nvim}
-#if [[ -z $EDITOR ]]; then
-#  if [[ -n $SSH_CONNECTION ]]; then
-#    export EDITOR='nano'
-#  else
-#    export EDITOR='nvim'
-#  fi
-#fi
 
 # Support colors in less
 LESS_TERMCAP_mb=$(tput bold; tput setaf 1)
@@ -62,4 +57,4 @@ export GROFF_NO_SGR=1
 
 # SOURCES
 #source "/usr/share/nvm/init-nvm.sh";
-source "/home/javalsai/.ghcup/env";
+[ -s ~"/.ghcup/env" ] && . ~/.ghcup/env;
