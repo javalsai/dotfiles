@@ -92,6 +92,9 @@ return {
       capabilities = capabilities,
     }
 
+    -- CSS
+    lspconfig.cssls.setup {}
+
     --- OTHER
     -- Biome
     lspconfig.biome.setup {
