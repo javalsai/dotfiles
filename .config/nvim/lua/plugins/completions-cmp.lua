@@ -8,10 +8,21 @@ return {
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
             "hrsh7th/cmp-cmdline",
+            "onsails/lspkind.nvim",
         },
         config = function()
+            local lspkind = require('lspkind')
             local cmp = require('cmp')
             cmp.setup {
+                formatting = {
+                    format = lspkind.cmp_format({
+                        mode = 'symbol',
+                        maxwidth = {
+                            menu = 30,
+                        },
+                        ellipsis_char = '…',
+                    }),
+                },
                 snippet = {
                     -- REQUIRED - you must specify a snippet engine
                     expand = function(args)
@@ -22,8 +33,8 @@ return {
                     end,
                 },
                 window = {
-                    -- completion = cmp.config.window.bordered(),
-                    -- documentation = cmp.config.window.bordered(),
+                    completion = cmp.config.window.bordered(),
+                    documentation = cmp.config.window.bordered(),
                 },
                 mapping = cmp.mapping.preset.insert {
                     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
