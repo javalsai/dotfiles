@@ -8,10 +8,18 @@ return {
     local lspconfig = require('lspconfig')
 
     -- ASM
-    lspconfig.asm_lsp.setup {}
+    local asm_capabilities = vim.lsp.protocol.make_client_capabilities()
+    asm_capabilities.textDocument.completion.completionItem.snippetSupport = true
+    lspconfig.asm_lsp.setup {
+      capabilities = asm_capabilities,
+    }
 
     -- Bash
     lspconfig.bashls.setup {}
+
+    -- Zig
+    lspconfig.zls.setup {}
+
 
     -- TS
     lspconfig.ts_ls.setup {}

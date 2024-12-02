@@ -39,6 +39,8 @@ vim.opt.clipboard:append { "unnamedplus" }
 vim.o.cmdheight = 0
 vim.o.showcmdloc = 'statusline'
 
+vim.env.EDITOR = "nvr --remote-tab-wait-silent"
+
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 vim.cmd([[
