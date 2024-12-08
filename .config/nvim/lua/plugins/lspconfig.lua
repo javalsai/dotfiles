@@ -39,25 +39,25 @@ return {
     lspconfig.clangd.setup {}
 
     -- Rust
-    lspconfig.rust_analyzer.setup {
-      -- flags = flags,
-      -- capabilities = capabilities,
-      -- on_attach = on_attach,
-      settings = {
-        ["rust-analyzer"] = {
-          -- cargo = {
-          --   allFeatures = true,
-          -- },
-          -- checkOnSave = {
-          --   allFeatures = true,
-          -- extraArgs = { "--all-features" }
-          -- },
-          -- check = {
-          --   allTargets = true,
-          -- },
-        },
-      },
-    }
+    -- lspconfig.rust_analyzer.setup {
+    --   -- flags = flags,
+    --   -- capabilities = capabilities,
+    --   -- on_attach = on_attach,
+    --   settings = {
+    --     ["rust-analyzer"] = {
+    --       -- cargo = {
+    --       --   allFeatures = true,
+    --       -- },
+    --       -- checkOnSave = {
+    --       --   allFeatures = true,
+    --       -- extraArgs = { "--all-features" }
+    --       -- },
+    --       -- check = {
+    --       --   allTargets = true,
+    --       -- },
+    --     },
+    --   },
+    -- }
 
     -- Crates
     require("crates").setup()
