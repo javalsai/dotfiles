@@ -31,7 +31,11 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 if [[ -z "$TERMUX_VERSION" ]]; then
-    export CLIP_COPY="xclip -sel clip"
+    if command -v wl-copy &> /dev/null; then
+        export CLIP_COPY="wl-copy"
+    else
+        export CLIP_COPY="xclip -sel clip"
+    fi
     export SSH_ASKPASS='/usr/bin/ksshaskpass'
     export SSH_ASKPASS_REQUIRE=prefer
 else
@@ -66,4 +70,4 @@ export GROFF_NO_SGR=1
 
 # SOURCES
 #source "/usr/share/nvm/init-nvm.sh";
-[ -s ~"/.ghcup/env" ] && . ~/.ghcup/env;
+[ -s "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env";
