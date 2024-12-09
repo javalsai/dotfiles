@@ -10,6 +10,7 @@
 
 !/.config/
 !/.config/*/
+!/.ssh/
 !/.local/
 !/.local/bin/
 
@@ -28,5 +29,9 @@
 !/.config/zsh/**
 /.config/zsh/.zsh_history
 /.config/zsh/.zcompdump*
+
+!/.ssh/config
+!/.ssh/authorized_keys
+!/.ssh/allowed_signers
 
 !/.local/bin/local-ssh-key
