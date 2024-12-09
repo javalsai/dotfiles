@@ -3,7 +3,7 @@
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="/home/javalsai/.surrealdb:$PATH"
+export PATH="$HOME/.surrealdb:$PATH"
 export PATH="$PATH:$HOME/perl5/bin"
 
 
@@ -30,8 +30,17 @@ fi
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-export SSH_ASKPASS='/usr/bin/ksshaskpass'
-export SSH_ASKPASS_REQUIRE=prefer
+if [[ -z "$TERMUX_VERSION" ]]; then
+    export CLIP_COPY="xclip -sel clip"
+    export SSH_ASKPASS='/usr/bin/ksshaskpass'
+    export SSH_ASKPASS_REQUIRE=prefer
+else
+    export CLIP_COPY=termux-clipboard-set
+    export STORAGE=/storage/emulated/0
+    export NVM_DIR=/data/data/com.termux/files/home/.nvm # idek if i still have nvm
+    export RSYNC_RSH=ssha
+    export GIT_SSH_COMMAND=ssha
+fi
 
 export EDITOR=${EDITOR:-nvim}
 

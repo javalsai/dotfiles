@@ -59,7 +59,7 @@ touchp() {
 # }
 
 copyf() {
-    xclip -sel clip < "$1";
+    $CLIP_COPY < "$1";
 }
 
 cdp() {
