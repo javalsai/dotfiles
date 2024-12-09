@@ -2,8 +2,6 @@
 #zmodload zsh/zprof
 
 ### Basic env ###
-setopt extended_glob
-
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
 [ -f "$HOME/.sh-utls" ] && . "$HOME/.sh-utls"
 
@@ -17,6 +15,19 @@ export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST-$USER
 ZSH_THEME="powerlevel9k/powerlevel9k"
 [[ "$(hostname)" == "server5" ]] && ZSH_THEME="robbyrussell-custom"
 POWERLEVEL9K_MODE="nerdfont-complete"
+
+setopt extendedglob
+setopt complete_aliases
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=999999999
+SAVEHIST=999999999
+
+setopt HIST_REDUCE_BLANKS
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
 
 ### ZSH / OMZ / PL9K ricing ###
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
@@ -159,7 +170,7 @@ else
     xdg-open --send "$TMPFO"
   }
 
-  export NODE_PATH='/data/data/com.termux/files/usr/lib/node_modules'
+  export NODE_PATH="$PREFIX/lib/node_modules"
 fi
 
 if command -v thefuck &> /dev/null; then
