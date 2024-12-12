@@ -140,6 +140,8 @@ alias ip="ip -c"
 alias ffmpeg='ffmpeg -hide_banner'
 alias wget="wget --hsts-file ~/.local/share/wget/hsts"
 alias nv=nvim
+alias gs='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN TO USE GHOSTSCRIPT"'
+
 alias h="GIT_DIR=.dotfiles.git " # can put dotfiles in home with .git as .dotfiles.git
                                  # and manage with h alias
 
