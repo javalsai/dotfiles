@@ -15,6 +15,7 @@
 !/.local/bin/
 
 !/.config/user-dirs.dirs
+!/.config/dolphinrc
 
 !/.config/VSCodium/product.json
 !/.config/VSCodium/User/keybindings.json

@@ -1,0 +1,57 @@
+[$Version]
+update_info=dolphin_detailsmodesettings.upd:rename-leading-padding,dolphin_detailsmodesettings.upd:move-content-display
+
+[FileDialogSize]
+2 screens: Height=600
+2 screens: Width=960
+
+[General]
+OpenExternallyCalledFolderInNewTab=true
+OpenNewTabAfterLastTab=true
+ShowFullPath=true
+ShowFullPathInTitlebar=true
+Version=202
+ViewPropsTimestamp=2022,5,22,16,11,16.406
+
+[Icons]
+Theme=Papirus-Dark
+
+# Omfg this single thing is gonna make me
+# commit this file too
+[UiSettings]
+ColorScheme=*
+
+[IconsMode]
+PreviewSize=80
+
+[InformationPanel]
+previewsAutoPlay=true
+
+[KFileDialog Settings]
+Places Icons Auto-resize=false
+Places Icons Static Size=22
+
+[KPropertiesDialog]
+2 screens: Height=600
+2 screens: Width=405
+HDMI-1 Height 1440x900=600
+HDMI-1 Width 1440x900=409
+HDMI-A-0 Height 1440x900=600
+HDMI-A-0 Height 1440x900 HDMI-A-0=600
+HDMI-A-0 Width 1440x900=418
+HDMI-A-0 Width 1440x900 HDMI-A-0=418
+
+[MainWindow]
+MenuBar=Disabled
+ToolBarsMovable=Disabled
+
+[Open-with settings]
+CompletionMode=1
+History=neo
+
+[PreviewSettings]
+Plugins=appimagethumbnail,audiothumbnail,avif,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,directorythumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,mobithumbnail,opendocumentthumbnail,gsthumbnail,rawthumbnail,stl-thumb,stlthumbnail,svgthumbnail,ffmpegthumbs,gdk-pixbuf-thumbnailer
+
+[ViewPropertiesDialog]
+HDMI-A-0 Height 1440x900=600
+HDMI-A-0 Width 1440x900=700
