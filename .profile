@@ -1,4 +1,5 @@
 # PATH
+# this file is like... 10ms º-º
 # export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
@@ -22,7 +23,7 @@ export JAVA_HOME="/opt/android-studio/jbr"
 export ANDROID_HOME="$HOME/Android/Sdk"
 
 if [[ -d "$ANDROID_HOME/ndk" ]]; then
-    NDK_HOME="$ANDROID_HOME/ndk/$(command ls -1 "$ANDROID_HOME/ndk" | head -n1)"
+    NDK_HOME="$ANDROID_HOME/ndk/$(command ls -1 "$ANDROID_HOME/ndk" | head -1)"
     export NDK_HOME
 fi
 
@@ -48,24 +49,28 @@ fi
 
 export EDITOR=${EDITOR:-nvim}
 
+# mfw tput takes 60ms ._. (its basic ansi conventions anyways)
+# (still like 5ms tho... but meh)
 # Support colors in less
-LESS_TERMCAP_mb=$(tput bold; tput setaf 1)
-LESS_TERMCAP_md=$(tput bold; tput setaf 1)
-LESS_TERMCAP_me=$(tput sgr0)
-LESS_TERMCAP_se=$(tput sgr0)
-LESS_TERMCAP_so=$(tput bold; tput setaf 3; tput setab 4)
-LESS_TERMCAP_ue=$(tput sgr0)
-LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 2)
-LESS_TERMCAP_mr=$(tput rev)
-LESS_TERMCAP_mh=$(tput dim)
-LESS_TERMCAP_ZN=$(tput ssubm)
-LESS_TERMCAP_ZV=$(tput rsubm)
-LESS_TERMCAP_ZO=$(tput ssupm)
-LESS_TERMCAP_ZW=$(tput rsupm)
-export LESS_TERMCAP_mb LESS_TERMCAP_md LESS_TERMCAP_me LESS_TERMCAP_se \
-    LESS_TERMCAP_so LESS_TERMCAP_ue LESS_TERMCAP_us LESS_TERMCAP_mr \
-    LESS_TERMCAP_mh LESS_TERMCAP_ZN LESS_TERMCAP_ZV LESS_TERMCAP_ZO \
-    LESS_TERMCAP_ZW
+TPUT_SGR0=$(tput sgr0)
+export LESS_TERMCAP_mb=$'\x1b''[1;31m' # $(tput bold; tput setaf 1)
+export LESS_TERMCAP_md=$'\x1b''[1;31m' # $(tput bold; tput setaf 1)
+export LESS_TERMCAP_me=$TPUT_SGR0 # $(tput sgr0)
+export LESS_TERMCAP_se=$TPUT_SGR0 # $(tput sgr0)
+export LESS_TERMCAP_so=$'\x1b''[1;33;44m' # $(tput bold; tput setaf 3; tput setab 4)
+export LESS_TERMCAP_ue=$TPUT_SGR0 # $(tput sgr0)
+export LESS_TERMCAP_us=$'\x1b''[1;4;32m' # $(tput smul; tput bold; tput setaf 2)
+export LESS_TERMCAP_mr=$'\x1b''[7m' # $(tput rev)
+export LESS_TERMCAP_mh=$'\x1b''[2m' # $(tput dim)
+# apparently not even supported in any of my terms
+export LESS_TERMCAP_ZN= # $(tput ssubm)
+export LESS_TERMCAP_ZV= # $(tput rsubm)
+export LESS_TERMCAP_ZO= # $(tput ssupm)
+export LESS_TERMCAP_ZW= # $(tput rsupm)
+# export LESS_TERMCAP_mb LESS_TERMCAP_md LESS_TERMCAP_me LESS_TERMCAP_se \
+#     LESS_TERMCAP_so LESS_TERMCAP_ue LESS_TERMCAP_us LESS_TERMCAP_mr \
+#     LESS_TERMCAP_mh LESS_TERMCAP_ZN LESS_TERMCAP_ZV LESS_TERMCAP_ZO \
+#     LESS_TERMCAP_ZW
 export GROFF_NO_SGR=1
 
 # SOURCES

@@ -1,9 +1,12 @@
 ### Profiling ###
-#zmodload zsh/zprof
+
+[[ -n "$NO_ZSHRC" ]] && return || :
+
+[[ -n "$ZSH_PROF" ]] && zmodload zsh/zprof || :
 
 ### Basic env ###
-[ -f "$HOME/.profile" ] && . "$HOME/.profile"
-[ -f "$HOME/.sh-utls" ] && . "$HOME/.sh-utls"
+[ -f "$HOME/.profile" ] && . "$HOME/.profile" || :
+[ -f "$HOME/.sh-utls" ] && . "$HOME/.sh-utls" || :
 
 export ZSH="$HOME/.oh-my-zsh"
 [[ "$(hostname)" == "server5" ]] && export ZSH="/usr/share/oh-my-zsh/"
@@ -12,7 +15,7 @@ export ZSH="$HOME/.oh-my-zsh"
 export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST-$USER
 
 ### ZSH / OMZ / PL9K headers ###
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="powerlevel9k/powerlevel9k" # pl9k also like 10ms
 [[ "$(hostname)" == "server5" ]] && ZSH_THEME="robbyrussell-custom"
 POWERLEVEL9K_MODE="nerdfont-complete"
 
@@ -175,10 +178,11 @@ else
   export NODE_PATH="$PREFIX/lib/node_modules"
 fi
 
-if command -v thefuck &> /dev/null; then
-  eval $(thefuck --alias FUCK)
-  eval $(thefuck --alias)
-fi
+# ah yes, my beloved 160ms
+# if command -v thefuck &> /dev/null; then
+#   eval $(thefuck --alias FUCK)
+#   eval $(thefuck --alias)
+# fi
 
 ### Welcome Screen ###
 if command -v fastfetch &> /dev/null && [ -z "$SHELL_SESSION_LOADED" ]; then
@@ -194,4 +198,4 @@ bindkey '^[[127;5u' backward-kill-word
 [ -s "$HOME/.bun/_bun" ] && source "/home/javalsai/.bun/_bun" || :
 
 ### Profiling ###
-#zprof
+[[ -n "$ZSH_PROF" ]] && zprof || :
