@@ -128,12 +128,17 @@ alias fuckyou="%&|"
 alias weather="curl -s https://wttr.in/Granada --output - | head -n 7 | tail -n 6 && echo"
 
 # Shorthands
-alias -- '+x'="chmod +x"
+for a in {,u,g,o,a}+{r,w,x}; do alias -- "$a=chmod $a"; done
+# alias -- '+r'="chmod +r"
+# alias -- '+w'="chmod +w"
+# alias -- '+x'="chmod +x"
 alias b64=base64
 alias edit="$EDITOR" # I just nvim tho
 alias mommy="cargo mommy" # no commentary
 alias ado="doas " # alises with doas
 alias xo=xdg-open
+alias nv=nvim
+alias gz=gzip
 
 # Overrides
 alias cat="bat -pp"
@@ -142,7 +147,6 @@ alias ls="eza --icons -g --smart-group -b --git --git-repos -M"
 alias ip="ip -c"
 alias ffmpeg='ffmpeg -hide_banner'
 alias wget="wget --hsts-file ~/.local/share/wget/hsts"
-alias nv=nvim
 alias gs='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN TO USE GHOSTSCRIPT"'
 
 alias h="GIT_DIR=.dotfiles.git " # can put dotfiles in home with .git as .dotfiles.git
