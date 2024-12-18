@@ -36,3 +36,4 @@
 !/.ssh/allowed_signers
 
 !/.local/bin/local-ssh-key
+!/.local/bin/get-hypr-hover-window

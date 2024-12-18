@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+hyprctl clients -j | \
+    jq \
+        --argjson pos "$(hyprctl cursorpos -j)" \
+        --argjson mons "$(hyprctl monitors -j)" \
+        \
+        '. | map(select(.at[0] < $pos.x and (.at[0] + .size[0]) > $pos.x and .at[1] < $pos.y and (.at[1] + .size[1]) > $pos.y and (.workspace.id | IN($mons.[].activeWorkspace.id)))) | min_by(.focusHistoryID) | .address' -r
