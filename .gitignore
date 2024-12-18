@@ -10,12 +10,12 @@
 
 !/.config/
 !/.config/*/
-!/.ssh/
 !/.local/
 !/.local/bin/
+!/.ssh/
 
-!/.config/user-dirs.dirs
 !/.config/dolphinrc
+!/.config/user-dirs.dirs
 
 !/.config/VSCodium/product.json
 !/.config/VSCodium/User/keybindings.json
@@ -31,9 +31,10 @@
 /.config/zsh/.zsh_history
 /.config/zsh/.zcompdump*
 
-!/.ssh/config
+!/.local/bin/get-hypr-hover-window
+!/.local/bin/local-ssh-key
+!/.local/bin/wfreeze
+
 !/.ssh/authorized_keys
 !/.ssh/allowed_signers
-
-!/.local/bin/local-ssh-key
-!/.local/bin/get-hypr-hover-window
+!/.ssh/config

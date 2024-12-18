@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail;
+
+hyprpicker -r -z &
+sleep 0.2
+FREEZE_PID=$!
+
+"$@"
+kill "$FREEZE_PID"
