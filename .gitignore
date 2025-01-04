@@ -22,6 +22,7 @@
 !/.config/VSCodium/User/settings.json
 !/.config/dunst/**
 !/.config/hypr/**
+/.config/hypr/hyprlandd.conf
 !/.config/kitty/**
 !/.config/nvim/**
 !/.config/wezterm/**
