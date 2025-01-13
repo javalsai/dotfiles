@@ -62,6 +62,9 @@ return {
     -- Crates
     require("crates").setup()
 
+    -- Toml...
+    lspconfig.taplo.setup {}
+
     -- JSON
     local jsonls_capabilities = vim.lsp.protocol.make_client_capabilities()
     jsonls_capabilities.textDocument.completion.completionItem.snippetSupport = true
