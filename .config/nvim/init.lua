@@ -1,3 +1,5 @@
+require 'utils'
+
 -- Base
 vim.o.encoding = "UTF-8"
 vim.o.compatible = false
@@ -77,12 +79,46 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local function is_term(win_id)
+  -- could be used to check split info and pick better
+  -- local split_info = vim.api.nvim_win_get_config(win_id)
+
+  local buf = vim.api.nvim_win_get_buf(win_id)
+  local bufname = vim.api.nvim_buf_get_name(buf)
+  return bufname:startswith('term://')
+end
+
+Last_non_term_win_id = nil
+function Focus_term()
+  local focused_win_id = vim.api.nvim_get_current_win()
+
+  if is_term(focused_win_id) then
+    if Last_non_term_win_id then
+      vim.api.nvim_set_current_win(Last_non_term_win_id)
+    end
+  else
+    Last_non_term_win_id = focused_win_id
+
+    for _, win_id in ipairs(vim.api.nvim_list_wins()) do
+      if is_term(win_id) then
+        vim.api.nvim_set_current_win(win_id)
+        return
+      end
+    end
+
+    vim.cmd('below split')
+    vim.cmd('term')
+  end
+end
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\ "
-vim.api.nvim_set_keymap('n', 'F', '<cmd>lua vim.lsp.buf.format()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'Z', '<Cmd>lua vim.diagnosis.open_float()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap(
+vim.keymap.set({ 'n', 'v', 'i', 'c', 't' }, '<C-ñ>', '<cmd>lua Focus_term()<CR>', { noremap = true, silent = true })
+vim.keymap.set('t', '<C-ESC>', '<C-\\><C-n>', { noremap = true, silent = true })
+vim.keymap.set('n', 'F', '<cmd>lua vim.lsp.buf.format()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', 'Z', '<Cmd>lua vim.diagnosis.open_float()<CR>', { noremap = true, silent = true })
+vim.keymap.set(
   'n',
   '<leader>K',
   '<Cmd>lua vim.diagnostic.open_float(nil, {focus=false})<CR>',
