@@ -130,6 +130,9 @@ vim.keymap.set(
   '<Cmd>lua vim.diagnostic.open_float(nil, {focus=false})<CR>',
   { noremap = true, silent = true }
 )
+vim.keymap.set('n', '<ESC>', function()
+  require('notify').dismiss { pending = true, silent = true }
+end, { noremap = true, silent = true })
 
 -- Setup lazy.nvim
 -- require("lazy").setup({

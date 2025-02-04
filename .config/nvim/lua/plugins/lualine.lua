@@ -29,7 +29,7 @@ return {
     dependencies = {
         "nvim-tree/nvim-web-devicons",
     },
-    config = {
+    opts = {
         extensions = { 'neo-tree', 'mason', 'lazy', 'fugitive' },
         sections = {
             lualine_c = { { 'filename', path = 1 }, 'selectioncount', 'searchcount' },
