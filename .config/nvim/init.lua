@@ -38,6 +38,9 @@ vim.o.lazyredraw = false
 vim.opt.wildmode:append { "longest", "list" }
 vim.opt.clipboard:append { "unnamedplus" }
 
+-- To use a interactive shell on commands (I can use aliases)
+vim.o.shellcmdflag = "-ic"
+
 vim.o.cmdheight = 0
 vim.o.showcmdloc = 'statusline'
 
@@ -45,6 +48,7 @@ vim.env.EDITOR = "nvr --remote-tab-wait-silent"
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- TODO: write as lua
 vim.cmd([[
   highlight ExtraWhitespace ctermbg=red guibg=red
   match ExtraWhitespace /\s\+$/
@@ -58,6 +62,7 @@ vim.cmd([[
   let NERDTreeChDirMode=2
 
   inoremap <S-Tab> <C-d>
+
 
   set completeopt-=preview " For No Previews
 ]])
@@ -111,6 +116,7 @@ function Focus_term()
   end
 end
 
+-- TODO: lazyfy or move to a better place
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\ "
 vim.keymap.set({ 'n', 'v', 'i', 'c', 't' }, '<C-ñ>', '<cmd>lua Focus_term()<CR>', { noremap = true, silent = true })
