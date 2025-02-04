@@ -16,11 +16,6 @@ ViewPropsTimestamp=2022,5,22,16,11,16.406
 [Icons]
 Theme=Papirus-Dark
 
-# Omfg this single thing is gonna make me
-# commit this file too
-[UiSettings]
-ColorScheme=*
-
 [IconsMode]
 PreviewSize=80
 
@@ -50,7 +45,10 @@ CompletionMode=1
 History=neo
 
 [PreviewSettings]
-Plugins=appimagethumbnail,audiothumbnail,avif,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,directorythumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,mobithumbnail,opendocumentthumbnail,gsthumbnail,rawthumbnail,stl-thumb,stlthumbnail,svgthumbnail,ffmpegthumbs,gdk-pixbuf-thumbnailer
+Plugins=appimagethumbnail,audiothumbnail,avif,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,directorythumbnail,heif,imagethumbnail,jpegthumbnail,jxl,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,mobithumbnail,opendocumentthumbnail,gsthumbnail,rawthumbnail,stl-thumb,stlthumbnail,svgthumbnail,ffmpegthumbs,gdk-pixbuf-thumbnailer
+
+[UiSettings]
+ColorScheme=*
 
 [ViewPropertiesDialog]
 HDMI-A-0 Height 1440x900=600
