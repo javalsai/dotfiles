@@ -152,6 +152,11 @@ alias gs='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN T
 alias h="GIT_DIR=.dotfiles.git " # can put dotfiles in home with .git as .dotfiles.git
                                  # and manage with h alias
 
+# Non-Override Whoopsies
+alias :qa=exit
+alias :q=exit
+alias ':q!'=exit
+
 if [[ -z "$TERMUX_VERSION" ]]; then
   mkdir -p -m 700 "$HOME/.local/state/paru/.gnupg/"
   alias paru="GNUPGHOME=$HOME/.local/state/paru/.gnupg/ paru" # like leave my gpg keyring alone ffs
