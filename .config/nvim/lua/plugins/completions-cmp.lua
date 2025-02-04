@@ -2,13 +2,26 @@ return {
     {
         "hrsh7th/nvim-cmp",
         dependencies = {
-            "hrsh7th/cmp-vsnip",
-            "hrsh7th/vim-vsnip",
+            -- "hrsh7th/cmp-vsnip",
+            -- "hrsh7th/vim-vsnip",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
             "hrsh7th/cmp-cmdline",
             "onsails/lspkind.nvim",
+            {
+                "L3MON4D3/LuaSnip",
+                dependencies = {
+                    "saadparwaiz1/cmp_luasnip",
+                    {
+                        "rafamadriz/friendly-snippets",
+                        config = function()
+                            require("luasnip.loaders.from_vscode").lazy_load()
+                            -- require("luasnip.loaders.from_lua").lazy_load({ paths = "./lua/snippets" })
+                        end,
+                    },
+                }
+            },
         },
         config = function()
             local lspkind = require('lspkind')
@@ -26,8 +39,8 @@ return {
                 snippet = {
                     -- REQUIRED - you must specify a snippet engine
                     expand = function(args)
-                        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-                        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+                        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+                        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
                         -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
                         -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
                     end,
@@ -58,6 +71,7 @@ return {
                     { name = 'buffer' },
                     { name = 'path' },
                     { name = 'crates' },
+                    { name = 'luasnip' },
                 }
             }
         end,
