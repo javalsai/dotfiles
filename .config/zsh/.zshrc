@@ -203,6 +203,16 @@ fi
 bindkey '^H' backward-kill-word
 bindkey '^[[127;5u' backward-kill-word
 
+__nvim() { nv }
+__ls_l() { l; zle reset-prompt }
+__xdg_open_cwd() { xdg-open . }
+zle -N __nvim
+zle -N __ls_l
+zle -N __xdg_open_cwd
+bindkey "^N" __nvim
+bindkey "^[^L" __ls_l
+bindkey "^[^E" __xdg_open_cwd
+
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "/home/javalsai/.bun/_bun" || :
 
