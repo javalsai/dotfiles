@@ -91,7 +91,9 @@ return {
     -- Markdown
     lspconfig.remark_ls.setup {
       settings = {
-        requireConfig = true
+        remark = {
+          requireConfig = false
+        }
       }
     }
 
