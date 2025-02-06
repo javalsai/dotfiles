@@ -57,9 +57,6 @@ vim.o.showcmdloc = 'statusline'
 
 vim.env.EDITOR = "nvr --remote-tab-wait-silent"
 
-vim.cmd([[
-  inoremap <S-Tab> <C-d>
-]])
 -- vim cmd, not sure what this was for
 -- set completeopt-=preview " For No Previews
 
@@ -134,6 +131,9 @@ vim.keymap.set('n', '<ESC>', function()
   end
   require('notify').dismiss { pending = true, silent = true }
 end, { noremap = true, silent = true })
+vim.keymap.set('v', '<Tab>', '>gv')
+vim.keymap.set('v', '<S-Tab>', '<gv')
+vim.keymap.set('i', '<S-Tab>', '<C-o><<')
 
 -- Setup lazy.nvim
 -- require("lazy").setup({
