@@ -46,8 +46,6 @@ vim.o.showcmdloc = 'statusline'
 
 vim.env.EDITOR = "nvr --remote-tab-wait-silent"
 
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
 -- TODO: write as lua
 vim.cmd([[
   highlight ExtraWhitespace ctermbg=red guibg=red
@@ -131,6 +129,11 @@ vim.keymap.set(
   { noremap = true, silent = true }
 )
 vim.keymap.set('n', '<ESC>', function()
+  local notif = require 'notify'
+  if notif.active() == 0 then
+    vim.cmd('nohlsearch')
+    return
+  end
   require('notify').dismiss { pending = true, silent = true }
 end, { noremap = true, silent = true })
 

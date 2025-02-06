@@ -1,5 +1,5 @@
 return {
-    'rcarriga/nvim-notify',
+    'javalsai/nvim-notify-patch',
     config = function()
         require("notify").setup({
             background_colour = "#000000",
