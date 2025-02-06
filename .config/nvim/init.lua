@@ -34,6 +34,10 @@ vim.o.mouse = "a"
 vim.o.ttyfast = true
 vim.o.lazyredraw = false
 
+-- Persistent Undo
+vim.o.undofile = true
+-- vim.o.undodir = '.cache/nvim/undodir/'
+
 -- Idk
 vim.opt.wildmode:append { "longest", "list" }
 vim.opt.clipboard:append { "unnamedplus" }
