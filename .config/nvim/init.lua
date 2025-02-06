@@ -77,6 +77,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- lazyfy these
 local function is_term(win_id)
   -- could be used to check split info and pick better
   -- local split_info = vim.api.nvim_win_get_config(win_id)
@@ -131,6 +132,9 @@ vim.keymap.set('n', '<ESC>', function()
   end
   require('notify').dismiss { pending = true, silent = true }
 end, { noremap = true, silent = true })
+vim.keymap.set('i', '<C-BACKSPACE>', '<C-o>lvb"_d', { noremap = true, silent = true })
+vim.keymap.set('i', '<C-DEL>', '<C-o>vwh"_d', { noremap = true, silent = true })
+vim.keymap.set({ 'n', 'v' }, '<C-D>', '"_')
 vim.keymap.set('v', '<Tab>', '>gv')
 vim.keymap.set('v', '<S-Tab>', '<gv')
 vim.keymap.set('i', '<S-Tab>', '<C-o><<')
