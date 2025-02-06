@@ -10,6 +10,7 @@ vim.o.showmatch = true
 vim.o.incsearch = true
 
 -- Line Behaviour
+vim.o.linebreak = true
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.scrolloff = 3
@@ -17,6 +18,12 @@ vim.o.scrolloff = 3
 -- Syntax
 vim.o.syntax = 'on'
 vim.cmd.filetype 'plugin on'
+vim.o.list = true
+vim.o.listchars = "tab:> ,trail:·"
+vim.api.nvim_set_hl(0, 'ExtraWhitespace', { ctermbg = 'red', bg = 'red' })
+vim.api.nvim_set_hl(0, 'Tab', { ctermbg = 'gray', fg = 'gray' })
+vim.fn.matchadd('ExtraWhitespace', '\\s\\+$')
+vim.fn.matchadd('Tab', '\\t\\+')
 
 -- Tabs / Indents
 vim.o.autoindent = true
@@ -50,24 +57,11 @@ vim.o.showcmdloc = 'statusline'
 
 vim.env.EDITOR = "nvr --remote-tab-wait-silent"
 
--- TODO: write as lua
 vim.cmd([[
-  highlight ExtraWhitespace ctermbg=red guibg=red
-  match ExtraWhitespace /\s\+$/
-
-  highlight Tab ctermfg=gray guifg=gray
-  match Tab /\t\+/
-
-  set linebreak
-  set list listchars=tab:>\ ,trail:·
-
-  let NERDTreeChDirMode=2
-
   inoremap <S-Tab> <C-d>
-
-
-  set completeopt-=preview " For No Previews
 ]])
+-- vim cmd, not sure what this was for
+-- set completeopt-=preview " For No Previews
 
 -- lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
