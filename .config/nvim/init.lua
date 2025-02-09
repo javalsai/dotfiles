@@ -1,4 +1,4 @@
-require 'utils'
+---@module 'lazyvim'
 
 -- Base
 vim.o.encoding = "UTF-8"
@@ -62,7 +62,7 @@ vim.env.EDITOR = "nvr --remote-tab-wait-silent"
 
 -- lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
+if not (vim.uv or vim.loop)['fs_stat'](lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
   local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
   if vim.v.shell_error ~= 0 then
@@ -84,7 +84,7 @@ local function is_term(win_id)
 
   local buf = vim.api.nvim_win_get_buf(win_id)
   local bufname = vim.api.nvim_buf_get_name(buf)
-  return bufname:startswith('term://')
+  return bufname:match('^term://')
 end
 
 Last_non_term_win_id = nil
@@ -111,18 +111,19 @@ function Focus_term()
 end
 
 -- TODO: lazyfy or move to a better place
+local kargs = { noremap = true, silent = true }
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\ "
-vim.keymap.set({ 'n', 'v', 'i', 'c', 't' }, '<C-ñ>', '<cmd>lua Focus_term()<CR>', { noremap = true, silent = true })
-vim.keymap.set('t', '<C-ESC>', '<C-\\><C-n>', { noremap = true, silent = true })
-vim.keymap.set('n', 'F', '<cmd>lua vim.lsp.buf.format()<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', 'Z', '<Cmd>lua vim.diagnosis.open_float()<CR>', { noremap = true, silent = true })
+vim.keymap.set({ 'n', 'v', 'i', 'c', 't' }, '<C-ñ>', '<cmd>lua Focus_term()<CR>', kargs)
+vim.keymap.set('t', '<C-ESC>', '<C-\\><C-n>', kargs)
+vim.keymap.set('n', 'F', '<cmd>lua vim.lsp.buf.format()<CR>', kargs)
+vim.keymap.set('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', kargs)
+vim.keymap.set('n', 'Z', '<Cmd>lua vim.diagnosis.open_float()<CR>', kargs)
 vim.keymap.set(
   'n',
   '<leader>K',
   '<Cmd>lua vim.diagnostic.open_float(nil, {focus=false})<CR>',
-  { noremap = true, silent = true }
+  kargs
 )
 vim.keymap.set('n', '<ESC>', function()
   local notif = require 'notify'
@@ -131,13 +132,13 @@ vim.keymap.set('n', '<ESC>', function()
     return
   end
   require('notify').dismiss { pending = true, silent = true }
-end, { noremap = true, silent = true })
-vim.keymap.set('i', '<C-BACKSPACE>', '<C-o>lvb"_d', { noremap = true, silent = true })
-vim.keymap.set('i', '<C-DEL>', '<C-o>vwh"_d', { noremap = true, silent = true })
-vim.keymap.set({ 'n', 'v' }, '<C-D>', '"_')
-vim.keymap.set('v', '<Tab>', '>gv')
-vim.keymap.set('v', '<S-Tab>', '<gv')
-vim.keymap.set('i', '<S-Tab>', '<C-o><<')
+end, kargs)
+vim.keymap.set('i', '<C-BACKSPACE>', '<C-o>h<C-o>vb"_d', kargs)
+vim.keymap.set('i', '<C-DEL>', '<C-o>vwl"_d', kargs)
+vim.keymap.set({ 'n', 'v' }, '<C-D>', '"_', kargs)
+vim.keymap.set('v', '<Tab>', '>gv', kargs)
+vim.keymap.set('v', '<S-Tab>', '<gv', kargs)
+vim.keymap.set('i', '<S-Tab>', '<C-o><<', kargs)
 
 -- Setup lazy.nvim
 -- require("lazy").setup({
