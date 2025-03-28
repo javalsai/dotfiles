@@ -3,11 +3,11 @@ return {
     config = function()
         require('streamer-mode').setup
         {
-            use_defaults = false,
+            -- use_defaults = false,
 
-            paths = {
-                '*',
-            },
+            -- paths = {
+            --     '*',
+            -- },
 
             keywords = {
                 '\\(\'\\|"\\)*api_key\\(\'\\|"\\)*\\s*\\(=\\|:\\)\\s*....',
@@ -26,10 +26,12 @@ return {
                 '\\(\'\\|"\\)*credential.helper\\(\'\\|"\\)*\\s*\\(=\\|:\\)\\s*....',
             },
 
+            exclude_all_default_keywords = true,
+
             level = 'edit',
             default_state = 'on',
             conceal_char = '…',
-            patterns = {},
+            -- patterns = {},
         }
     end
     -- opts = {

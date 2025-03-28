@@ -1,5 +1,6 @@
 return {
     "williamboman/mason-lspconfig.nvim",
+    lazy = false,
     dependencies = {
         {
             "williamboman/mason.nvim",
@@ -8,18 +9,6 @@ return {
         }
     },
     opts = {
-        ensure_installed = {
-            'asm_lsp',
-            'bashls',
-            'biome',
-            'cssls',
-            'emmet_ls',
-            'lemminx',
-            'lua_ls',
-            -- 'marksman',
-            'taplo',
-            'ts_ls',
-            'zls',
-        }
+        automatic_installation = true,
     },
 }

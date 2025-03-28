@@ -60,7 +60,7 @@ return {
     -- }
 
     -- Crates
-    require("crates").setup()
+    require("crates").setup {}
 
     -- Toml...
     lspconfig.taplo.setup {}
