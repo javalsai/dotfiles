@@ -16,7 +16,8 @@ export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST-$USER
 
 ### ZSH / OMZ / PL9K headers ###
 ZSH_THEME="powerlevel9k/powerlevel9k" # pl9k also like 10ms
-[[ "$(hostname)" == "server5" ]] && ZSH_THEME="robbyrussell-custom"
+[[ "$(hostname)" == "server5" ]] || [[ "$(hostname)" == "artway" ]] \
+  && ZSH_THEME="robbyrussell-custom"
 POWERLEVEL9K_MODE="nerdfont-complete"
 
 setopt extendedglob
@@ -163,8 +164,12 @@ if [[ -z "$TERMUX_VERSION" ]]; then
   alias pgpg="GNUPGHOME=$HOME/.local/state/paru/.gnupg/ gpg"
 
   mkdir -p "$HOME/.local/state/"
-  export _Z_DATA="$HOME/.local/state/.z"
-  [[ -r "/usr/share/z/z.sh" ]] && . /usr/share/z/z.sh
+  if [[ "$(hostname)" == "artway" ]]; then
+    eval "$(zoxide init zsh)"
+  else
+    export _Z_DATA="$HOME/.local/state/.z"
+    [[ -r "/usr/share/z/z.sh" ]] && . /usr/share/z/z.sh
+  fi
 else
   alias ssh='ssha'
   alias scp='scpa'
@@ -194,13 +199,18 @@ fi
 # fi
 
 ### Welcome Screen ###
-if command -v fastfetch &> /dev/null && [ -z "$SHELL_SESSION_LOADED" ]; then
-  printf "\33[2K\r"; fastfetch -c examples/7.jsonc
-  export SHELL_SESSION_LOADED=1
+if [ -z "$SHELL_SESSION_LOADED" ]; then
+  if [[ "$(hostname)" == "artway" ]]; then
+    pfetch
+  elif command -v fastfetch &> /dev/null; then
+    printf "\33[2K\r"; fastfetch -c examples/7.jsonc
+    export SHELL_SESSION_LOADED=1
+  fi
 fi
 
 ### Bindings ###
 bindkey '^H' backward-kill-word
+bindkey '^_' backward-kill-word # For TTY
 bindkey '^[[127;5u' backward-kill-word
 
 __nvim() { nv }
