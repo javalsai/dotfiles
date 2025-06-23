@@ -133,12 +133,23 @@ vim.keymap.set('n', '<ESC>', function()
   end
   require('notify').dismiss { pending = true, silent = true }
 end, kargs)
-vim.keymap.set('i', '<C-BACKSPACE>', '<C-o>h<C-o>vb"_d', kargs)
-vim.keymap.set('i', '<C-DEL>', '<C-o>vwl"_d', kargs)
+vim.keymap.set('i', '<C-BACKSPACE>', '<C-w>', kargs)
+vim.keymap.set('i', '<C-DEL>', '<C-o>"_de', kargs)
 vim.keymap.set({ 'n', 'v' }, '<C-D>', '"_', kargs)
 vim.keymap.set('v', '<Tab>', '>gv', kargs)
 vim.keymap.set('v', '<S-Tab>', '<gv', kargs)
-vim.keymap.set('i', '<S-Tab>', '<C-o><<', kargs)
+-- vim.keymap.set('i', '<S-Tab>', '<C-o><<', kargs)
+-- just for a f*ing cursor-follow-'<<'
+vim.keymap.set('i', '<S-Tab>', function()
+  local col = vim.fn.col(".")
+  local row = vim.fn.line(".")
+  local line_len = #vim.fn.getline(row)
+  vim.cmd("normal! <<")
+  vim.schedule(function()
+    local d_line_len = line_len - #vim.fn.getline(row)
+    vim.fn.cursor(row, col - d_line_len)
+  end)
+end, kargs)
 
 -- Setup lazy.nvim
 -- require("lazy").setup({
@@ -153,3 +164,13 @@ vim.keymap.set('i', '<S-Tab>', '<C-o><<', kargs)
 --   checker = { enabled = true },
 -- })
 require("lazy").setup("plugins")
+
+
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {"c", "lua", "vim", "vimdoc", "html", "latex", "query", "markdown", "markdown_inline"},
+  sync_install = false,
+  auto_install = true,
+  highlight = {
+    enable = true,
+  },
+}

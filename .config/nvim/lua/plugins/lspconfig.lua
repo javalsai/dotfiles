@@ -89,13 +89,16 @@ return {
     }
 
     -- Markdown
-    lspconfig.remark_ls.setup {
-      settings = {
-        remark = {
-          requireConfig = false
-        }
-      }
-    }
+    -- FUCK markdown LSP clients, they all suck, embrace TreeSitter
+
+    -- lspconfig.remark_ls.setup {
+    --   settings = {
+    --     remark = {
+    --       requireConfig = false
+    --     }
+    --   }
+    -- }
+    -- lspconfig.marksman.setup {}
 
     -- XML
     lspconfig.lemminx.setup {}
