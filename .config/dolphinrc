@@ -38,7 +38,6 @@ HDMI-A-0 Width 1440x900 HDMI-A-0=418
 
 [MainWindow]
 MenuBar=Disabled
-ToolBarsMovable=Disabled
 
 [Open-with settings]
 CompletionMode=1

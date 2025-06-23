@@ -147,6 +147,20 @@ return {
     -- Prisma
     lspconfig.prismals.setup {}
 
+    -- Qml
+    local qmlls_capabilities = vim.lsp.protocol.make_client_capabilities()
+    qmlls_capabilities.textDocument.completion.completionItem.snippetSupport = true
+    lspconfig.qmlls.setup({
+      capabilities = qmlls_capabilities,
+      -- on_attach = on_attach,
+      cmd = { "/usr/lib/qt6/bin/qmlls" },
+      filetypes = { "qml" },
+      single_file_support = true,
+      root_dir = function(fname)
+        return lspconfig.util.find_git_ancestor(fname)
+      end,
+    })
+
     -- Generic conf
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('UserLspConfig', {}),

@@ -19,7 +19,7 @@ vim.o.scrolloff = 3
 vim.o.syntax = 'on'
 vim.cmd.filetype 'plugin on'
 vim.o.list = true
-vim.o.listchars = "tab:> ,trail:·"
+vim.opt.listchars = { tab = "> ", trail = "·" }
 vim.api.nvim_set_hl(0, 'ExtraWhitespace', { ctermbg = 'red', bg = 'red' })
 vim.api.nvim_set_hl(0, 'Tab', { ctermbg = 'gray', fg = 'gray' })
 vim.fn.matchadd('ExtraWhitespace', '\\s\\+$')
@@ -135,7 +135,7 @@ vim.keymap.set('n', '<ESC>', function()
 end, kargs)
 vim.keymap.set('i', '<C-BACKSPACE>', '<C-w>', kargs)
 vim.keymap.set('i', '<C-DEL>', '<C-o>"_de', kargs)
-vim.keymap.set({ 'n', 'v' }, '<C-D>', '"_', kargs)
+-- vim.keymap.set({ 'n', 'v' }, '<C-D>', '"_', kargs)
 vim.keymap.set('v', '<Tab>', '>gv', kargs)
 vim.keymap.set('v', '<S-Tab>', '<gv', kargs)
 -- vim.keymap.set('i', '<S-Tab>', '<C-o><<', kargs)
@@ -150,6 +150,10 @@ vim.keymap.set('i', '<S-Tab>', function()
     vim.fn.cursor(row, col - d_line_len)
   end)
 end, kargs)
+
+vim.keymap.set('v', 'p', '"_dP', kargs)
+-- vim.keymap.set({ 'i', 'v' }, 's', '"_s', kargs)
+-- vim.keymap.set({ 'i', 'v' }, 'c', '"_c', kargs)
 
 -- Setup lazy.nvim
 -- require("lazy").setup({
