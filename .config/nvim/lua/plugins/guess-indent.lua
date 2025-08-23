@@ -1,4 +1,4 @@
 return {
-    "NMAC427/guess-indent.nvim",
-    config = true,
+  'NMAC427/guess-indent.nvim',
+  config = true,
 }

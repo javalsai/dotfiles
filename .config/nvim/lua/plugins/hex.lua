@@ -1,4 +1,4 @@
 return {
-    'RaafatTurki/hex.nvim',
-    config = true,
+  'RaafatTurki/hex.nvim',
+  config = true,
 }

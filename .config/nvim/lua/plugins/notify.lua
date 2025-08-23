@@ -1,22 +1,35 @@
-return {
-    'javalsai/nvim-notify-patch',
-    config = function()
-        -- local hostname_proc = assert(io.popen('hostname'))
-        -- local output = hostname_proc:read('*all')
-        -- hostname_proc:close()
-        -- if output ~= 'artway' then
-            require("notify").setup({
-                background_colour = "#000000",
-                timeout = 10000,
-                fps = 48,
-                render = "wrapped-default", -- compact",
-                time_formats = {
-                    notification = "%T",
-                },
-                max_width = 70,
-                stages = "slide"
-                })
-                vim.notify = require('notify')
-        -- end
+local function esc(notif)
+  return function()
+    if notif.active() == 0 then
+      vim.cmd('nohlsearch')
+    else
+      notif.dismiss { pending = true, silent = true }
     end
+  end
+end
+
+return {
+  'javalsai/nvim-notify-patch',
+  lazy = false,
+  keys = function()
+    local notif = require 'notify'
+    return {
+      { '<ESC>', esc(notif) },
+    }
+  end,
+  config = function()
+    require('notify').setup({
+      merge_duplicates = true,
+      background_colour = '#000000',
+      timeout = 1500,
+      fps = 32,
+      render = 'compact', -- compact",
+      time_formats = {
+        notification = '%T',
+      },
+      max_width = 70,
+      stages = 'slide',
+    })
+    vim.notify = require('notify')
+  end,
 }
