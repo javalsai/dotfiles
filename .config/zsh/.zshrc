@@ -216,12 +216,15 @@ bindkey '^[[127;5u' backward-kill-word
 __nvim() { nv }
 __ls_l() { l; zle reset-prompt }
 __xdg_open_cwd() { xdg-open . }
+__ctrl_shift_l() { printf '\e[H\e[3J'; zle reset-prompt }
 zle -N __nvim
 zle -N __ls_l
 zle -N __xdg_open_cwd
+zle -N __ctrl_shift_l
 bindkey "^N" __nvim
-bindkey "^[^L" __ls_l
-bindkey "^[^E" __xdg_open_cwd
+bindkey "^[^L" __ls_l # alt
+bindkey "^[^E" __xdg_open_cwd # alt
+bindkey "^[[108;6u" __ctrl_shift_l
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "/home/javalsai/.bun/_bun" || :
