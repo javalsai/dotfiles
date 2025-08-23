@@ -36,7 +36,21 @@ setopt SHARE_HISTORY
 ### ZSH / OMZ / PL9K ricing ###
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%(?:%B%F{green}:%B%F{red})  ➜ %{$reset_color%}"
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%B%(?:%F{green}:%F{red})  ➜ %f"
+
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[alias]='fg=10,bold' # 10=lightgreen
+ZSH_HIGHLIGHT_STYLES[function]='fg=10,bold' # 10=lightgreen
+ZSH_HIGHLIGHT_STYLES[path]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[path_prefix]='fg=magenta,underline'
+ZSH_HIGHLIGHT_STYLES[arithmetic-expansion]='fg=yellow,underline'
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=cyan'
+
+typeset -A ZSH_HIGHLIGHT_PRECOMMANDS
+ZSH_HIGHLIGHT_PRECOMMANDS=(
+  each ''
+)
 
 if [[ -z "$TERMUX_VERSION" ]]; then
   POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon status context dir vcs)
@@ -125,11 +139,12 @@ alias please="doas"
 alias fucking="doas"
 
 # Misc Utils
+alias hl='rg --passthru'
 alias fuckyou="%&|"
 alias weather="curl -s https://wttr.in/Granada --output - | head -n 7 | tail -n 6 && echo"
 
 # Shorthands
-for a in {,u,g,o,a}+{r,w,x}; do alias -- "$a=chmod $a"; done
+for a in {,u,g,o,a}{+,-}{r,w,x}; do alias -- "$a=chmod $a"; done
 # alias -- '+r'="chmod +r"
 # alias -- '+w'="chmod +w"
 # alias -- '+x'="chmod +x"
@@ -139,6 +154,7 @@ alias mommy="cargo mommy" # no commentary
 alias ado="doas " # alises with doas
 alias xo=xdg-open
 alias nv=nvim
+alias nvR=nvim -R
 alias gz=gzip
 
 # Overrides
@@ -147,6 +163,7 @@ alias ls="eza --icons -g --smart-group -b --git --git-repos -M"
 # same-command overrides tho
 alias ip="ip -c"
 alias ffmpeg='ffmpeg -hide_banner'
+alias ffprobe='ffprobe -hide_banner'
 alias wget="wget --hsts-file ~/.local/share/wget/hsts"
 alias gs='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN TO USE GHOSTSCRIPT"'
 

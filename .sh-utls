@@ -78,6 +78,12 @@ egpg() {
     rm -f "$FILE_PATH"
 }
 
+each() {
+    while read -r ln; do
+        "$@" "$ln"
+    done
+}
+
 
 # More like fixes but whatever...
 #_do_nvm_thingy() {
