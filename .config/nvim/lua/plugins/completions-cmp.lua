@@ -1,5 +1,28 @@
 local globals = require 'globals'
 
+local luasnip_spec = {
+  'L3MON4D3/LuaSnip',
+  dependencies = {
+    'saadparwaiz1/cmp_luasnip',
+    {
+      'rafamadriz/friendly-snippets',
+      config = function()
+        require('luasnip.loaders.from_vscode').lazy_load()
+      end,
+    },
+  },
+  config = function()
+    local ls = require 'luasnip'
+
+    local snippets = {}
+    for k, v in pairs(globals.text_snippets) do
+      table.insert(snippets, ls.snippet(k, { ls.text_node(v) }))
+    end
+
+    ls.add_snippets('all', snippets)
+  end,
+}
+
 return {
   {
     'hrsh7th/nvim-cmp',
@@ -9,32 +32,13 @@ return {
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
       'onsails/lspkind.nvim',
-      {
-        'L3MON4D3/LuaSnip',
-        dependencies = {
-          'saadparwaiz1/cmp_luasnip',
-          {
-            'rafamadriz/friendly-snippets',
-            config = function()
-              require('luasnip.loaders.from_vscode').lazy_load()
-            end,
-          },
-        },
-        config = function()
-          local ls = require 'luasnip'
-
-          local snippets = {}
-          for k, v in pairs(globals.text_snippets) do
-            table.insert(snippets, ls.snippet(k, { ls.text_node(v) }))
-          end
-
-          ls.add_snippets('all', snippets)
-        end,
-      },
+      luasnip_spec,
     },
     config = function()
-      local lspkind = require('lspkind')
-      local cmp = require('cmp')
+      local lspkind = require 'lspkind'
+      local cmp = require 'cmp'
+      local luasnip = require 'luasnip'
+
       cmp.setup {
         formatting = {
           format = lspkind.cmp_format({
@@ -47,7 +51,7 @@ return {
         },
         snippet = {
           expand = function(args)
-            require('luasnip').lsp_expand(args.body)
+            luasnip.lsp_expand(args.body)
           end,
         },
         window = {
@@ -69,7 +73,6 @@ return {
         },
         sources = cmp.config.sources {
           { name = 'nvim_lsp' },
-          { name = 'vsnip' },
           { name = 'buffer' },
           { name = 'path' },
           { name = 'crates' },
