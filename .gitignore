@@ -26,6 +26,7 @@
 !/.config/hypr/**
 /.config/hypr/hyprlandd.conf
 !/.config/kitty/**
+!/.config/mpv/**
 !/.config/nvim/**
 .config/nvim/lazy-lock.json
 !/.config/wezterm/**
