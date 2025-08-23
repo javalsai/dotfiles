@@ -3,6 +3,7 @@
 	name = javalsai
 [core]
 	editor = $EDITOR
+	attributesfile = ~/.gitattributes
 [safe]
 	directory = /opt/WALC
 	directory = /opt/better-discord
@@ -10,7 +11,7 @@
 [gpg]
 	format = ssh
 [gpg "ssh"]
-	allowedSignersFile = /home/javalsai/.ssh/allowed_signers
+	allowedSignersFile = ~/.ssh/allowed_signers
 	defaultKeyCommand = sh -c 'echo key::$(local-ssh-key)'
 [commit]
 	gpgsign = true
@@ -25,3 +26,5 @@
 	required = true
 [alias]
 	unstage = "restore --staged"
+[diff "exif"]
+	textconv = exiftool

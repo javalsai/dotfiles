@@ -1,1 +1,7 @@
+#!/usr/bin/env bash
+set -e
+if [[ -n "$TERMUX_VERSION" ]]; then
+    . "$PREFIX/libexec/source-ssh-agent.sh"
+fi
+
 ssh-add -L | grep -qv "The agent has no identities." || ssh-add; ssh-add -L
