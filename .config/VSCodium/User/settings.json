@@ -77,7 +77,7 @@
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.cursorWidth": 3,
     "editor.fontSize": 14,
-    "editor.fontFamily": "'Source Code Pro', 'Hack Nerd Font', 'Iosevka'",
+    "editor.fontFamily": "'Cascadia Code', 'Source Code Pro', 'Hack Nerd Font', 'Iosevka'",
     "editor.foldingImportsByDefault": true,
     "editor.formatOnPaste": true,
     "editor.linkedEditing": true,
@@ -246,4 +246,6 @@
     "[json]": {
         "editor.defaultFormatter": "biomejs.biome"
     },
+    "terminal.integrated.fontLigatures.enabled": true,
+    "editor.fontLigatures": true,
 }
