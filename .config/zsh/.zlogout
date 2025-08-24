@@ -1,3 +1,3 @@
-if [ -n "$SSH_AUTH_SOCK" ] ; then
+if [ -n "$SSH_AGENT_PID" ] ; then
   eval `/usr/bin/ssh-agent -k`
 fi

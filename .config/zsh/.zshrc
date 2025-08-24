@@ -90,9 +90,15 @@ POWERLEVEL9K_STATUS_HIDE_SIGNAME=false
   POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
 
   ## OS icon ##
-  POWERLEVEL9K_LINUX_ICON=$'\uF31F'
-  POWERLEVEL9K_OS_ICON_FOREGROUND=81
-  POWERLEVEL9K_OS_ICON_BACKGROUND=235
+  if [[ "$(hostname)" == "tuxcord.net" ]]; then
+    POWERLEVEL9K_LINUX_ICON=$'\uF31D'
+    POWERLEVEL9K_OS_ICON_FOREGROUND=203
+    POWERLEVEL9K_OS_ICON_BACKGROUND=235
+  else
+    POWERLEVEL9K_LINUX_ICON=$'\uF31F'
+    POWERLEVEL9K_OS_ICON_FOREGROUND=81
+    POWERLEVEL9K_OS_ICON_BACKGROUND=235
+  fi
   ## Android OS icon ##
   POWERLEVEL9K_CUSTOM_ANDROID_ICON="echo ﲎ"
   POWERLEVEL9K_CUSTOM_ANDROID_ICON_FOREGROUND=64
@@ -109,7 +115,10 @@ plugins=(
   rust
   extract
 )
-if [[ "$(hostname)" == "server5" ]]; then
+if [[ "$(hostname)" == "tuxcord.net" ]]; then
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+elif [[ "$(hostname)" == "server5" ]]; then
   source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
   source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 else

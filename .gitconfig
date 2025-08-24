@@ -8,6 +8,8 @@
 	directory = /opt/WALC
 	directory = /opt/better-discord
 	directory = /home/javalsai/tmp/web-root
+	directory = /var/www/tuxcord.net
+	directory = /var/tuxcord
 [gpg]
 	format = ssh
 [gpg "ssh"]
