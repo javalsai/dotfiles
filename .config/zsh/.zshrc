@@ -227,7 +227,7 @@ fi
 # fi
 
 ### Welcome Screen ###
-if [ -z "$SHELL_SESSION_LOADED" ]; then
+if [ -z "$SHELL_SESSION_LOADED" ] && [ -z "$FAST_SHELL" ]; then
   if [[ "$(hostname)" == "artway" ]]; then
     pfetch
   elif command -v fastfetch &> /dev/null; then

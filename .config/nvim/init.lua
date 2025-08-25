@@ -64,6 +64,7 @@ vim.o.shellcmdflag = '-ic'
 vim.o.cmdheight = 0
 vim.o.showcmdloc = 'statusline'
 
+vim.env.FAST_SHELL = true
 vim.env.EDITOR = 'nvr --remote-tab-wait-silent'
 
 -- TODO: lazyfy or move to a better place
