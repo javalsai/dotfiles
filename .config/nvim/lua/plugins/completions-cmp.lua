@@ -13,8 +13,8 @@ local luasnip_spec = {
     local function luasnip_expand() require 'luasnip'.expand() end
 
     return {
-      { '<C-Right>', luasnip_next,   desc = 'Luasnip next jump',     mode = { 'i', 's' } },
-      { '<C-Left>',  luasnip_prev,   desc = 'Luasnip previous jump', mode = { 'i', 's' } },
+      { '<C-S-Right>', luasnip_next,   desc = 'Luasnip next jump',     mode = { 'i', 's' } },
+      { '<C-S-Left>',  luasnip_prev,   desc = 'Luasnip previous jump', mode = { 'i', 's' } },
       { '<C-q>',     luasnip_expand, desc = 'Luasnip expand',        mode = { 'i', 's' } },
     }
   end,
