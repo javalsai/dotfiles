@@ -72,18 +72,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 utils.keymaps_set {
-  {
-    '<C-ñ>',
-    cmds.focus_term,
-    { 'n', 'v', 'i', 'c', 't' },
-    desc = 'Toggles term focus',
-  },
-  {
-    '<C-ESC>',
-    '<C-\\><C-n>',
-    't',
-    desc = 'Escape from terminal mode',
-  },
+  { '<C-ESC>',       '<C-\\><C-n>',                 't', desc = 'Escape from terminal mode' },
   { '<C-BACKSPACE>', '<C-w>',                       'i' },
   { '<C-DEL>',       '<C-o>"_de',                   'i' },
   { '<Tab>',         '>gv',                         'v' },
@@ -98,14 +87,14 @@ utils.keymaps_set {
 local lazypath = globals.lazypath
 if not (vim.uv or vim.loop)['fs_stat'](lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-  local out = vim.fn.system({
+  local out = vim.fn.system {
     'git',
     'clone',
     '--filter=blob:none',
     '--branch=stable',
     lazyrepo,
     lazypath,
-  })
+  }
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
@@ -119,4 +108,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
-require('lazy').setup('plugins')
+require 'lazy'.setup {
+  spec = { import = 'plugins' },
+  performance = { reset_packpath = false },
+  change_detection = { enabled = false },
+}

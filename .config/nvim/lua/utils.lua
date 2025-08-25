@@ -97,13 +97,4 @@ function M.keymaps_set(keymaps)
   end
 end
 
-function M.is_term(win_id)
-  -- could be used to check split info and pick better
-  -- local split_info = vim.api.nvim_win_get_config(win_id)
-
-  local buf = vim.api.nvim_win_get_buf(win_id)
-  local bufname = vim.api.nvim_buf_get_name(buf)
-  return bufname:match('^term://')
-end
-
 return M

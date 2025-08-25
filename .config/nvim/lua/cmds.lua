@@ -44,37 +44,9 @@ function M.paste_over_visual_nocopy()
     (nlines == 1 and scol + lastline_len or lastline_len),
     0,
   }
-  vim.notify(vim.inspect(new_end))
   vim.fn.setpos('.', new_end)
   vim.fn.setpos("'<", start_pos)
   vim.fn.setpos("'>", new_end)
-end
-
-local last_non_term_win_id = nil
-function M.focus_term()
-  local focused_win_id = vim.api.nvim_get_current_win()
-
-  if utils.is_term(focused_win_id) then
-    if last_non_term_win_id then
-      vim.api.nvim_set_current_win(last_non_term_win_id)
-    end
-  else
-    last_non_term_win_id = focused_win_id
-
-    for _, win_id in ipairs(vim.api.nvim_list_wins()) do
-      if utils.is_term(win_id) then
-        vim.api.nvim_set_current_win(win_id)
-        return
-      end
-    end
-
-    local buf = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_open_win(buf, true, {
-      split = 'below',
-      win = 0,
-    })
-    vim.cmd.term()
-  end
 end
 
 return M

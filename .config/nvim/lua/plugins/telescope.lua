@@ -2,7 +2,7 @@ local utils = require 'utils'
 
 return {
   'nvim-telescope/telescope.nvim',
-  lazy = false,
+  event = 'VeryLazy',
   dependencies = {
     'nvim-lua/plenary.nvim',
     require 'plugins.treesitter',
@@ -10,14 +10,13 @@ return {
   },
   keys = function()
     local wk = require 'which-key'
-    local builtin = require 'telescope.builtin'
 
     return utils.lazy_wkeys(wk, {
       { '<leader>f',  group = 'Find / Telescope' },
-      { '<leader>ff', builtin.find_files,        desc = 'Find Files' },
-      { '<leader>fg', builtin.live_grep,         desc = 'Live Grep' },
-      { '<leader>fb', builtin.buffers,           desc = 'Buffers' },
-      { '<leader>fh', builtin.help_tags,         desc = 'Help Tags' },
+      { '<leader>ff', require 'telescope.builtin'.find_files, desc = 'Find Files' },
+      { '<leader>fg', require 'telescope.builtin'.live_grep,  desc = 'Live Grep' },
+      { '<leader>fb', require 'telescope.builtin'.buffers,    desc = 'Buffers' },
+      { '<leader>fh', require 'telescope.builtin'.help_tags,  desc = 'Help Tags' },
     })
   end,
 

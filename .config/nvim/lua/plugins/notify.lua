@@ -1,10 +1,8 @@
 local function esc(notif)
-  return function()
-    if notif.active() == 0 then
-      vim.cmd('nohlsearch')
-    else
-      notif.dismiss { pending = true, silent = true }
-    end
+  if notif.active() == 0 then
+    vim.cmd('nohlsearch')
+  else
+    notif.dismiss { pending = true, silent = true }
   end
 end
 
@@ -12,9 +10,8 @@ return {
   'javalsai/nvim-notify-patch',
   lazy = false,
   keys = function()
-    local notif = require 'notify'
     return {
-      { '<ESC>', esc(notif) },
+      { '<ESC>', function() esc(require 'notify') end },
     }
   end,
   config = function()

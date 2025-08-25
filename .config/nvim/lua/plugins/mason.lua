@@ -1,14 +1,11 @@
 return {
   'williamboman/mason-lspconfig.nvim',
-  lazy = false,
+  event = 'VeryLazy',
   dependencies = {
-    {
-      'williamboman/mason.nvim',
-      lazy = false,
-      config = true,
-    },
+    { 'williamboman/mason.nvim', config = true },
+    require 'plugins.lspconfig',
   },
   opts = {
-    automatic_installation = true,
+    -- automatic_installation = true,
   },
 }
