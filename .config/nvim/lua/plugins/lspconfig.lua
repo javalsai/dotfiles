@@ -200,8 +200,8 @@ return {
       filetypes = { 'qml' },
       single_file_support = true,
       root_dir = function(fname)
-        local git = vim.fs.find('.git', { path = fname, upward = true })
-        return vim.fn.dirname(git and git[1] or fname)
+        local upfname = vim.fs.find('shell.qml', { path = fname, upward = true })
+        return vim.fs.dirname(upfname and upfname[1] or fname)
       end,
     })
 
