@@ -229,9 +229,7 @@ fi
 
 ### Welcome Screen ###
 if [ -z "$SHELL_SESSION_LOADED" ] && [ -z "$FAST_SHELL" ]; then
-  if [[ "$(hostname)" == "artway" ]]; then
-    pfetch
-  elif command -v fastfetch &> /dev/null; then
+  if command -v fastfetch &> /dev/null; then
     printf "\33[2K\r"; fastfetch
     export SHELL_SESSION_LOADED=1
   fi
