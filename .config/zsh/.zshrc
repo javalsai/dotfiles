@@ -170,6 +170,7 @@ alias gz=gzip
 
 # Overrides
 alias cat="bat -pp"
+eza() { timeout 0.5s eza "$@" || command eza --no-git "$@" }
 alias ls="eza --icons -g --smart-group -b --git --git-repos -M"
 # same-command overrides tho
 alias ip="ip -c"
@@ -231,7 +232,7 @@ if [ -z "$SHELL_SESSION_LOADED" ] && [ -z "$FAST_SHELL" ]; then
   if [[ "$(hostname)" == "artway" ]]; then
     pfetch
   elif command -v fastfetch &> /dev/null; then
-    printf "\33[2K\r"; fastfetch -c examples/7.jsonc
+    printf "\33[2K\r"; fastfetch
     export SHELL_SESSION_LOADED=1
   fi
 fi

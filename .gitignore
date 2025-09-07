@@ -23,6 +23,7 @@
 !/.config/VSCodium/User/keybindings.json
 !/.config/VSCodium/User/settings.json
 !/.config/dunst/**
+!/.config/fastfetch/**
 !/.config/hypr/**
 /.config/hypr/hyprlandd.conf
 !/.config/kitty/**
@@ -43,3 +44,8 @@
 !/.ssh/authorized_keys
 !/.ssh/allowed_signers
 !/.ssh/config
+
+!/pictures/
+!/pictures/wallpapers/
+!/pictures/wallpapers/sync/
+!/pictures/wallpapers/sync/**
