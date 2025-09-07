@@ -34,8 +34,8 @@ Scope {
       margins {
         top: margin
         left: margin
-        right: margin
-        bottom: margin
+        right: GState.vertical_layout ? 0 : margin
+        bottom: GState.vertical_layout ? margin : 0
       }
 
       implicitHeight: GState.bar_height
