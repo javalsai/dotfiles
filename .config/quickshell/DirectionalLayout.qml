@@ -1,40 +1,13 @@
 import QtQuick
 import QtQuick.Layouts
 
-Item {
-  id: root
+GridLayout {
+  id: layout
 
-  property int spacing
+  property int spacing: 0
+  rowSpacing: spacing
+  columnSpacing: spacing
 
-  default property alias content: stash.data
-  Item {
-    id: stash
-    visible: false
-  }
-
-  Loader {
-    id: loader
-    anchors.fill: parent
-    sourceComponent: GState.vertical_layout ? col : row
-
-    onLoaded: {
-      for (var i = stash.data.length - 1; i >= 0; --i) {
-        stash.data[i].parent = loader.item;
-      }
-    }
-  }
-
-  Component {
-    id: col
-    ColumnLayout {
-      spacing: root.spacing
-    }
-  }
-
-  Component {
-    id: row
-    RowLayout {
-      spacing: root.spacing
-    }
-  }
+  rows: GState.vertical_layout ? -1 : 1
+  columns: GState.vertical_layout ? 1 : -1
 }

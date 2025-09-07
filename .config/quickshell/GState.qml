@@ -19,7 +19,7 @@ Singleton {
   readonly property int bar_height: 30
   readonly property int bar_width: 50
 
-  property bool vertical_layout: false
+  property alias vertical_layout: config.vertical_layout
   readonly property int bounding_length: vertical_layout ? bar_width : bar_height
 
   readonly property SystemClock clock: SystemClock {
@@ -27,9 +27,22 @@ Singleton {
     precision: SystemClock.Seconds
   }
 
+  FileView {
+    path: ".config/quickshell/config.json"
+
+    watchChanges: true
+    onFileChanged: reload()
+    onAdapterUpdated: writeAdapter()
+
+    JsonAdapter {
+      id: config
+      property bool vertical_layout: false
+    }
+  }
+
   property Theme theme: Theme {
-    primary: "#dd5555"
-    accent: "#dddd55"
+    primary: "#d55"
+    accent: "#dd5"
     background: "#101010"
     text: "#eee"
   }

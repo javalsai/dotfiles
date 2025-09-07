@@ -8,7 +8,7 @@ ShellRoot {
   Connections {
     target: Hyprland
     function onRawEvent(event) {
-      console.log(`${event.name}: ${event.data}`);
+      // console.log(`${event.name}: ${event.data}`);
 
       if (event.name == "configreloaded")
         HyprlandConfig.reload();

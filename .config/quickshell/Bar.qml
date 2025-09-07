@@ -15,7 +15,7 @@ Scope {
       required property var modelData
 
       screen: modelData
-      aboveWindows: false
+      aboveWindows: GState.vertical_layout
 
       property HyprlandMonitor hyprlandMonitor: Hyprland.monitorFor(screen)
       property HyprlandWorkspace hyprlandWorkspace: hyprlandMonitor.activeWorkspace
@@ -46,6 +46,7 @@ Scope {
       Rectangle {
         anchors.fill: parent
         radius: bar.floatingBar ? HyprlandConfig.rounding : 0
+
         Behavior on radius {
           NumberAnimation {
             duration: 200
@@ -68,21 +69,14 @@ Scope {
           anchors.bottom: GState.vertical_layout ? undefined : parent.bottom
           anchors.right: GState.vertical_layout ? parent.right : undefined
 
-          Repeater {
-            model: Hyprland.workspaces
-
-            WorkspaceButton {
-              Layout.alignment: Qt.AlignCenter
-              thisMonitor: hyprlandMonitor
-            }
-          }
-
           ButtonLike {
             backgroundColor: GState.distro_color
             backgroundOpacity: hovered ? 0.3 : 0
 
             leftPadding: 3
-            clickable: false
+            onClicked: GState.vertical_layout = !GState.vertical_layout
+
+            clickable: true
 
             Layout.alignment: Qt.AlignCenter
 
@@ -90,6 +84,15 @@ Scope {
               font.family: GState.icon_font_family
               color: GState.distro_color
               text: GState.distro_icon
+            }
+          }
+
+          Repeater {
+            model: Hyprland.workspaces
+
+            WorkspaceButton {
+              Layout.alignment: Qt.AlignCenter
+              thisMonitor: hyprlandMonitor
             }
           }
         }
