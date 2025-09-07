@@ -81,10 +81,6 @@ export LESS_TERMCAP_ZN= # $(tput ssubm)
 export LESS_TERMCAP_ZV= # $(tput rsubm)
 export LESS_TERMCAP_ZO= # $(tput ssupm)
 export LESS_TERMCAP_ZW= # $(tput rsupm)
-# export LESS_TERMCAP_mb LESS_TERMCAP_md LESS_TERMCAP_me LESS_TERMCAP_se \
-#     LESS_TERMCAP_so LESS_TERMCAP_ue LESS_TERMCAP_us LESS_TERMCAP_mr \
-#     LESS_TERMCAP_mh LESS_TERMCAP_ZN LESS_TERMCAP_ZV LESS_TERMCAP_ZO \
-#     LESS_TERMCAP_ZW
 export GROFF_NO_SGR=1
 
 # SOURCES
