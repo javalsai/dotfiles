@@ -1,5 +1,4 @@
 -- https://gitea.com/duck-that-quacks/dotfiles/src/branch/main/config/nvim/snippets/all.lua
-local s, t, i = s, t, i
 
 return {
   -- Blocks
