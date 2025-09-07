@@ -15,13 +15,13 @@ local luasnip_spec = {
     return {
       { '<C-S-Right>', luasnip_next,   desc = 'Luasnip next jump',     mode = { 'i', 's' } },
       { '<C-S-Left>',  luasnip_prev,   desc = 'Luasnip previous jump', mode = { 'i', 's' } },
-      { '<C-q>',     luasnip_expand, desc = 'Luasnip expand',        mode = { 'i', 's' } },
+      { '<C-q>',       luasnip_expand, desc = 'Luasnip expand',        mode = { 'i', 's' } },
     }
   end,
   config = function()
     local ls = require 'luasnip'
-    local from_lua_loader = require 'luasnip.loaders.from_lua'
-    require('luasnip.loaders.from_vscode').lazy_load()
+    require 'luasnip.loaders.from_vscode'.lazy_load()
+    require 'luasnip.loaders.from_lua'.load { paths = vim.fn.stdpath('config') .. '/snippets' }
 
     local snippets = {}
     for k, v in pairs(globals.text_snippets) do
@@ -29,14 +29,13 @@ local luasnip_spec = {
     end
 
     ls.add_snippets('all', snippets)
-    from_lua_loader.load({ paths = vim.fn.stdpath('config') .. '/snippets' })
   end,
 }
 
 return {
   {
     'hrsh7th/nvim-cmp',
-    event = 'VimEnter',
+    event = 'VeryLazy',
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
@@ -44,28 +43,6 @@ return {
       'hrsh7th/cmp-cmdline',
       'onsails/lspkind.nvim',
       luasnip_spec,
-      {
-        'L3MON4D3/LuaSnip',
-        dependencies = {
-          'saadparwaiz1/cmp_luasnip',
-          {
-            'rafamadriz/friendly-snippets',
-            config = function()
-              require('luasnip.loaders.from_vscode').lazy_load()
-            end,
-          },
-        },
-        config = function()
-          local ls = require 'luasnip'
-
-          local snippets = {}
-          for k, v in pairs(globals.text_snippets) do
-            table.insert(snippets, ls.snippet(k, { ls.text_node(v) }))
-          end
-
-          ls.add_snippets('all', snippets)
-        end,
-      },
     },
     config = function()
       local cmp = require 'cmp'

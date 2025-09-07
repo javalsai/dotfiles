@@ -196,7 +196,7 @@ return {
     lspconfig.qmlls.setup({
       capabilities = capabilities,
       -- on_attach = on_attach,
-      cmd = { '/usr/lib/qt6/bin/qmlls' },
+      cmd = { '/usr/lib/qt6/bin/qmlls', '-E' },
       filetypes = { 'qml' },
       single_file_support = true,
       root_dir = function(fname)
