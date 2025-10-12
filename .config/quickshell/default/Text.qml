@@ -1,4 +1,5 @@
 import QtQuick
+import qs
 
 Text {
   font.family: GState.default_font_family

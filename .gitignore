@@ -32,7 +32,7 @@
 !/.config/mpv/**
 !/.config/nvim/**
 .config/nvim/lazy-lock.json
-!/.config/quickshell/*
+!/.config/quickshell/**
 !/.config/wezterm/**
 !/.config/waybar/**
 !/.config/wofi/**

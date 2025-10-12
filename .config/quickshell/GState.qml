@@ -8,7 +8,7 @@ Singleton {
   id: singleton
 
   readonly property string distro_icon: " "
-  readonly property color distro_color: "#8bf"
+  readonly property color distro_color: "#88bbff"
 
   readonly property string special_ws_name: "な"
 
@@ -41,9 +41,9 @@ Singleton {
   }
 
   property Theme theme: Theme {
-    primary: "#d55"
-    accent: "#dd5"
+    primary: "#dd5555"
+    accent: "#dddd55"
     background: "#101010"
-    text: "#eee"
+    text: "#eeeeee"
   }
 }

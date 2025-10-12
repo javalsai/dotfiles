@@ -1,7 +1,12 @@
 import Quickshell
+import Quickshell.Services.UPower
 import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
+
+import qs;
+import qs.default as Default;
+import qs.components.bar as Bar;
 
 Scope {
   id: root
@@ -57,19 +62,19 @@ Scope {
         clip: true
         color: GState.theme.background
 
-        DirectionalLayout {
+        Default.DLayout {
           id: layout
 
           spacing: 3
 
-          anchors.leftMargin: GState.vertical_layout ? 0 : HyprlandConfig.gaps_out / 2
-          anchors.topMargin: GState.vertical_layout ? HyprlandConfig.gaps_out : 0
+          anchors.leftMargin: GState.vertical_layout ? 0 : HyprlandConfig.rounding
+          anchors.topMargin: GState.vertical_layout ? HyprlandConfig.rounding : 0
           anchors.left: parent.left
           anchors.top: parent.top
           anchors.bottom: GState.vertical_layout ? undefined : parent.bottom
           anchors.right: GState.vertical_layout ? parent.right : undefined
 
-          ButtonLike {
+          Default.Button {
             backgroundColor: GState.distro_color
             backgroundOpacity: hovered ? 0.3 : 0
 
@@ -80,7 +85,7 @@ Scope {
 
             Layout.alignment: Qt.AlignCenter
 
-            DefaultText {
+            Default.Text {
               font.family: GState.icon_font_family
               color: GState.distro_color
               text: GState.distro_icon
@@ -90,17 +95,45 @@ Scope {
           Repeater {
             model: Hyprland.workspaces
 
-            WorkspaceButton {
+            Bar.WsButton {
               Layout.alignment: Qt.AlignCenter
               thisMonitor: hyprlandMonitor
             }
           }
         }
 
-        BarTime {
+        Bar.Time {
           clock: GState.clock
           anchors.centerIn: parent
           anchors.verticalCenterOffset: 0.30
+        }
+
+        Default.DLayout {
+          id: rightLayout
+
+          spacing: 3
+
+          anchors.rightMargin: GState.vertical_layout ? 0 : HyprlandConfig.rounding
+          anchors.bottomMargin: GState.vertical_layout ? HyprlandConfig.rounding : 0
+          anchors.left: GState.vertical_layout ? parent.left : undefined
+          anchors.top: GState.vertical_layout ? undefined : parent.top
+          anchors.bottom: parent.bottom
+          anchors.right: parent.right
+
+          Loader {
+            readonly property var battery: UPower.devices.values.find(b => b.isLaptopBattery)
+            source: battery ? "BarBattery.qml" : false
+          }
+
+          AnimatedImage {
+            sourceSize.width: GState.vertical_layout ? GState.bar_width : undefined
+            sourceSize.height: GState.vertical_layout ? undefined : GState.bar_height
+
+            Layout.alignment: Qt.AlignCenter
+
+            asynchronous: true
+            source: "../assets/bongocat.gif"
+          }
         }
       }
     }

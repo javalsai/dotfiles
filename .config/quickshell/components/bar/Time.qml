@@ -1,7 +1,10 @@
 import QtQuick
 import Quickshell
 
-DefaultText {
+import qs;
+import qs.default as Default;
+
+Default.Text {
   id: horizontal
 
   font.pixelSize:  GState.font_size * (GState.vertical_layout ? 1.4 : 1)

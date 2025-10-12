@@ -2,6 +2,9 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell.Hyprland
 
+import qs;
+import qs.default as Default;
+
 Item {
   id: root
 
@@ -23,7 +26,7 @@ Item {
   implicitWidth: button.implicitWidth
   implicitHeight: button.implicitHeight
 
-  ButtonLike {
+  Default.Button {
     id: button
 
     backgroundOpacity: button.hovered ? .3 : 0
@@ -31,7 +34,7 @@ Item {
     onClicked: root.workspace.activate()
     clickable: true
 
-    DefaultText {
+    Default.Text {
       font.underline: root.isFocused
       color: if (root.isActive) {
         GState.theme.primary;

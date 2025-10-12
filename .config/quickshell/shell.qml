@@ -2,8 +2,10 @@ import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 
+import qs.components as Components;
+
 ShellRoot {
-  Bar {}
+  Components.Bar {}
 
   Connections {
     target: Hyprland
@@ -22,8 +24,4 @@ ShellRoot {
         Hyprland.refreshToplevels();
     }
   }
-
-  // Background {}
-  // Drawers {}
-  // Shortcuts {}
 }
