@@ -10,6 +10,8 @@
 !/.zshenv
 !/.sh-utls
 
+!/.github/
+!/.github/**
 !/.config/
 !/.config/*/
 !/.local/
