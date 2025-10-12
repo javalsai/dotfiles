@@ -4,9 +4,9 @@ import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
 
-import qs;
-import qs.default as Default;
-import qs.components.bar as Bar;
+import qs
+import qs.default as Default
+import qs.components.bar as Bar
 
 Scope {
   id: root
@@ -24,7 +24,10 @@ Scope {
 
       property HyprlandMonitor hyprlandMonitor: Hyprland.monitorFor(screen)
       property HyprlandWorkspace hyprlandWorkspace: hyprlandMonitor.activeWorkspace
-      property int tilingWindowCount: hyprlandWorkspace?.toplevels?.values?.filter(toplevel => !toplevel.lastIpcObject.floating)?.length ?? 1
+      // filter non uninitialized ipc toplevels
+      property list<var> toplevels: (hyprlandWorkspace?.toplevels?.values || []).filter(toplevel => "floating" in toplevel.lastIpcObject)
+      property int tilingWindowCount: toplevels.filter(toplevel => !toplevel.lastIpcObject.floating).length ?? 1
+      onTilingWindowCountChanged: () => console.log(JSON.stringify(hyprlandWorkspace?.toplevels?.values.map(a => a.lastIpcObject), null, 2))
       property bool floatingBar: tilingWindowCount != 1
 
       property int margin: floatingBar ? HyprlandConfig.gaps_out : 0
