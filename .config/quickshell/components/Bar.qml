@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Hyprland
 
 import QtQuick
+import QtQuick.Layouts
 
 import qs
 import qs.default as Default
@@ -70,7 +71,13 @@ Scope {
         }
 
         Default.DLayout {
-          anchors.fill: parent
+          anchors {
+            fill: parent
+            leftMargin: GState.vertical_layout ? 0 : HyprlandConfig.rounding
+            rightMargin: anchors.leftMargin
+            topMargin: GState.vertical_layout ? HyprlandConfig.rounding : 0
+            bottomMargin: anchors.topMargin
+          }
 
           rowSpacing: 0
           columnSpacing: 0

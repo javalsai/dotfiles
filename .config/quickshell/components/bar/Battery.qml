@@ -14,9 +14,9 @@ Row {
   readonly property int bat_perc: Math.round(battery.percentage * 100)
   readonly property int bat_warn: 30
 
-  readonly property string bat_icon: icon_set[Math.ceil(battery.percentage * icon_set.length) - 1]
+  readonly property string bat_icon: icon_set[Math.max(Math.ceil(battery.percentage * icon_set.length) - 1, 0)]
 
-  readonly property string opt_type_icon: battery.isLaptopBattery ? GState.laptop_icon : GState.bat_type_icon[battery.type] || ''
+  readonly property string opt_type_icon: battery.isLaptopBattery ? GState.laptop_icon : GState.bat_type_icon[battery.type] || '?'
   readonly property string opt_braced_type_icon: opt_type_icon
 
   readonly property color charge_color: if (charging > 0) {
