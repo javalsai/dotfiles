@@ -1,10 +1,12 @@
 import QtQuick
 import QtQuick.Layouts
 
+import qs
+
 GridLayout {
   id: layout
 
-  property int spacing: 0
+  property int spacing: GState.spacing
   rowSpacing: spacing
   columnSpacing: spacing
 

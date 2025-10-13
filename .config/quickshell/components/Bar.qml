@@ -1,12 +1,13 @@
+pragma ComponentBehavior: Bound
+
 import Quickshell
-import Quickshell.Services.UPower
 import Quickshell.Hyprland
+
 import QtQuick
-import QtQuick.Layouts
 
 import qs
 import qs.default as Default
-import qs.components.bar as Bar
+import qs.util as Util
 
 Scope {
   id: root
@@ -25,9 +26,8 @@ Scope {
       property HyprlandMonitor hyprlandMonitor: Hyprland.monitorFor(screen)
       property HyprlandWorkspace hyprlandWorkspace: hyprlandMonitor.activeWorkspace
       // filter non uninitialized ipc toplevels
-      property list<var> toplevels: (hyprlandWorkspace?.toplevels?.values || []).filter(toplevel => "floating" in toplevel.lastIpcObject)
+      property list<var> toplevels: (hyprlandWorkspace?.toplevels?.values ?? []).filter(toplevel => "floating" in toplevel.lastIpcObject)
       property int tilingWindowCount: toplevels.filter(toplevel => !toplevel.lastIpcObject.floating).length ?? 1
-      onTilingWindowCountChanged: () => console.log(JSON.stringify(hyprlandWorkspace?.toplevels?.values.map(a => a.lastIpcObject), null, 2))
       property bool floatingBar: tilingWindowCount != 1
 
       property int margin: floatingBar ? HyprlandConfig.gaps_out : 0
@@ -65,78 +65,23 @@ Scope {
         clip: true
         color: GState.theme.background
 
-        Default.DLayout {
-          id: layout
-
-          spacing: 3
-
-          anchors.leftMargin: GState.vertical_layout ? 0 : HyprlandConfig.rounding
-          anchors.topMargin: GState.vertical_layout ? HyprlandConfig.rounding : 0
-          anchors.left: parent.left
-          anchors.top: parent.top
-          anchors.bottom: GState.vertical_layout ? undefined : parent.bottom
-          anchors.right: GState.vertical_layout ? parent.right : undefined
-
-          Default.Button {
-            backgroundColor: GState.distro_color
-            backgroundOpacity: hovered ? 0.3 : 0
-
-            leftPadding: 3
-            onClicked: GState.vertical_layout = !GState.vertical_layout
-
-            clickable: true
-
-            Layout.alignment: Qt.AlignCenter
-
-            Default.Text {
-              font.family: GState.icon_font_family
-              color: GState.distro_color
-              text: GState.distro_icon
-            }
-          }
-
-          Repeater {
-            model: Hyprland.workspaces
-
-            Bar.WsButton {
-              Layout.alignment: Qt.AlignCenter
-              thisMonitor: hyprlandMonitor
-            }
-          }
-        }
-
-        Bar.Time {
-          clock: GState.clock
+        BarCenter {
           anchors.centerIn: parent
-          anchors.verticalCenterOffset: 0.30
         }
 
         Default.DLayout {
-          id: rightLayout
+          anchors.fill: parent
 
-          spacing: 3
+          rowSpacing: 0
+          columnSpacing: 0
 
-          anchors.rightMargin: GState.vertical_layout ? 0 : HyprlandConfig.rounding
-          anchors.bottomMargin: GState.vertical_layout ? HyprlandConfig.rounding : 0
-          anchors.left: GState.vertical_layout ? parent.left : undefined
-          anchors.top: GState.vertical_layout ? undefined : parent.top
-          anchors.bottom: parent.bottom
-          anchors.right: parent.right
-
-          Loader {
-            readonly property var battery: UPower.devices.values.find(b => b.isLaptopBattery)
-            source: battery ? "BarBattery.qml" : false
+          BarLeft {
+            hyprlandMonitor: bar.hyprlandMonitor
           }
 
-          AnimatedImage {
-            sourceSize.width: GState.vertical_layout ? GState.bar_width : undefined
-            sourceSize.height: GState.vertical_layout ? undefined : GState.bar_height
+          Util.Spacer {}
 
-            Layout.alignment: Qt.AlignCenter
-
-            asynchronous: true
-            source: "../assets/bongocat.gif"
-          }
+          BarRight {}
         }
       }
     }

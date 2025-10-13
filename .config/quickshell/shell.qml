@@ -1,8 +1,9 @@
 import QtQuick
 import Quickshell
 import Quickshell.Hyprland
+import Quickshell.Services.Pipewire
 
-import qs.components as Components;
+import qs.components as Components
 
 ShellRoot {
   Components.Bar {}
@@ -23,5 +24,9 @@ ShellRoot {
       if (["changefloatingmode", "activewindow", "activewindowv2", "fullscreen", "movewindow", "movewindowv2"].some(event_name => event_name = event.name))
         Hyprland.refreshToplevels();
     }
+  }
+
+  PwObjectTracker {
+    objects: [Pipewire.defaultAudioSink]
   }
 }

@@ -8,5 +8,9 @@ Text {
   horizontalAlignment: Text.AlignHCenter
   verticalAlignment: Text.AlignVCenter
 
+  // thanks to the almighty @m7moud_el_zayat
+  renderType: Text.NativeRendering
+  font.hintingPreference: Font.PreferFullHinting
+
   color: GState.theme.text
 }

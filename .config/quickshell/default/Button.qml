@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import qs;
+import qs.default as Default;
 
 Button {
   id: button
@@ -16,23 +17,14 @@ Button {
 
   contentItem: content
 
-  background: Rectangle {
+  background: Default.Rectangle {
     implicitWidth: button.implicits
     implicitHeight: button.implicits
 
     opacity: button.backgroundOpacity // button.hovered ? .3 : 0
     color: button.backgroundColor
-    radius: 2
-
-    Behavior on opacity {
-      NumberAnimation {
-        duration: 200
-        easing.type: Easing.OutCubic
-      }
-    }
   }
 
-  // TODO: if onClicked
   HoverHandler {
     enabled: button.clickable
     acceptedDevices: PointerDevice.All | PointerDevice.Stylus
