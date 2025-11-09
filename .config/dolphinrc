@@ -1,3 +1,5 @@
+MenuBar=Disabled
+
 [$Version]
 update_info=dolphin_detailsmodesettings.upd:rename-leading-padding,dolphin_detailsmodesettings.upd:move-content-display
 
@@ -44,10 +46,10 @@ CompletionMode=1
 History=neo
 
 [PreviewSettings]
-Plugins=appimagethumbnail,audiothumbnail,avif,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,directorythumbnail,heif,imagethumbnail,jpegthumbnail,jxl,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,mobithumbnail,opendocumentthumbnail,gsthumbnail,rawthumbnail,stl-thumb,stlthumbnail,svgthumbnail,ffmpegthumbs,gdk-pixbuf-thumbnailer
+Plugins=appimagethumbnail,audiothumbnail,glycin-heif,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,directorythumbnail,heif,imagethumbnail,glycin-image-rs,jpegthumbnail,glycin-jxl,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,mobithumbnail,opendocumentthumbnail,gsthumbnail,rawthumbnail,stl-thumb,stlthumbnail,glycin-svg,svgthumbnail,ffmpegthumbs
 
 [UiSettings]
-ColorScheme=*
+ColorScheme=Kvantum
 
 [ViewPropertiesDialog]
 HDMI-A-0 Height 1440x900=600
