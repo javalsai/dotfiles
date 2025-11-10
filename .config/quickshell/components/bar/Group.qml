@@ -13,5 +13,7 @@ Default.Rectangle {
   Default.DLayout {
     id: inner
     anchors.centerIn: parent
+
+    spacing: 10
   }
 }

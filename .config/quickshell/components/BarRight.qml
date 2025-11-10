@@ -23,7 +23,7 @@ Default.DLayout {
 
   Bar.Group {
     id: bat_group
-    readonly property list<UPowerDevice> devices: UPower.devices.values //.filter(b => b.isLaptopBattery)
+    readonly property list<UPowerDevice> devices: UPower.devices.values.filter(b => b.type !== UPowerDeviceType.LinePower)
 
     Layout.alignment: Qt.AlignCenter
 

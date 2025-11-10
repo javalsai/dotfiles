@@ -8,7 +8,7 @@ Row {
   id: root
   required property UPowerDevice battery
 
-  readonly property bool charging: battery.changeRate > 0
+  readonly property bool charging: battery.timeToFull !== 0
   readonly property list<string> icon_set: charging ? GState.charging_battery_icons : GState.battery_icons
 
   readonly property int bat_perc: Math.round(battery.percentage * 100)
