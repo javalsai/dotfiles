@@ -29,11 +29,13 @@ while read -r line; do
 
     filename=$name.$ext
     curl "${curlopts[@]}" -sLo "$filename" "$url"
-    magick "$filename" -crop "$(
-        magick "$filename" -trim -format '%wx%h%O' info:
-    )" +repage "$filename"
+    if ! [ "$opt" == "raw" ]; then
+        magick "$filename" -crop "$(
+            magick "$filename" -trim -format '%wx%h%O' info:
+        )" +repage "$filename"
 
-    if [ "$ext" != "png" ]; then
-        ffmpegw -i "$filename" -vf "colorkey=black:2e-02:0" -c:v png -preset slow "$name.png"
+        if [ "$ext" != "png" ]; then
+            ffmpegw -i "$filename" -vf "colorkey=black:2e-02:0" -c:v png -preset slow "$name.png"
+        fi
     fi
 done <"$FILE" | lolcat
