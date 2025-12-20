@@ -79,6 +79,7 @@ utils.keymaps_set {
   { '<S-Tab>',       '<gv',                         'v' },
   { '<S-Tab>',       cmds.cursor_follow_stab,       'i' },
   { '<leader>p',     cmds.paste_over_visual_nocopy, 'x' },
+  { 'ḉ',             '<ESC>',                       'i' },
   -- vim.keymap.set({ 'i', 'v' }, 's', '"_s', kargs)
   -- vim.keymap.set({ 'i', 'v' }, 'c', '"_c', kargs)
 }

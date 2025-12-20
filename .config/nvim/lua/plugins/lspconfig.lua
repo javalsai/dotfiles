@@ -145,6 +145,20 @@ return {
     -- }
     -- lspconfig.marksman.setup {}
 
+    -- Typst
+    -- TODO:
+    -- - properly cfg main/imported stuff
+    -- - add typstyle to mason somehow (i dont remember how i cfgd mason)
+    -- - add the preview thingy, dont wanna manually zathura every time and typst watch
+    lspconfig.tinymist.setup {
+      settings = {
+        formatterMode = 'typstyle',
+        exportPdf = 'onType',
+        semanticTokens = 'disable',
+      },
+      capabilities = capabilities,
+    }
+
     -- XML
     lspconfig.lemminx.setup { capabilities = capabilities }
 

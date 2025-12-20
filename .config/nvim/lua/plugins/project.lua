@@ -1,5 +1,6 @@
 return {
   'DrKJeff16/project.nvim',
+  enabled = false,
   config = function()
     require('project').setup {
       detection_methods = { 'lsp', 'pattern' },
