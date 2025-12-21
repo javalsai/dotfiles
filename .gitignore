@@ -16,6 +16,7 @@
 !/.config/*/
 !/.local/
 !/.local/bin/
+!/.local/bin/shits/
 !/.ssh/
 
 !/.config/dolphinrc
@@ -43,6 +44,7 @@
 !/.local/bin/get-hypr-hover-window
 !/.local/bin/local-ssh-key
 !/.local/bin/wfreeze
+!/.local/bin/shits/unipicker.sh
 
 !/.ssh/authorized_keys
 !/.ssh/allowed_signers
