@@ -37,6 +37,7 @@ local function rustacean_init()
 end
 
 return {
+  -- TODO: I should mooove this out of the "plugin" bcs its builtin nvim now, still grouping gonna be tricky
   'neovim/nvim-lspconfig',
   lazy = false,
   dependencies = {
@@ -52,37 +53,39 @@ return {
     require 'plugins.which-key',
   },
   config = function()
-    local lspconfig = require 'lspconfig'
     local lspconfig_util = require 'lspconfig.util'
 
     local crates = require 'crates'
     local schemastore = require 'schemastore'
 
-    local capabilities = default_capabilities()
+    vim.lsp.config('*', {
+      capabilities = default_capabilities(),
+      root_markers = { '.git' },
+    })
 
     -- ASM
-    lspconfig.asm_lsp.setup { capabilities = capabilities }
+    vim.lsp.enable('asm_lsp')
 
     -- Bash
-    lspconfig.bashls.setup { capabilities = capabilities }
+    vim.lsp.enable('bashls')
 
     -- Zig
-    lspconfig.zls.setup { capabilities = capabilities }
+    vim.lsp.enable('zls')
 
     -- TS
-    lspconfig.ts_ls.setup { capabilities = capabilities }
+    vim.lsp.enable('ts_ls')
 
     -- Lua
-    lspconfig.lua_ls.setup {
-      capabilities = capabilities,
+    vim.lsp.config('lua_ls', {
       settings = {
         -- workspace = { library = { vim.env.VIMRUNTIME, globals.lazypath } },
         telemetry = { enable = false },
       },
-    }
+    })
+    vim.lsp.enable('lua_ls')
 
     -- C/CPP/...
-    lspconfig.clangd.setup { capabilities = capabilities }
+    vim.lsp.enable('clangd')
 
     -- Rustacean nvim is used anyways
     -- Rust
@@ -110,10 +113,10 @@ return {
     crates.setup {}
 
     -- Toml...
-    lspconfig.taplo.setup { capabilities = capabilities }
+    vim.lsp.enable('taplo')
 
     -- JSON
-    lspconfig.jsonls.setup {
+    vim.lsp.config('jsonls', {
       commands = {
         Format = {
           function()
@@ -130,8 +133,8 @@ return {
           validate = { enable = true },
         },
       },
-      capabilities = capabilities,
-    }
+    })
+    vim.lsp.enable('jsonls')
 
     -- Markdown
     -- FUCK markdown LSP clients, they all suck, embrace TreeSitter
@@ -150,27 +153,26 @@ return {
     -- - properly cfg main/imported stuff
     -- - add typstyle to mason somehow (i dont remember how i cfgd mason)
     -- - add the preview thingy, dont wanna manually zathura every time and typst watch
-    lspconfig.tinymist.setup {
+    vim.lsp.config('tinymist', {
       settings = {
         formatterMode = 'typstyle',
         exportPdf = 'onType',
         semanticTokens = 'disable',
       },
-      capabilities = capabilities,
-    }
+    })
+    vim.lsp.enable('tinymist')
 
     -- XML
-    lspconfig.lemminx.setup { capabilities = capabilities }
+    vim.lsp.enable('lemminx')
 
     -- HTML
-    lspconfig.html.setup { capabilities = capabilities }
+    vim.lsp.enable('html')
 
     -- CSS
-    lspconfig.cssls.setup { capabilities = capabilities }
+    vim.lsp.enable('cssls')
 
     -- Emmet
-    lspconfig.emmet_ls.setup({
-      capabilities = capabilities,
+    vim.lsp.config('emmet_ls', {
       filetypes = {
         'css',
         'eruby',
@@ -195,20 +197,20 @@ return {
         },
       },
     })
+    vim.lsp.enable('emmet_ls')
 
     --- OTHER
     -- Biome
-    lspconfig.biome.setup {
-      capabilities = capabilities,
+    vim.lsp.config('biome', {
       root_dir = lspconfig_util.root_pattern('biome.json', 'biome.jsonc'),
-    }
+    })
+    vim.lsp.enable('biome')
 
     -- Prisma
-    lspconfig.prismals.setup { capabilities = capabilities }
+    vim.lsp.enable('prismals')
 
     -- Qml
-    lspconfig.qmlls.setup({
-      capabilities = capabilities,
+    vim.lsp.config('qmlls', {
       -- on_attach = on_attach,
       cmd = { '/usr/lib/qt6/bin/qmlls', '-E' },
       filetypes = { 'qml' },
@@ -218,6 +220,7 @@ return {
         return vim.fs.dirname(upfname and upfname[1] or fname)
       end,
     })
+    vim.lsp.enable('qmlls')
 
     -- Generic conf
     vim.api.nvim_create_autocmd('LspAttach', {
