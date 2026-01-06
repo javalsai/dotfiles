@@ -20,6 +20,7 @@
 !/.ssh/
 
 !/.config/dolphinrc
+!/.config/kdeglobals
 !/.config/user-dirs.dirs
 
 !/.config/VSCodium/product.json
