@@ -6,4 +6,13 @@ hyprctl clients -j | \
         --argjson pos "$(hyprctl cursorpos -j)" \
         --argjson mons "$(hyprctl monitors -j)" \
         \
-        '. | map(select(.at[0] < $pos.x and (.at[0] + .size[0]) > $pos.x and .at[1] < $pos.y and (.at[1] + .size[1]) > $pos.y and (.workspace.id | IN($mons.[].activeWorkspace.id)))) | min_by(.focusHistoryID) | .address' -r
+        '. |
+        map(select(
+            .at[0] < $pos.x and (.at[0] + .size[0]) > $pos.x and
+            .at[1] < $pos.y and (.at[1] + .size[1]) > $pos.y and
+            (.workspace.id | IN($mons.[].activeWorkspace.id)))) |
+        [
+            map(select(.floating)).[0],
+            (map(select(.floating | not)) | min_by(.focusHistoryID))
+        ] | map(select(.)) | .[0]
+        .address' -r
