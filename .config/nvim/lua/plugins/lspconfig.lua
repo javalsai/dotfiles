@@ -18,6 +18,9 @@ local function rustacean_init()
   vim.g.rustaceanvim = {
     tools = {},
     server = {
+      cmd = { 'rustup', 'run', 'nightly', 'rust-analyzer' },
+      standalone = true,
+
       on_attach = function(_, bufnr)
         local wk = require 'which-key'
         local _, maps = utils.bufmap(wk, bufnr)
@@ -32,12 +35,12 @@ local function rustacean_init()
       end,
       default_settings = { ['rust-analyzer'] = {} },
     },
+
     dap = {},
   }
 end
 
 return {
-  -- TODO: I should mooove this out of the "plugin" bcs its builtin nvim now, still grouping gonna be tricky
   'neovim/nvim-lspconfig',
   lazy = false,
   dependencies = {
@@ -153,12 +156,30 @@ return {
     -- - properly cfg main/imported stuff
     -- - add typstyle to mason somehow (i dont remember how i cfgd mason)
     -- - add the preview thingy, dont wanna manually zathura every time and typst watch
+    -- - use my coolass proper keys thing
     vim.lsp.config('tinymist', {
       settings = {
         formatterMode = 'typstyle',
         exportPdf = 'onType',
         semanticTokens = 'disable',
       },
+      -- https://myriad-dreamin.github.io/tinymist/frontend/neovim.html#label-Working%20with%20Multiple-Files%20Projects
+      on_attach = function(client, bufnr)
+        vim.keymap.set('n', '<leader>tp', function()
+          client:exec_cmd({
+            title = 'pin',
+            command = 'tinymist.pinMain',
+            arguments = { vim.api.nvim_buf_get_name(0) },
+          }, { bufnr = bufnr })
+        end, { desc = '[T]inymist [P]in', noremap = true })
+        vim.keymap.set('n', '<leader>tu', function()
+          client:exec_cmd({
+            title = 'unpin',
+            command = 'tinymist.pinMain',
+            arguments = { vim.v.null },
+          }, { bufnr = bufnr })
+        end, { desc = '[T]inymist [U]npin', noremap = true })
+      end,
     })
     vim.lsp.enable('tinymist')
 
@@ -210,6 +231,7 @@ return {
     vim.lsp.enable('prismals')
 
     -- Qml
+    -- TODO: fname is now a number, prolly like bufnr or smth
     vim.lsp.config('qmlls', {
       -- on_attach = on_attach,
       cmd = { '/usr/lib/qt6/bin/qmlls', '-E' },

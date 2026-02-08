@@ -84,6 +84,13 @@ utils.keymaps_set {
   -- vim.keymap.set({ 'i', 'v' }, 'c', '"_c', kargs)
 }
 
+-- so like, when typing in insert mode, these common punctuation marks also insert pseudo undo marks, that way undo doens't wipe out all the inserted text
+vim.keymap.set('i', ',', ',<C-g>u')
+vim.keymap.set('i', '.', '.<C-g>u')
+vim.keymap.set('i', ';', ';<C-g>u')
+vim.keymap.set('i', '!', '!<C-g>u')
+vim.keymap.set('i', '?', '?<C-g>u')
+
 -- lazy.nvim
 local lazypath = globals.lazypath
 if not (vim.uv or vim.loop)['fs_stat'](lazypath) then
