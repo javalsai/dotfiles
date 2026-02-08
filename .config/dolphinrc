@@ -8,7 +8,6 @@ update_info=dolphin_detailsmodesettings.upd:rename-leading-padding,dolphin_detai
 2 screens: Width=960
 
 [General]
-OpenExternallyCalledFolderInNewTab=true
 OpenNewTabAfterLastTab=true
 ShowFullPath=true
 ShowFullPathInTitlebar=true
@@ -20,9 +19,6 @@ Theme=Papirus-Dark
 
 [IconsMode]
 PreviewSize=80
-
-[InformationPanel]
-previewsAutoPlay=true
 
 [KFileDialog Settings]
 Places Icons Auto-resize=false
@@ -40,6 +36,9 @@ HDMI-A-0 Width 1440x900 HDMI-A-0=418
 
 [MainWindow]
 MenuBar=Disabled
+
+[Notification Messages]
+ConfirmRenameFileType=false
 
 [Open-with settings]
 CompletionMode=1
