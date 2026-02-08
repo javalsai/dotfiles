@@ -9,7 +9,11 @@ export PATH="$PATH:$HOME/perl5/bin"
 
 
 # ADDITIONAL ENV
-export BROWSER="firefox";
+if [[ "$HOSTNAME" != "laptop" ]]; then
+    export BROWSER="firefox";
+else
+    export BROWSER="librewolf";
+fi
 export WINEDEBUG="fixme-all";
 
 export BUN_INSTALL="$HOME/.bun"
@@ -17,6 +21,8 @@ export PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}";
 export PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}";
 export PERL_MB_OPT="--install_base \"$HOME/perl5\"";
 export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5";
+
+export GOPATH="$HOME/.local/share/go/"
 
 # ffs, java & android (for tauri at least for now)
 export JAVA_HOME="/opt/android-studio/jbr"
@@ -84,5 +90,4 @@ export LESS_TERMCAP_ZW= # $(tput rsupm)
 export GROFF_NO_SGR=1
 
 # SOURCES
-#source "/usr/share/nvm/init-nvm.sh";
-[ -s "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env";
+[ -s "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env" || :
