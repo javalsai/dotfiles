@@ -169,6 +169,7 @@ alias nvR="nvim -R"
 alias gz=gzip
 alias rp=realpath
 alias dn=dirname
+alias dps="docker ps --format 'table {{.ID }} \\t {{ .Names }} \\t {{ .Image }}'"
 
 # Overrides
 alias dig=dog
