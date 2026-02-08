@@ -118,7 +118,7 @@ plugins=(
 if [[ "$(hostname)" == "tuxcord.net" ]]; then
   source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
   source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-elif [[ "$(hostname)" == "server5" ]]; then
+elif [ -d "/usr/share/zsh/plugins/" ]; then
   source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
   source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 else
@@ -165,10 +165,13 @@ alias xa="xargs " # aliases with xargs
 alias each="each " # aliases with each
 alias xo=xdg-open
 alias nv=nvim
-alias nvR=nvim -R
+alias nvR="nvim -R"
 alias gz=gzip
+alias rp=realpath
+alias dn=dirname
 
 # Overrides
+alias dig=dog
 alias cat="bat -pp"
 eza() { timeout 0.5s eza "$@" || command eza --no-git "$@" }
 alias ls="eza --icons -g --smart-group -b --git --git-repos -M"
@@ -177,7 +180,9 @@ alias ip="ip -c"
 alias ffmpeg='ffmpeg -hide_banner'
 alias ffprobe='ffprobe -hide_banner'
 alias wget="wget --hsts-file ~/.local/share/wget/hsts"
+# programs i sometime typo'd and cant ctrlc out or are annoying asf
 alias gs='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN TO USE GHOSTSCRIPT"'
+alias mf='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN TO USE METAFONT, WHATEVER TS IS"'
 
 alias h="GIT_DIR=.dotfiles.git " # can put dotfiles in home with .git as .dotfiles.git
                                  # and manage with h alias
@@ -244,13 +249,16 @@ __nvim() { nv }
 __ls_l() { l; zle reset-prompt }
 __xdg_open_cwd() { xdg-open . }
 __ctrl_shift_l() { printf '\e[H\e[3J'; zle reset-prompt }
+__yazi_cwd() { yazi . }
 zle -N __nvim
 zle -N __ls_l
 zle -N __xdg_open_cwd
 zle -N __ctrl_shift_l
+zle -N __yazi_cwd
 bindkey "^N" __nvim
 bindkey "^[^L" __ls_l # alt
 bindkey "^[^E" __xdg_open_cwd # alt
+bindkey "^[^Y" __yazi_cwd # alt
 bindkey "^[[108;6u" __ctrl_shift_l
 
 # bun completions
