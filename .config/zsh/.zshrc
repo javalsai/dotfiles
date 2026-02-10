@@ -175,9 +175,9 @@ alias dps="docker ps --format 'table {{.ID }} \\t {{ .Names }} \\t {{ .Image }}'
 alias dig=dog
 alias cat="bat -pp"
 eza() { timeout 0.5s eza "$@" || command eza --no-git "$@" }
-alias ls="eza --icons -g --smart-group -b --git --git-repos -M"
+alias ls="eza --icons -g --smart-group -b --hyperlink --git --git-repos -M"
 # same-command overrides tho
-alias ip="ip -c"
+alias ip="ip -c=auto -iec"
 alias ffmpeg='ffmpeg -hide_banner'
 alias ffprobe='ffprobe -hide_banner'
 alias wget="wget --hsts-file ~/.local/share/wget/hsts"
