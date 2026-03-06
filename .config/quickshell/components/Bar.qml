@@ -22,7 +22,7 @@ Scope {
       required property var modelData
 
       screen: modelData
-      aboveWindows: GState.vertical_layout
+      aboveWindows: true
 
       property HyprlandMonitor hyprlandMonitor: Hyprland.monitorFor(screen)
       property HyprlandWorkspace hyprlandWorkspace: hyprlandMonitor.activeWorkspace
@@ -71,24 +71,38 @@ Scope {
         }
 
         Default.DLayout {
+          readonly property int outer_margin: HyprlandConfig.rounding - GState.button_radius
+
           anchors {
             fill: parent
-            leftMargin: GState.vertical_layout ? 0 : HyprlandConfig.rounding
+            leftMargin: GState.vertical_layout ? 0 : outer_margin
             rightMargin: anchors.leftMargin
-            topMargin: GState.vertical_layout ? HyprlandConfig.rounding : 0
+            topMargin: GState.vertical_layout ? outer_margin : 0
             bottomMargin: anchors.topMargin
           }
 
-          rowSpacing: 0
-          columnSpacing: 0
-
           BarLeft {
             hyprlandMonitor: bar.hyprlandMonitor
+            Layout.alignment: Qt.AlignCenter
           }
 
           Util.Spacer {}
 
-          BarRight {}
+          BarRight {
+            Layout.alignment: Qt.AlignCenter
+          }
+        }
+      }
+
+      PopupWindow {
+        // anchor.window: bar
+        visible: true
+
+        width: 500
+        height: 500
+
+        Default.Text {
+          text: "test"
         }
       }
     }

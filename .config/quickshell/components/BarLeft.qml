@@ -16,17 +16,19 @@ Default.DLayout {
 
   Default.Button {
     backgroundColor: GState.distro_color
-    backgroundOpacity: hovered ? 0.3 : 0
+    backgroundOpacity: hovered ? GState.hover_color_opac : 0
 
-    leftPadding: 3
     onClicked: GState.vertical_layout = !GState.vertical_layout
 
     clickable: true
 
+    implicitWidth: GState.font_size * 1.7
+    implicitHeight: GState.font_size * 1.7
+
     Layout.alignment: Qt.AlignCenter
 
-    Default.Text {
-      font.family: GState.icon_font_family
+    Default.Icon {
+      id: logo
       color: GState.distro_color
       text: GState.distro_icon
     }

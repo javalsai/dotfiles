@@ -5,8 +5,8 @@ import qs.default as Default
 Default.Rectangle {
   id: bat_group
 
-  implicitWidth: inner.implicitWidth + 14
-  implicitHeight: inner.implicitHeight + 4
+  implicitWidth: inner.implicitWidth
+  implicitHeight: inner.implicitHeight
 
   default property alias content: inner.data
 

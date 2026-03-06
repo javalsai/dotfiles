@@ -1,12 +1,14 @@
 import QtQuick
 
-Rectangle {
-    radius: 2
+import qs
 
-    Behavior on opacity {
-      NumberAnimation {
-        duration: 200
-        easing.type: Easing.OutCubic
-      }
+Rectangle {
+  radius: GState.button_radius
+
+  Behavior on opacity {
+    NumberAnimation {
+      duration: 200
+      easing.type: Easing.OutCubic
     }
   }
+}

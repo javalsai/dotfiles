@@ -6,6 +6,8 @@ QtObject {
   required property color background
   required property color text
 
+  required property color hover_color
+
   required property color positive_green
   required property color negative_red
 

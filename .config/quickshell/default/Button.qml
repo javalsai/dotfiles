@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-import qs;
-import qs.default as Default;
+import qs
+import qs.default as Default
 
 Button {
   id: button
@@ -11,23 +11,23 @@ Button {
   property real backgroundOpacity: 1
   property color backgroundColor
   required property bool clickable
-  required default property Item content
+  default required property Item content
 
   padding: 0
 
   contentItem: content
 
   background: Default.Rectangle {
-    implicitWidth: button.implicits
-    implicitHeight: button.implicits
+    implicitWidth: button.content.implicitWidth
+    implicitHeight: button.content.implicitHeight
 
-    opacity: button.backgroundOpacity // button.hovered ? .3 : 0
+    opacity: button.backgroundOpacity
     color: button.backgroundColor
   }
 
   HoverHandler {
     enabled: button.clickable
-    acceptedDevices: PointerDevice.All | PointerDevice.Stylus
+    acceptedDevices: PointerDevice.All
     cursorShape: Qt.PointingHandCursor
   }
 }

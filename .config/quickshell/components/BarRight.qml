@@ -17,6 +17,9 @@ Default.DLayout {
     Layout.alignment: Qt.AlignCenter
 
     Bar.Volume {
+      id: volume
+      anchors.centerIn: parent
+
       pw_audio: Pipewire.defaultAudioSink?.audio
     }
   }

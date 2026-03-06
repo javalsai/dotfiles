@@ -1,10 +1,10 @@
 import QtQuick
 import Quickshell.Hyprland
 
-import qs;
-import qs.default as Default;
+import qs
+import qs.default as Default
 
-Item {
+Default.Button {
   id: root
 
   required property HyprlandWorkspace modelData
@@ -22,18 +22,18 @@ Item {
   } else
     workspace.name
 
-  implicitWidth: button.implicitWidth
-  implicitHeight: button.implicitHeight
+  backgroundOpacity: hovered ? GState.hover_color_opac : 0
+  backgroundColor: GState.theme.primary
+  onClicked: root.workspace.activate()
+  clickable: true
 
-  Default.Button {
-    id: button
-
-    backgroundOpacity: button.hovered ? .3 : 0
-    backgroundColor: GState.theme.primary
-    onClicked: root.workspace.activate()
-    clickable: true
+  Item {
+    implicitWidth: GState.font_size * 1.7
+    implicitHeight: GState.font_size * 1.7
 
     Default.Text {
+      anchors.fill: parent
+
       font.underline: root.isFocused
       color: if (root.isActive) {
         GState.theme.primary;
