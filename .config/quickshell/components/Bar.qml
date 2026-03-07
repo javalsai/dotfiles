@@ -93,18 +93,6 @@ Scope {
           }
         }
       }
-
-      PopupWindow {
-        // anchor.window: bar
-        visible: true
-
-        width: 500
-        height: 500
-
-        Default.Text {
-          text: "test"
-        }
-      }
     }
   }
 }

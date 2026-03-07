@@ -4,6 +4,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.UPower
+import Quickshell.Services.Mpris
 
 Singleton {
   id: singleton
@@ -18,17 +19,25 @@ Singleton {
   readonly property var bat_type_icon: ({
       [UPowerDeviceType.Phone]: "",
       [UPowerDeviceType.Headphones]: "󰋋",
-      [UPowerDeviceType.Mouse]: ""
+      [UPowerDeviceType.Mouse]: "",
     })
 
   readonly property string distro_icon: ""
   readonly property color distro_color: "#88bbff"
+  readonly property var known_player_data: ({
+    // based on .identity (from mpris)
+    ["Spotify"]: ["", "#1DB954"],
+    ["mpv"]: ["", "#420042"],
+  })
+  readonly property string player_icon: ""
 
   readonly property string special_ws_name: "な"
 
   readonly property string default_font_family: "Cascadia Code"
   // IMPORTANT MONO, will make icons char size BUT they will be aligned, consequently requires scaling font size up
   readonly property string icon_font_family: "Hack Nerd Font Mono"
+
+  readonly property int popup_padding: 20
 
   readonly property int font_size: 17
   readonly property int bar_height: 35
@@ -50,6 +59,18 @@ Singleton {
     precision: SystemClock.Seconds
   }
 
+  // var = MprisPlayer | undefined
+  property var current_player: {
+    const playerctld = Mpris.players.values.find(player => player.dbusName == 'org.mpris.MediaPlayer2.playerctld');
+    if (playerctld) {
+      playerctld
+    } else {
+      Mpris.players.values
+        .filter(player => player.canTogglePlaying)
+        .sort((a, b) => b.isPlaying - a.isPlaying)[0]
+    }
+  }
+
   FileView {
     path: ".config/quickshell/config.json"
 
@@ -63,11 +84,20 @@ Singleton {
     }
   }
 
+
+  readonly property list<string> gifsList: gifsListFile.text().trim().split(' ')
+  FileView {
+    id: gifsListFile
+    path: ".config/quickshell/assets/gifs.list"
+    blockLoading: true
+  }
+
   property Theme theme: Theme {
     primary: "#dd5555"
     accent: "#dddd55"
     background: "#101010"
     text: "#eeeeee"
+    unimportant_text: "#888888"
 
     hover_color: "#eeeeee"
 

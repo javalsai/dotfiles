@@ -52,8 +52,8 @@ Default.PopupButton {
   popup_window: Default.PopupWindow {
     anchored: root
 
-    height: 100
-    width: 100
+    implicitHeight: 100
+    implicitWidth: 100
 
     Default.Text {
       text: "test"

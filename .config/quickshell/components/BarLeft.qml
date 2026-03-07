@@ -42,4 +42,16 @@ Default.DLayout {
       thisMonitor: root.hyprlandMonitor
     }
   }
+
+  Loader {
+    active: !!GState.current_player
+
+    sourceComponent: Bar.Group {
+      color: "transparent"
+
+      Layout.alignment: Qt.AlignCenter
+
+      Bar.Player { }
+    }
+  }
 }

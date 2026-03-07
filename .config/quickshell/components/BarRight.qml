@@ -18,7 +18,6 @@ Default.DLayout {
 
     Bar.Volume {
       id: volume
-      anchors.centerIn: parent
 
       pw_audio: Pipewire.defaultAudioSink?.audio
     }
@@ -43,10 +42,14 @@ Default.DLayout {
     }
   }
 
-  // TODO: fix frozen
   AnimatedImage {
-    sourceSize.width: GState.vertical_layout ? GState.bar_width : 0
-    sourceSize.height: GState.vertical_layout ? 0 : GState.bar_height
+    // sourceSize.width: GState.vertical_layout ? GState.bar_width : 0
+    // sourceSize.height: GState.vertical_layout ? 0 : GState.bar_height
+    // HUH?: this fixes frozen
+
+    // and how does this even work without breaking the ratio
+    sourceSize.width: GState.bar_width
+    sourceSize.height: GState.bar_height
 
     Layout.alignment: Qt.AlignCenter
 

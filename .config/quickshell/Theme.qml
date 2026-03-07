@@ -5,6 +5,7 @@ QtObject {
   required property color accent
   required property color background
   required property color text
+  required property color unimportant_text
 
   required property color hover_color
 

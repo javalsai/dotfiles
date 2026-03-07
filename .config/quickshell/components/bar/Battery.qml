@@ -24,7 +24,7 @@ Default.PopupButton {
 
       spacing: GState.spacing
 
-      readonly property bool charging: root.battery.changeRate > 0
+      readonly property bool charging: root.battery.ready && root.battery.changeRate > 0
       readonly property list<string> icon_set: charging ? GState.charging_battery_icons : GState.battery_icons
 
       readonly property int bat_perc: Math.round(root.battery.percentage * 100)
@@ -68,8 +68,8 @@ Default.PopupButton {
   popup_window: Default.PopupWindow {
     anchored: root
 
-    height: 100
-    width: 100
+    implicitHeight: 100
+    implicitWidth: 100
 
     Default.Text {
       text: "test"
