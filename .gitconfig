@@ -30,3 +30,5 @@
 	unstage = "restore --staged"
 [diff "exif"]
 	textconv = exiftool
+[includeIf "gitdir:~/"]
+    path = ~/.config/.dotfiles.gitconfig

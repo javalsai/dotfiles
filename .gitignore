@@ -19,6 +19,8 @@
 !/.local/bin/shits/
 !/.ssh/
 
+!/.config/.dotfiles.*
+
 !/.config/dolphinrc
 !/.config/kdeglobals
 !/.config/user-dirs.dirs
