@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+import Quickshell.Io
 import Quickshell.Widgets
 import Quickshell.Services.Mpris
 
@@ -17,6 +18,8 @@ Default.PopupWindow {
 
   readonly property int maxImageSize: 150
 
+  readonly property bool is_playerctld: GState.current_player.dbusName == 'org.mpris.MediaPlayer2.playerctld'
+
   function fmtTime(raw_time) {
     let time = Math.round(raw_time);
     let seconds = time % 60;
@@ -30,9 +33,70 @@ Default.PopupWindow {
     height: parent.height - (GState.popup_padding * 2)
     width: parent.width - (GState.popup_padding * 2)
 
-    Default.Text {
-      color: GState.theme.unimportant_text
-      text: GState.current_player.identity
+    // ❮ ❯
+    // ⟨ ⟩
+    RowLayout {
+      Layout.fillWidth: true
+
+      Loader {
+        active: root.is_playerctld
+
+        Process {
+          id: playerctld_prev
+          running: false
+          command: [ "playerctld", "unshift" ]
+        }
+
+        sourceComponent: Component {
+          Default.Button {
+            clickable: true
+            backgroundColor: GState.theme.hover_color
+            backgroundOpacity: hovered ? GState.hover_opac : 0
+            onClicked: playerctld_prev.running = true
+
+            Item {
+              implicitWidth: GState.font_size * 1.7
+              implicitHeight: GState.font_size * 1.7
+              Default.Text { anchors.fill: parent; text: "⟨"; color: GState.theme.unimportant_text }
+            }
+          }
+        }
+      }
+
+      Util.Spacer {}
+
+      Default.Text {
+        color: GState.theme.unimportant_text
+        text: `${GState.current_player.identity} · ${GState.mprisPlayerStateNames[GState.current_player.playbackState]}`
+      }
+
+      Util.Spacer {}
+
+
+      Loader {
+        active: root.is_playerctld
+
+        Process {
+          id: playerctld_next
+          running: false
+          command: [ "playerctld", "shift" ]
+        }
+
+        sourceComponent: Component {
+          Default.Button {
+            clickable: true
+            backgroundColor: GState.theme.hover_color
+            backgroundOpacity: hovered ? GState.hover_opac : 0
+            onClicked: playerctld_next.running = true
+
+            Item {
+              implicitWidth: GState.font_size * 1.7
+              implicitHeight: GState.font_size * 1.7
+              Default.Text { anchors.fill: parent; text: "⟩"; color: GState.theme.unimportant_text }
+            }
+          }
+        }
+      }
     }
 
     Util.Spacer {}
@@ -95,30 +159,40 @@ Default.PopupWindow {
 
       Default.Text {
         id: position_text
-        text: fmtTime(GState.current_player.position)
+        text: fmtTime(GState.current_player.position) + ' '
       }
 
       Slider {
         id: control
 
+        property int rt_position: 0
+
         from: 0
         to: GState.current_player.length
         value: GState.current_player.position
         enabled: GState.current_player.canSeek && GState.current_player.positionSupported
-        onMoved: GState.current_player.position = value
+        onMoved: rt_position = value
+        onPressedChanged: if (!pressed) GState.current_player.position = rt_position
+
+        touchDragThreshold: 50
 
         Layout.fillWidth: true
-        // implicitWidth: (500 - GState.popup_padding * 2) - position_text.width - length_text.width
 
         background: Rectangle {
           x: control.leftPadding
           y: control.topPadding + control.availableHeight / 2 - height / 2
-          implicitWidth: 200
-          implicitHeight: 4
           width: control.availableWidth
-          height: implicitHeight
+          height: 4
           radius: 2
           color: GState.theme.primary
+
+          HoverHandler {
+            id: slider_hover
+
+            enabled: control.enabled
+            acceptedDevices: PointerDevice.All
+            cursorShape: Qt.PointingHandCursor
+          }
         }
 
         handle: Rectangle {
@@ -127,17 +201,17 @@ Default.PopupWindow {
           implicitWidth: 12
           implicitHeight: 12
           radius: 6
-          color: control.pressed ? GState.theme.accent : GState.theme.primary
+          color: (control.pressed || slider_hover.hovered) ? GState.theme.accent : GState.theme.primary
         }
       }
 
       Default.Text {
         id: length_text
-        text: fmtTime(GState.current_player.length)
+        text: ' ' + fmtTime(GState.current_player.length)
       }
 
       FrameAnimation {
-        running: GState.current_player.playbackState == MprisPlaybackState.Playing && root.visible
+        running: GState.current_player.playbackState == MprisPlaybackState.Playing && root.visible && !control.pressed
         onTriggered: GState.current_player.positionChanged()
       }
     }
@@ -149,12 +223,14 @@ Default.PopupWindow {
 
       AnimatedImage {
         readonly property string chosen_gif: GState.gifsList[Math.floor(Math.random() * GState.gifsList.length)]
-        // Component.onCompleted: console.log(chosen_gif)
+        Component.onCompleted: console.log(chosen_gif)
 
         anchors.centerIn: parent
 
-        width: Math.min(150, sourceSize.width * 150 / sourceSize.height)
-        height: Math.min(150, sourceSize.height * 150 / sourceSize.width)
+        playing: GState.current_player.isPlaying
+
+        width: Math.min(root.maxImageSize, sourceSize.width * root.maxImageSize / sourceSize.height)
+        height: Math.min(root.maxImageSize, sourceSize.height * root.maxImageSize / sourceSize.width)
 
         source: `../../assets/${chosen_gif}`
       }
@@ -165,8 +241,8 @@ Default.PopupWindow {
 
       Image {
         cache: true
-        height: root.maxImageSize
-        width: root.maxImageSize
+        width: Math.min(root.maxImageSize, sourceSize.width * root.maxImageSize / sourceSize.height)
+        height: Math.min(root.maxImageSize, sourceSize.height * root.maxImageSize / sourceSize.width)
         source: GState.current_player?.trackArtUrl
       }
     }

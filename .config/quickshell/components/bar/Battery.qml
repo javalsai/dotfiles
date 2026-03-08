@@ -8,9 +8,6 @@ Default.PopupButton {
   id: root
   required property UPowerDevice battery
 
-  readonly property bool charging: battery.timeToFull !== 0
-  readonly property list<string> icon_set: charging ? GState.charging_battery_icons : GState.battery_icons
-
   implicitWidth: battery.implicitWidth + (GState.button_h_spacing * 2)
   implicitHeight: battery.implicitHeight + (GState.button_v_spacing * 2)
 
@@ -24,7 +21,7 @@ Default.PopupButton {
 
       spacing: GState.spacing
 
-      readonly property bool charging: root.battery.ready && root.battery.changeRate > 0
+      readonly property bool charging: battery.change_rate > 0
       readonly property list<string> icon_set: charging ? GState.charging_battery_icons : GState.battery_icons
 
       readonly property int bat_perc: Math.round(root.battery.percentage * 100)
@@ -65,6 +62,7 @@ Default.PopupButton {
       }
     }
   }
+
   popup_window: Default.PopupWindow {
     anchored: root
 

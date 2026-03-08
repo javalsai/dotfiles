@@ -6,6 +6,7 @@ import Quickshell.Io
 import Quickshell.Services.UPower
 import Quickshell.Services.Mpris
 
+// TODO!: 95% of this is not actual state and can be moved to proper state or constants
 Singleton {
   id: singleton
 
@@ -28,6 +29,12 @@ Singleton {
     // based on .identity (from mpris)
     ["Spotify"]: ["", "#1DB954"],
     ["mpv"]: ["", "#420042"],
+    ["Mozilla librewolf"]: ["", "#07ACFB"], // I mean, its firefox based
+  })
+  readonly property var mprisPlayerStateNames: ({
+    [MprisPlaybackState.Playing]: "playing",
+    [MprisPlaybackState.Paused]: "paused",
+    [MprisPlaybackState.Stopped]: "stopped",
   })
   readonly property string player_icon: ""
 
@@ -72,7 +79,7 @@ Singleton {
   }
 
   FileView {
-    path: ".config/quickshell/config.json"
+    path: Qt.resolvedUrl("./config.json")
 
     watchChanges: true
     onFileChanged: reload()
@@ -88,7 +95,7 @@ Singleton {
   readonly property list<string> gifsList: gifsListFile.text().trim().split(' ')
   FileView {
     id: gifsListFile
-    path: ".config/quickshell/assets/gifs.list"
+    path: Qt.resolvedUrl("./assets/gifs.list")
     blockLoading: true
   }
 
