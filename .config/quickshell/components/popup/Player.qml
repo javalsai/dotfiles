@@ -38,29 +38,10 @@ Default.PopupWindow {
     RowLayout {
       Layout.fillWidth: true
 
-      Loader {
+      PlayerProcessButton {
         active: root.is_playerctld
-
-        Process {
-          id: playerctld_prev
-          running: false
-          command: [ "playerctld", "unshift" ]
-        }
-
-        sourceComponent: Component {
-          Default.Button {
-            clickable: true
-            backgroundColor: GState.theme.hover_color
-            backgroundOpacity: hovered ? GState.hover_opac : 0
-            onClicked: playerctld_prev.running = true
-
-            Item {
-              implicitWidth: GState.font_size * 1.7
-              implicitHeight: GState.font_size * 1.7
-              Default.Text { anchors.fill: parent; text: "⟨"; color: GState.theme.unimportant_text }
-            }
-          }
-        }
+        command: [ 'playerctld', 'unshift' ]
+        text: '⟨'
       }
 
       Util.Spacer {}
@@ -73,29 +54,10 @@ Default.PopupWindow {
       Util.Spacer {}
 
 
-      Loader {
+      PlayerProcessButton {
         active: root.is_playerctld
-
-        Process {
-          id: playerctld_next
-          running: false
-          command: [ "playerctld", "shift" ]
-        }
-
-        sourceComponent: Component {
-          Default.Button {
-            clickable: true
-            backgroundColor: GState.theme.hover_color
-            backgroundOpacity: hovered ? GState.hover_opac : 0
-            onClicked: playerctld_next.running = true
-
-            Item {
-              implicitWidth: GState.font_size * 1.7
-              implicitHeight: GState.font_size * 1.7
-              Default.Text { anchors.fill: parent; text: "⟩"; color: GState.theme.unimportant_text }
-            }
-          }
-        }
+        command: [ 'playerctld', 'shift' ]
+        text: '⟩'
       }
     }
 
@@ -123,31 +85,24 @@ Default.PopupWindow {
       ColumnLayout {
         Layout.fillWidth: true
 
-        Default.Text {
-          Layout.fillWidth: true
-          horizontalAlignment: Text.AlignLeft
+        Default.WrapText {
           text: GState.current_player.trackTitle
-          wrapMode: Text.Wrap
         }
 
-        Default.Text {
-          Layout.fillWidth: true
-          horizontalAlignment: Text.AlignLeft
+        Default.WrapText {
           text: GState.current_player.trackArtist || "<unknown artist>"
+          font.italic: !GState.current_player.trackArtist
           font.pixelSize: GState.font_size * 0.75
           color: GState.theme.unimportant_text
-          wrapMode: Text.Wrap
         }
 
         // "soft" spacer
         Default.Text { text: "" }
 
-        Default.Text {
-          Layout.fillWidth: true
-          horizontalAlignment: Text.AlignLeft
+        Default.WrapText {
           text: GState.current_player.trackAlbum || "<unknown album>"
+          font.italic: !GState.current_player.trackAlbum
           font.pixelSize: GState.font_size * 0.75
-          wrapMode: Text.Wrap
         }
       }
     }
