@@ -51,7 +51,7 @@ Default.DLayout {
 
       Layout.alignment: Qt.AlignCenter
 
-      Bar.Player { }
+      Bar.Player { player: GState.current_player }
     }
   }
 }

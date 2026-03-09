@@ -1,26 +1,28 @@
 import QtQuick
 
+import Quickshell.Services.Mpris
+
 import qs
 import qs.default as Default
 import qs.components.popup as Popup
 
 Default.PopupButton {
-  // visible: GState.current_player?.isPlaying ?? false
-
-  readonly property string name: GState.current_player?.identity ?? ""
-  readonly property var extra_data: GState.known_player_data[name] || [GState.player_icon, GState.theme.primary]
-
   id: root
 
-  implicitWidth: player.implicitWidth + (GState.button_h_spacing * 2)
-  implicitHeight: player.implicitHeight + (GState.button_v_spacing * 2)
+  required property MprisPlayer player
+
+  readonly property string name: player.identity
+  readonly property var extra_data: GState.known_player_data[name] || [GState.player_icon, GState.theme.primary]
+
+  implicitWidth: player_button.implicitWidth + (GState.button_h_spacing * 2)
+  implicitHeight: player_button.implicitHeight + (GState.button_v_spacing * 2)
 
   Item {
-    implicitWidth: player.implicitWidth
-    implicitHeight: player.implicitHeight
+    implicitWidth: player_button.implicitWidth
+    implicitHeight: player_button.implicitHeight
 
     Row {
-      id: player
+      id: player_button
       anchors.centerIn: parent
 
       Default.Icon {
@@ -31,5 +33,5 @@ Default.PopupButton {
     }
   }
 
-  popup_window: Popup.Player { anchored: root }
+  popup_window: Popup.Player { player: root.player; anchored: root }
 }

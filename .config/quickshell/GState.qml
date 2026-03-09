@@ -20,22 +20,22 @@ Singleton {
   readonly property var bat_type_icon: ({
       [UPowerDeviceType.Phone]: "",
       [UPowerDeviceType.Headphones]: "󰋋",
-      [UPowerDeviceType.Mouse]: "",
+      [UPowerDeviceType.Mouse]: ""
     })
 
   readonly property string distro_icon: ""
   readonly property color distro_color: "#88bbff"
   readonly property var known_player_data: ({
-    // based on .identity (from mpris)
-    ["Spotify"]: ["", "#1DB954"],
-    ["mpv"]: ["", "#420042"],
-    ["Mozilla librewolf"]: ["", "#07ACFB"], // I mean, its firefox based
-  })
+      // based on .identity (from mpris)
+      ["Spotify"]: ["", "#1DB954"],
+      ["mpv"]: ["", "#420042"],
+      ["Mozilla librewolf"]: ["", "#07ACFB"] // I mean, its firefox based
+    })
   readonly property var mprisPlayerStateNames: ({
-    [MprisPlaybackState.Playing]: "playing",
-    [MprisPlaybackState.Paused]: "paused",
-    [MprisPlaybackState.Stopped]: "stopped",
-  })
+      [MprisPlaybackState.Playing]: "playing",
+      [MprisPlaybackState.Paused]: "paused",
+      [MprisPlaybackState.Stopped]: "stopped"
+    })
   readonly property string player_icon: ""
 
   readonly property string special_ws_name: "な"
@@ -68,13 +68,12 @@ Singleton {
 
   // var = MprisPlayer | undefined
   property var current_player: {
-    const playerctld = Mpris.players.values.find(player => player.dbusName == 'org.mpris.MediaPlayer2.playerctld');
-    if (playerctld) {
+    const playerctld = Mpris.players.values.find(player => player.dbusName == Constants.playerctldDbusName);
+
+    if (playerctld != null) {
       playerctld
     } else {
-      Mpris.players.values
-        .filter(player => player.canTogglePlaying)
-        .sort((a, b) => b.isPlaying - a.isPlaying)[0]
+      Mpris.players.values.filter(player => player.canTogglePlaying).sort((a, b) => b.isPlaying - a.isPlaying)[0]
     }
   }
 
@@ -90,7 +89,6 @@ Singleton {
       property bool vertical_layout: false
     }
   }
-
 
   readonly property list<string> gifsList: gifsListFile.text().trim().split(' ')
   FileView {

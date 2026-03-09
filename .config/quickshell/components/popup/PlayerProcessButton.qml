@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import Quickshell.Io
 
@@ -10,8 +12,6 @@ Loader {
   required property bool active
   required property list<string> command
   required property string text
-
-  // active: root.is_playerctld
 
   Process {
     id: oneshot_process

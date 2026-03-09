@@ -8,6 +8,9 @@ PopupWindow {
   required property Item anchored
   visible: false
 
+  // only after `dca6523`, still only in `-git` as of rn
+  grabFocus: true
+
   color: "transparent"
 
   anchor {
