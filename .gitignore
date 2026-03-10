@@ -20,6 +20,8 @@
 !/.ssh/
 
 !/.config/.dotfiles.*
+!/.config/logo.*
+!/logo.*
 
 !/.config/dolphinrc
 !/.config/kdeglobals
