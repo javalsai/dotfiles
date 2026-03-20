@@ -13,8 +13,15 @@ Singleton {
   readonly property list<string> volume_icons: ["", "", ""]
   readonly property string volume_muted_icon: ""
 
+  // fontforging in the mono:
+  // > charge_height = 1180
+  // > normal_height = 1780
+  //
+  // the icon, one, so do some math and if we want to match their apparent heigh: k = normal / charging
   readonly property list<string> battery_icons: ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
   readonly property list<string> charging_battery_icons: ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"]
+  // I still don't like this approach though
+  readonly property double charging_icon_ratio: 1780 / 1180
 
   readonly property string laptop_icon: "󰌢"
   readonly property var bat_type_icon: ({
@@ -30,6 +37,8 @@ Singleton {
       ["Spotify"]: ["", "#1DB954"],
       ["mpv"]: ["", "#420042"],
       ["Mozilla librewolf"]: ["", "#07ACFB"] // I mean, its firefox based
+      ,
+      ["Haruna"]: ["", "#E5E5E5"] // can't do best and really want this indicator
     })
   readonly property var mprisPlayerStateNames: ({
       [MprisPlaybackState.Playing]: "playing",
@@ -71,9 +80,9 @@ Singleton {
     const playerctld = Mpris.players.values.find(player => player.dbusName == Constants.playerctldDbusName);
 
     if (playerctld != null) {
-      playerctld
+      playerctld;
     } else {
-      Mpris.players.values.filter(player => player.canTogglePlaying).sort((a, b) => b.isPlaying - a.isPlaying)[0]
+      Mpris.players.values.filter(player => player.canTogglePlaying).sort((a, b) => b.isPlaying - a.isPlaying)[0];
     }
   }
 

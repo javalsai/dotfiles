@@ -13,12 +13,13 @@ Item {
 
   property alias text: inner.text
   property alias color: inner.color
+  property double factor: 1
 
   Default.Text {
     id: inner
     anchors.fill: parent
 
     font.family: GState.icon_font_family
-    font.pixelSize: GState.font_size * 1.5 * (root.tall_icon ? 0.75 : 1)
+    font.pixelSize: GState.font_size * 1.5 * (root.tall_icon ? 0.75 : 1) * root.factor
   }
 }

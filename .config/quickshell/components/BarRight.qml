@@ -1,3 +1,6 @@
+pragma ComponentBehavior: Bound
+
+import Quickshell
 import Quickshell.Services.UPower
 import Quickshell.Services.Pipewire
 
@@ -25,19 +28,30 @@ Default.DLayout {
 
   Bar.Group {
     id: bat_group
-    readonly property list<UPowerDevice> devices: UPower.devices.values.filter(b => b.type !== UPowerDeviceType.LinePower)
+    readonly property ScriptModel devices: ScriptModel {
+      values: UPower.devices.values.filter(b => b.type !== UPowerDeviceType.LinePower)
+    }
 
     Layout.alignment: Qt.AlignCenter
 
     color: GState.theme.battery_group
-    visible: devices.length > 0
+    visible: devices.values.length > 0
 
     Repeater {
       model: bat_group.devices
 
-      Bar.Battery {
-        required property UPowerDevice modelData
-        battery: modelData
+      Bar.Group {
+        id: battery_group
+        color: "transparent"
+
+        Layout.alignment: Qt.AlignCenter
+        required property var modelData
+
+        Bar.Battery {
+          id: battery
+
+          battery: battery_group.modelData
+        }
       }
     }
   }
