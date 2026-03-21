@@ -181,6 +181,7 @@ alias ip="ip -c=auto -iec"
 alias ffmpeg='ffmpeg -hide_banner'
 alias ffprobe='ffprobe -hide_banner'
 alias wget="wget --hsts-file ~/.local/share/wget/hsts"
+alias R="R --silent --no-restore-data --no-save"
 # programs i sometime typo'd and cant ctrlc out or are annoying asf
 alias gs='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN TO USE GHOSTSCRIPT"'
 alias mf='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN TO USE METAFONT, WHATEVER TS IS"'

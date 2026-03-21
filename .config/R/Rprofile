@@ -1,0 +1,7 @@
+options(browser = Sys.getenv("BROWSER"))
+# options(save.workspace = "no")
+# options(save.history = "yes")
+
+# save.image("path.RData")
+# save(model, df, file = "path.RData")
+# load("path.RData")

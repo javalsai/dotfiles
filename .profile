@@ -9,7 +9,7 @@ export PATH="$PATH:$HOME/perl5/bin"
 
 
 # ADDITIONAL ENV
-if [[ "$HOSTNAME" != "laptop" ]]; then
+if [[ "$(hostname)" != "laptop" ]]; then
     export BROWSER="firefox";
 else
     export BROWSER="librewolf";
@@ -22,10 +22,15 @@ export PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_
 export PERL_MB_OPT="--install_base \"$HOME/perl5\"";
 export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5";
 
+# higene
 export GOPATH="$HOME/.local/share/go/"
+export NODE_REPL_HISTORY="$HOME/.local/state/node_history"
+export R_PROFILE_USER="$HOME/.config/R/Rprofile"
+export R_HISTFILE="$HOME/.local/state/Rhistory"
+export R_LIBS_USER="$HOME/.local/share/R/%p-library/%v"
 
 # ffs, java & android (for tauri at least for now)
-export JAVA_HOME="/opt/android-studio/jbr"
+# export JAVA_HOME="/opt/android-studio/jbr"
 export ANDROID_HOME="$HOME/Android/Sdk"
 
 if [[ -d "$ANDROID_HOME/ndk" ]]; then

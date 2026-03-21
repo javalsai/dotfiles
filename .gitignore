@@ -40,6 +40,7 @@
 !/.config/nvim/**
 .config/nvim/lazy-lock.json
 !/.config/quickshell/**
+!/.config/R/**
 !/.config/wezterm/**
 !/.config/waybar/**
 !/.config/wofi/**
