@@ -1,5 +1,4 @@
 # PATH
-# this file is like... 10ms º-º
 # export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
@@ -7,6 +6,9 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.surrealdb:$PATH"
 export PATH="$PATH:$HOME/perl5/bin"
 
+if [[ -z "$LS_COLORS" ]]; then
+    eval "$(dircolors -b)"
+fi
 
 # ADDITIONAL ENV
 if [[ "$(hostname)" != "laptop" ]]; then

@@ -1,0 +1,10 @@
+ohmyzsh/ohmyzsh path:plugins/git
+ohmyzsh/ohmyzsh path:plugins/git-lfs
+ohmyzsh/ohmyzsh path:plugins/extract
+ohmyzsh/ohmyzsh path:lib/directories.zsh
+
+zdharma-continuum/fast-syntax-highlighting
+# zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-autosuggestions
+romkatv/powerlevel10k
+# Aloxaf/fzf-tab
