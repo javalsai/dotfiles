@@ -8,6 +8,8 @@ export PATH="$PATH:$HOME/perl5/bin"
 
 if [[ -z "$LS_COLORS" ]]; then
     eval "$(dircolors -b)"
+    # match nvim's catppuccin theme, use a dircolors db file if this gets more convoluted
+    export LS_COLORS="ma=3;4;30;46:${LS_COLORS//34/"38;2;236;134;150"}"
 fi
 
 # ADDITIONAL ENV
@@ -76,6 +78,7 @@ fi
 
 export EDITOR=${EDITOR:-nvim}
 
+export LESS="-R --mouse"
 # mfw tput takes 60ms ._. (its basic ansi conventions anyways)
 # (still like 5ms tho... but meh)
 # Support colors in less
