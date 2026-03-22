@@ -1,3 +1,14 @@
+local function deepCopy(original)
+  local copy = {}
+  for k, v in pairs(original) do
+    if type(v) == 'table' then
+      v = deepCopy(v)
+    end
+    copy[k] = v
+  end
+  return copy
+end
+
 local function plural(str, bool)
   if bool then
     return str .. 's'
@@ -29,18 +40,39 @@ return {
   dependencies = {
     'nvim-tree/nvim-web-devicons',
   },
-  opts = {
-    extensions = { 'neo-tree', 'mason', 'lazy', 'fugitive' },
-    sections = {
-      lualine_c = {
-        { 'filename', path = 1 },
-        'selectioncount',
-        'searchcount'
+  opts = function()
+    local theme = require 'lualine.themes.auto'
+    -- theme.normal, theme.replace = theme.replace, theme.normal
+    -- theme.normal.c, theme.replace.c = theme.replace.c, nil
+    -- theme.inactive.a.fg = theme.normal.a.bg
+
+    -- theme.normal.a.bg = '#dd5555'
+    -- theme.normal.b.fg = '#dd5555'
+
+    return {
+      options = { theme = theme },
+      extensions = { 'neo-tree', 'mason', 'lazy', 'fugitive' },
+      sections = {
+        lualine_c = {
+          {
+            'filename',
+            path = 1,
+
+            symbols = {
+              modified = '[*]',
+              readonly = '[ro]',
+              unnamed = '[no name]',
+              newfile = '[new]',
+            },
+          },
+          'selectioncount',
+          'searchcount',
+        },
+        lualine_x = { getWords },
       },
-      lualine_x = { getWords },
-    },
-    inactive_sections = {
-      lualine_c = { { 'filename', path = 1 } },
-    },
-  },
+      inactive_sections = {
+        lualine_c = { { 'filename', path = 1 } },
+      },
+    }
+  end,
 }

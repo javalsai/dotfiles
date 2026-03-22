@@ -1,6 +1,8 @@
 # let me say this is the thing that most sucked to find docs about
 # just skim this https://github.com/CppCXY/EmmyLuaCodeStyle/blob/master/lua.template.editorconfig
 
+root = true
+
 [*.lua]
 indent_style = space
 indent_size = 2
@@ -13,3 +15,4 @@ trailing_table_separator = smart
 space_after_comment_dash = true
 auto_collapse_lines = true
 end_statement_with_semicolon = never
+align_array_table = contain_curly

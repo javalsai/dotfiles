@@ -97,4 +97,37 @@ function M.keymaps_set(keymaps)
   end
 end
 
+--- @param expr string
+function M.exepath(expr)
+  local path = vim.fn.exepath(expr)
+  if path == '' then
+    return nil
+  else
+    return path
+  end
+end
+
+--- @param exprs string[]
+function M.avail_exepath(exprs)
+  for _, expr in ipairs(exprs) do
+    local path = M.exepath(expr)
+    if path then
+      return path
+    end
+  end
+end
+
+--- @param s string
+--- @param sepr string
+function M.split(s, sepr)
+  if sepr == nil then sepr = ' ' end
+
+  local list = {}
+  for w in string.gmatch(s, '([^' .. sepr .. ']+)') do
+    table.insert(list, w)
+  end
+
+  return list
+end
+
 return M

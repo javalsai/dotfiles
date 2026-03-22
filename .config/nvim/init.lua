@@ -1,6 +1,7 @@
+-- To disable formatter: `--- @diagnostic disable: codestyle-check`
+
 local globals = require 'globals'
 local utils = require 'utils'
-local cmds = require 'cmds'
 
 -- Base
 vim.o.encoding = 'UTF-8'
@@ -20,6 +21,7 @@ vim.o.scrolloff = 3
 
 -- Syntax
 vim.o.syntax = 'on'
+vim.g.load_doxygen_syntax = 1
 vim.cmd.filetype 'plugin on'
 vim.o.list = true
 vim.opt.listchars = { tab = '> ', trail = '·' }
@@ -71,25 +73,56 @@ vim.env.EDITOR = 'nvr --remote-tab-wait-silent'
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- https://github.com/CppCXY/EmmyLuaCodeStyle/issues/223
+local escape_insert_seq = 'ḉ' -- pretty neat in latin keybd
 utils.keymaps_set {
-  { '<C-ESC>',       '<C-\\><C-n>',                 't', desc = 'Escape from terminal mode' },
-  { '<C-BACKSPACE>', '<C-w>',                       'i' },
-  { '<C-DEL>',       '<C-o>"_de',                   'i' },
-  { '<Tab>',         '>gv',                         'v' },
-  { '<S-Tab>',       '<gv',                         'v' },
-  { '<S-Tab>',       cmds.cursor_follow_stab,       'i' },
-  { '<leader>p',     cmds.paste_over_visual_nocopy, 'x' },
-  { 'ḉ',             '<ESC>',                       'i' },
-  -- vim.keymap.set({ 'i', 'v' }, 's', '"_s', kargs)
-  -- vim.keymap.set({ 'i', 'v' }, 'c', '"_c', kargs)
+  { '<C-ESC>',         '<C-\\><C-n>',           't', desc = 'Escape from terminal mode' },
+  { '<C-BACKSPACE>',   '<C-w>',                 'i'                                     },
+  { '<C-DEL>',         '<C-o>"_de',             'i'                                     },
+  { '<Tab>',           '>gv',                   'x'                                     },
+  { '<S-Tab>',         '<gv',                   'x'                                     },
+  { escape_insert_seq, '<ESC>',                 'i'                                     },
+
+  -- { '<leader>p',     cmds.paste_over_visual_nocopy, 'x' },
+  { '<leader>p',       '<cmd>let @z=@+<CR>"zp', 'x'                                     },
+  { '<leader>P',       '<cmd>let @z=@+<CR>"zP', 'x'                                     },
+  { '<leader>c',       '<cmd>let @z=@+<CR>"zc', 'x'                                     },
+  { '<leader>C',       '<cmd>let @z=@+<CR>"zC', 'x'                                     },
+  { '<leader>C',       '<cmd>let @z=@+<CR>"zC', 'n'                                     },
+  { '<leader>s',       '<cmd>let @z=@+<CR>"zs', 'x'                                     },
+  { '<leader>s',       '<cmd>let @z=@+<CR>"zs', 'n'                                     },
+
+  { '<leader>Ff',      '<cmd>tab split<CR>',    'n'                                     },
+
+  -- bcs ` in latin layout needs to be pressed for a sole one
+  { 'ñ',               '`',                     'n'                                     },
+  { 'ññ',              '``',                    'n'                                     },
+  { 'mñ',              'm`',                    'n'                                     },
+
+  -- would be cool to make these work in insert mode and stay in their position
+  { '<C-CR>',          'm`o<ESC>``',            'n'                                     },
+  { '<C-S-CR>',        'm`O<ESC>``',            'n'                                     },
 }
 
 -- so like, when typing in insert mode, these common punctuation marks also insert pseudo undo marks, that way undo doens't wipe out all the inserted text
-vim.keymap.set('i', ',', ',<C-g>u')
-vim.keymap.set('i', '.', '.<C-g>u')
-vim.keymap.set('i', ';', ';<C-g>u')
-vim.keymap.set('i', '!', '!<C-g>u')
-vim.keymap.set('i', '?', '?<C-g>u')
+local undo_marks = ',.;!? )]}_-\'\"'
+for i = 1, #undo_marks do
+  local c = undo_marks:sub(i, i)
+  vim.keymap.set('i', c, c .. '<C-g>u')
+end
+
+-- allows me to `:q` on tabs opened by nvr instead of having to remember `:bd` or go through all the files in `:ls` and
+-- `:bd`'ing the ONE. If the file was open by nvr and is leaving the window, close the buffer.
+vim.api.nvim_create_autocmd('WinClosed', {
+  callback = function(args)
+    if vim.b[args.buf].nvr then
+      vim.schedule(function()
+        vim.bo[args.buf].buflisted = false
+        vim.api.nvim_buf_delete(args.buf, { unload = true })
+      end)
+    end
+  end,
+})
 
 -- lazy.nvim
 local lazypath = globals.lazypath
@@ -105,9 +138,9 @@ if not (vim.uv or vim.loop)['fs_stat'](lazypath) then
   }
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
-      { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
+      { 'Failed to clone lazy.nvim:\n', 'ErrorMsg'   },
       { out,                            'WarningMsg' },
-      { '\nPress any key to exit...' },
+      { '\nPress any key to exit...'                 },
     }, true, {})
     vim.fn.getchar()
     os.exit(1)

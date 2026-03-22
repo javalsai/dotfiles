@@ -15,10 +15,11 @@ end
 local function rustacean_init()
   -- https://github.com/mrcjkb/rustaceanvim#zap-quick-setup
   -- https://github.com/mrcjkb/rustaceanvim#gear-advanced-configuration
+  local ra_path = utils.exepath('rust-analyzer')
   vim.g.rustaceanvim = {
     tools = {},
     server = {
-      cmd = { 'rustup', 'run', 'nightly', 'rust-analyzer' },
+      cmd = ra_path and { ra_path } or { 'rustup', 'run', 'nightly', 'rust-analyzer' },
       standalone = true,
 
       on_attach = function(_, bufnr)
@@ -30,7 +31,7 @@ local function rustacean_init()
 
         maps {
           { '<leader>a', action, desc = 'LSP action (rustacean)' },
-          { '<leader>K', hover,  desc = 'LSP hover (rustacean)' },
+          { '<leader>K', hover,  desc = 'LSP hover (rustacean)'  },
         }
       end,
       default_settings = { ['rust-analyzer'] = {} },
@@ -63,7 +64,7 @@ return {
 
     vim.lsp.config('*', {
       capabilities = default_capabilities(),
-      root_markers = { '.git' },
+      -- root_markers = { '.git' },
     })
 
     -- ASM
@@ -81,7 +82,12 @@ return {
     -- Lua
     vim.lsp.config('lua_ls', {
       settings = {
-        -- workspace = { library = { vim.env.VIMRUNTIME, globals.lazypath } },
+        -- https://github.com/folke/lazydev.nvim/issues/136#issuecomment-3796597122
+        Lua = {
+          workspace = {
+            library = vim.api.nvim_get_runtime_file('', true),
+          },
+        },
         telemetry = { enable = false },
       },
     })
@@ -231,16 +237,20 @@ return {
     vim.lsp.enable('prismals')
 
     -- Qml
-    -- TODO: fname is now a number, prolly like bufnr or smth
+    local qmlls_path = utils.avail_exepath({ 'qmlls6', 'qmlls' })
     vim.lsp.config('qmlls', {
-      -- on_attach = on_attach,
-      cmd = { '/usr/lib/qt6/bin/qmlls', '-E' },
+      cmd = { qmlls_path, '-E' },
       filetypes = { 'qml' },
       single_file_support = true,
-      root_dir = function(fname)
-        local upfname = vim.fs.find('shell.qml', { path = fname, upward = true })
-        return vim.fs.dirname(upfname and upfname[1] or fname)
-      end,
+      root_markers = { 'shell.qml' },
+
+      -- that `on_dir` took some crying
+      --
+      -- root_dir = function(bufnr, on_dir)
+      --   local fname = vim.api.nvim_buf_get_name(0)
+      --   local upfname = vim.fs.find('shell.qml', { path = fname, upward = true })
+      --   on_dir(vim.fs.dirname(upfname and upfname[1] or fname))
+      -- end,
     })
     vim.lsp.enable('qmlls')
 
@@ -254,16 +264,16 @@ return {
         -- TODO: remove non LSP groupped once I get used
         -- TODO: move onto some onattach
         maps {
-          { '<leader>F',   vim.lsp.buf.format,        desc = 'LSP format' },
-          { 'K',           vim.lsp.buf.hover,         desc = 'LSP hover' },
-          { 'Z',           vim.diagnostic.open_float, desc = 'Open diagnostic' },
+          { '<leader>F',   vim.lsp.buf.format,        desc = 'LSP format'       },
+          { 'K',           vim.lsp.buf.hover,         desc = 'LSP hover'        },
+          { 'Z',           vim.diagnostic.open_float, desc = 'Open diagnostic'  },
           { 'gd',          vim.lsp.buf.definition,    desc = 'Go to definition' },
-          { '<leader>r',   vim.lsp.buf.rename,        desc = 'LSP rename' },
-          { '<leader>l',   group = 'LSP / related' },
-          { '<leader>lf',  vim.lsp.buf.format,        desc = 'LSP format' },
-          { '<leader>lk',  vim.lsp.buf.hover,         desc = 'LSP hover' },
-          { '<leader>lz',  vim.diagnostic.open_float, desc = 'Open diagnostic' },
-          { '<leader>lr',  vim.lsp.buf.rename,        desc = 'LSP rename' },
+          { '<leader>r',   vim.lsp.buf.rename,        desc = 'LSP rename'       },
+          { '<leader>l',   group = 'LSP / related'                              },
+          { '<leader>lf',  vim.lsp.buf.format,        desc = 'LSP format'       },
+          { '<leader>lk',  vim.lsp.buf.hover,         desc = 'LSP hover'        },
+          { '<leader>lz',  vim.diagnostic.open_float, desc = 'Open diagnostic'  },
+          { '<leader>lr',  vim.lsp.buf.rename,        desc = 'LSP rename'       },
           { '<leader>lgd', vim.lsp.buf.definition,    desc = 'Go to definition' },
         }
       end,

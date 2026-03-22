@@ -7,9 +7,9 @@ return {
     'MunifTanjim/nui.nvim',
   },
   keys = {
-    { '<C-n>', ':Neotree filesystem reveal left<CR>', desc = 'Open Neotree' },
+    { '<C-n>', ':Neotree filesystem reveal left<CR>', desc = 'Open Neotree'   },
     { '<C-t>', ':Neotree toggle<CR>',                 desc = 'Toggle Neotree' },
-    { '<C-f>', ':Neotree focus<CR>',                  desc = 'Focus Neotree' },
+    { '<C-f>', ':Neotree focus<CR>',                  desc = 'Focus Neotree'  },
   },
   config = function()
     require('neo-tree').setup({
