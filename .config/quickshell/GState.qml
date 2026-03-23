@@ -38,7 +38,7 @@ Singleton {
       ["mpv"]: ["", "#420042"],
       ["Mozilla librewolf"]: ["", "#07ACFB"] // I mean, its firefox based
       ,
-      ["Haruna"]: ["", "#E5E5E5"] // can't do best and really want this indicator
+      ["Haruna"]: ["", "#E5E5E5"] // can't do better and really want this indicator
     })
   readonly property var mprisPlayerStateNames: ({
       [MprisPlaybackState.Playing]: "playing",
