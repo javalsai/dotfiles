@@ -30,5 +30,5 @@
 	unstage = "restore --staged"
 [diff "exif"]
 	textconv = exiftool
-[includeIf "gitdir:~/"]
+[includeIf "hasconfig:remote.origin.url:git@github.com:javalsai/dotfiles"]
     path = ~/.config/.dotfiles.gitconfig
