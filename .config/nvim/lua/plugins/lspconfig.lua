@@ -83,11 +83,7 @@ return {
     vim.lsp.config('lua_ls', {
       settings = {
         -- https://github.com/folke/lazydev.nvim/issues/136#issuecomment-3796597122
-        Lua = {
-          workspace = {
-            library = vim.api.nvim_get_runtime_file('', true),
-          },
-        },
+        -- Lua = { workspace = { library = vim.api.nvim_get_runtime_file('', true), }, },
         telemetry = { enable = false },
       },
     })
