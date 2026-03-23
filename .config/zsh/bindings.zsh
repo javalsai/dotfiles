@@ -21,3 +21,8 @@ bindkey "^[^L" __ls_l # alt
 bindkey "^[^E" __xdg_open_cwd # alt
 bindkey "^[^Y" __yazi_cwd # alt
 bindkey "^[[108;6u" __ctrl_shift_l
+
+### OMZ
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
