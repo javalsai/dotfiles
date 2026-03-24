@@ -27,6 +27,11 @@ while read -r line; do
         curlopts+=(-A "FuckYouBot/1.0 (compatible; totally-a-browser)")
     fi
 
+    if [ -e "$name.png" ] && [ -z "${FORCE:-}" ]; then
+        printf "\x1b[2;35m%s already exists\x1b[0m\n" "$name.png" >&2
+        continue
+    fi
+
     filename=$name.$ext
     curl "${curlopts[@]}" -sLo "$filename" "$url"
     if ! [ "$opt" == "raw" ]; then
@@ -38,4 +43,4 @@ while read -r line; do
             ffmpegw -i "$filename" -vf "colorkey=black:2e-02:0" -c:v png -preset slow "$name.png"
         fi
     fi
-done <"$FILE" | lolcat
+done <"$FILE" # | lolcat
