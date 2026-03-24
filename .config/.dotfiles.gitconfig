@@ -1,2 +1,2 @@
 [core]
-    attributesFile = ~/.config/.dotfiles.gitattributes
+    attributesfile = .config/.dotfiles.gitattributes
