@@ -26,12 +26,15 @@ Default.PopupButton {
       anchors.centerIn: parent
 
       Default.Icon {
-        color: root.extra_data[1]
+        color: root.player.isPlaying ? root.extra_data[1] : GState.theme.unimportant_text
         text: root.extra_data[0]
         anchors.verticalCenter: parent.verticalCenter
       }
     }
   }
 
-  popup_window: Popup.Player { player: root.player; anchored: root }
+  popup_window: Popup.Player {
+    player: root.player
+    anchored: root
+  }
 }
