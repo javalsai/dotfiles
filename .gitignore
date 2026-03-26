@@ -17,6 +17,7 @@
 !/.local/
 !/.local/bin/
 !/.local/bin/shits/
+!/.local/share/
 !/.ssh/
 
 !/.config/.dotfiles.*
@@ -52,6 +53,11 @@
 !/.local/bin/local-ssh-key
 !/.local/bin/wfreeze
 !/.local/bin/shits/unipicker.sh
+
+!/.local/share/ZapZap/
+!/.local/share/ZapZap/customizations/
+!/.local/share/ZapZap/customizations/global/
+!/.local/share/ZapZap/customizations/global/**
 
 !/.ssh/authorized_keys
 !/.ssh/allowed_signers

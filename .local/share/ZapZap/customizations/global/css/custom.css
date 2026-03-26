@@ -1,0 +1,45 @@
+/* colors can be tweaked a bit more ngl */
+:root,
+.dark.color-refresh,
+.x28tbhy.x28tbhy,
+.color-refresh,
+.color-refresh.dark,
+.dark,
+body.dark {
+    --WDS-accent: #d55;
+    --WDS-accent-RGB: 221, 85, 85;
+    --WDS-accent-emphasized: #f35d5d;
+    --WDS-accent-emphasized-RGB: 243, 93, 93;
+    --WDS-content-external-link: #d55;
+    --WDS-content-external-link-RGB: 221, 85, 85;
+    --WDS-accent-deemphasized: #2c1010;
+    --WDS-accent-deemphasized-RGB: 44, 16, 16;
+    --WDS-accent-dimmer: #2c1010;
+    --WDS-accent-dimmer-RGB: 44, 16, 16;
+    /* --WDS-lines-outline-deemphasized: #f00; */
+    /* --WDS-lines-outline-deemphasized-RGB: 255, 0, 0; */
+    --WDS-content-action-deemphasized: #2c1010;
+    --WDS-content-action-deemphasized-RGB: 44, 16, 16;
+
+    --WDS-systems-bubble-surface-outgoing: #341818;
+    --WDS-systems-bubble-surface-outgoing-RGB: 52, 24, 24;
+
+    --WDS-content-default: #d55;
+    --WDS-content-default-RGB: 221, 85, 85;
+
+    --message-primary: #ddd;
+    --text-primary: #ddd;
+
+    --WDS-systems-bubble-surface-overlay: rgba(0, 0, 0, .4);
+    --WDS-systems-bubble-surface-overlay-RGB: 0, 0, 0;
+
+    color: var(--text-primary);
+}
+
+::selection {
+    background: var(--WDS-accent);
+}
+
+.x14ug900 {
+    color: var(--message-primary);
+}
