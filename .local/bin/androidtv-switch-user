@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+if [ -n "$TERMUX_VERSION" ]
+    # wtf tho
+    then getent_host() { python -c "import socket; print(socket.gethostbyname('$1'))"; }
+    else getent_host() { getent hosts "$1" | cut -d' ' -f1; }
+fi
+
+HOSTNAME=androidtv
+ADB="adb -P 5038"
+RANDOM_PORT_RANGE=38000-43000
+
+ip=$(getent_host $HOSTNAME)
+if ! $ADB devices | grep -Eq "$ip:|$HOSTNAME:"; then
+    echo attempting to connect to $HOSTNAME
+
+    if ! $ADB connect $HOSTNAME; then
+        echo trying to find an open port from $RANDOM_PORT_RANGE
+
+        nmap $HOSTNAME -T4 -p$RANDOM_PORT_RANGE | rg -o '([0-9]*)/tcp' | \
+        while IFS=/ read -r port _; do
+            echo trying "$port"
+
+            if $ADB connect androidtv:"$port"
+                then break
+            fi
+        done
+    fi
+fi
+
+# actual logic now
+
+USER=${1:-0}
+$ADB shell am switch-user "$USER"

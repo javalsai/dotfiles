@@ -49,6 +49,7 @@
 /.config/zsh/.zsh_history
 /.config/zsh/.zcompdump*
 
+!/.local/bin/androidtv-switch-user
 !/.local/bin/get-hypr-hover-window
 !/.local/bin/local-ssh-key
 !/.local/bin/wfreeze
