@@ -28,10 +28,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 [[ "$HOSTNAME" == "server5" ]] || [[ "$HOSTNAME" == "artway" ]] \
   && ZSH_THEME="robbyrussell-custom"
 
-source "$ZCFG/style.zsh"
-source "$ZCFG/aliases.zsh"
-source "$ZCFG/bindings.zsh"
-
 ### Plugins ###
 source "$ZCFG/antidote.zsh"
 source "$ZCFG/pl10k.zsh"
@@ -44,10 +40,17 @@ else
   antidote load "${ZDOTDIR:-$HOME}"/.zsh_plugins_noninteractive.txt
 fi
 
+### Base ZSH, After Plugins ##
+# (bindings might use like... `l`, which comes from plugins) #
+source "$ZCFG/style.zsh"
+source "$ZCFG/aliases.zsh"
+source "$ZCFG/bindings.zsh"
+
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
+# ---
 
 ### Welcome Screen ###
 if [[ "$FULL_GRAPHICAL_SHELl" == true ]]; then

@@ -22,6 +22,8 @@ alias gz=gzip
 alias rp=realpath
 alias dn=dirname
 alias dps="docker ps --format 'table {{.ID }} \\t {{ .Names }} \\t {{ .Image }}'"
+alias ndk="PATH=\"\$NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/:\$PATH\" "
+alias tmp="cd \${TMPDIR:-/tmp}"
 
 # Overrides
 alias dig=dog

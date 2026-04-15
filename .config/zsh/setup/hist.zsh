@@ -1,12 +1,11 @@
-setopt extendedglob
-setopt complete_aliases
-setopt hist_ignore_all_dups
-setopt hist_ignore_space
-
-HISTFILE="$HOME/.zsh_history"
+HISTFILE="$HOME/.local/state/.zsh_history"
 HISTSIZE=999999999
 SAVEHIST=999999999
 
-setopt HIST_REDUCE_BLANKS
-setopt INC_APPEND_HISTORY
-setopt SHARE_HISTORY
+setopt share_history
+setopt hist_ignore_space
+setopt hist_ignore_dups       # dont insert contiguous dups
+unsetopt hist_ignore_all_dups # dont touch older hist even if matches
+setopt hist_find_no_dups      # do not show already showed entries when finding
+setopt inc_append_history     # immediate append
+setopt hist_reduce_blanks
