@@ -6,18 +6,18 @@ if [ -n "$TERMUX_VERSION" ]
     else getent_host() { getent hosts "$1" | cut -d' ' -f1; }
 fi
 
-HOSTNAME=androidtv
+HOSTNAME=${HOSTNAME:-androidtv}
 ADB="adb -P 5038"
 RANDOM_PORT_RANGE=38000-43000
 
-ip=$(getent_host $HOSTNAME)
+ip=${ip:-$(getent_host "$HOSTNAME")}
 if ! $ADB devices | grep -Eq "$ip:|$HOSTNAME:"; then
-    echo attempting to connect to $HOSTNAME
+    echo attempting to connect to "$HOSTNAME"
 
-    if ! $ADB connect $HOSTNAME; then
+    if ! $ADB connect "$HOSTNAME"; then
         echo trying to find an open port from $RANDOM_PORT_RANGE
 
-        nmap $HOSTNAME -T4 -p$RANDOM_PORT_RANGE | rg -o '([0-9]*)/tcp' | \
+        nmap "$HOSTNAME" -T4 -p$RANDOM_PORT_RANGE | rg -o '([0-9]*)/tcp' | \
         while IFS=/ read -r port _; do
             echo trying "$port"
 

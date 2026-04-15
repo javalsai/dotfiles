@@ -10,6 +10,7 @@ ShellRoot {
 
   Connections {
     target: Hyprland
+    // https://github.com/hyprwm/Hyprland/discussions/13721 😭
     function onRawEvent(event) {
       // console.log(`${event.name}: ${event.data}`);
 
