@@ -1,0 +1,57 @@
+:root,
+.theme-dark,
+.theme-darker,
+.theme-midnight {
+    --blurple-50: #d55;
+    --blurple-59: #cc4f4f;
+    --blurple-60: #b44;
+
+    --mention-foreground: #d55;
+    --mention-background: #522;
+
+    --reaction-background-reacted-default: #522;
+    --message-highlight-background-default: #211;
+    --brand-10a: #322; /** more like `--message-highlight-background-hover` */
+
+    --text-brand: #d55;
+
+    --text-link: #d55;
+}
+
+label:has(span.hiddenVisually_b18fe2 > input:checked) .switchIndicator_a28278 {
+    background-color: #d55 !important;
+}
+
+::selection {
+    background: var(--blurple-50);
+}
+
+/** Idk why the variable calc breaks on widescreen opening settings but this is roughly the calculation with so much mess vars */
+/** There's like some mess with `@media` messing up this var */
+.modal_e44912 {
+    --custom-viewport-padding: var(--space-40);
+    /* width: calc(100% - 80px); */
+}
+
+/** Hide bar */
+:root,
+.theme-dark,
+.theme-darker,
+.theme-midnight {
+    --custom-app-top-bar-height: 0;
+}
+
+.itemsContainer_ef3116 {
+    margin-top: 10px;
+}
+
+.bar_c38106 {
+    display: none;
+}
+
+/** Hide nitro, shop and quests */
+.content_d125d2:has(> .friendsButtonContainer_e6b769)
+  > :is(:nth-child(3), :nth-child(4), div.wrapper__553bf) {
+    /* background-color: red !important; */
+    display: none !important;
+}
