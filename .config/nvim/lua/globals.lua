@@ -1,4 +1,19 @@
 return {
+  --- So in case you run out of memory compiling any of these (ajem latex ajem), I mean on mobile ofc:
+  ---
+  --- cd ${TMPDIR:-/tmp}
+  --- MAJOR_ANDROID=24
+  --- CC=$NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android$MAJOR_ANDROID-clang
+  --- git clone https://github.com/latex-lsp/tree-sitter-latex
+  --- cd tree-sitter-latex
+  --- tree-sitter generate
+  --- $CC -O2 -fPIC -c src/parser.c
+  --- $CC -shared parser.o -o latex.so
+  --- scp latex.so phone:.local/share/nvim/site/parser/
+  ---
+  --- ssh:
+  --- cd .local/share/nvim/site/parser
+  --- # check ldd of the new one and a natively compiled one for reference (made them vars for know what to tweak)
   ts_langs = {
     'c',
     'lua',

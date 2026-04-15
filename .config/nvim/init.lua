@@ -18,6 +18,7 @@ vim.o.linebreak = true
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.scrolloff = 3
+vim.o.showbreak = '↪ '
 
 -- Syntax
 vim.o.syntax = 'on'
@@ -76,32 +77,36 @@ vim.g.maplocalleader = ' '
 -- https://github.com/CppCXY/EmmyLuaCodeStyle/issues/223
 local escape_insert_seq = 'ḉ' -- pretty neat in latin keybd
 utils.keymaps_set {
-  { '<C-ESC>',         '<C-\\><C-n>',           't', desc = 'Escape from terminal mode' },
-  { '<C-BACKSPACE>',   '<C-w>',                 'i'                                     },
-  { '<C-DEL>',         '<C-o>"_de',             'i'                                     },
-  { '<Tab>',           '>gv',                   'x'                                     },
-  { '<S-Tab>',         '<gv',                   'x'                                     },
-  { escape_insert_seq, '<ESC>',                 'i'                                     },
+  { '<C-ESC>',         '<C-\\><C-n>',        't',         desc = 'Escape from terminal mode' },
+  { '<C-BACKSPACE>',   '<C-w>',              'i'                                             },
+  { '<C-DEL>',         '<C-o>"_de',          'i'                                             },
+  { '<Tab>',           '>gv',                'x'                                             },
+  { '<S-Tab>',         '<gv',                'x'                                             },
+  { escape_insert_seq, '<ESC>',              'i'                                             },
 
   -- { '<leader>p',     cmds.paste_over_visual_nocopy, 'x' },
-  { '<leader>p',       '<cmd>let @z=@+<CR>"zp', 'x'                                     },
-  { '<leader>P',       '<cmd>let @z=@+<CR>"zP', 'x'                                     },
-  { '<leader>c',       '<cmd>let @z=@+<CR>"zc', 'x'                                     },
-  { '<leader>C',       '<cmd>let @z=@+<CR>"zC', 'x'                                     },
-  { '<leader>C',       '<cmd>let @z=@+<CR>"zC', 'n'                                     },
-  { '<leader>s',       '<cmd>let @z=@+<CR>"zs', 'x'                                     },
-  { '<leader>s',       '<cmd>let @z=@+<CR>"zs', 'n'                                     },
+  { '<leader>p',       '"_c<C-r>+<ESC>',     'x'                                             },
+  { '<leader>P',       '"_c<C-r>+<ESC>',     'x'                                             },
+  { '<leader>c',       '"_c',                'x'                                             },
+  { '<leader>C',       '"_C',                'x'                                             },
+  { '<leader>C',       '"_C',                'n'                                             },
+  { '<leader>s',       '"_s',                'x'                                             },
+  { '<leader>s',       '"_s',                'n'                                             },
 
-  { '<leader>Ff',      '<cmd>tab split<CR>',    'n'                                     },
+  { '<leader>Ff',      '<cmd>tab split<CR>', 'n'                                             },
 
   -- bcs ` in latin layout needs to be pressed for a sole one
-  { 'ñ',               '`',                     'n'                                     },
-  { 'ññ',              '``',                    'n'                                     },
-  { 'mñ',              'm`',                    'n'                                     },
+  { 'ñ',               '`',                  'n'                                             },
+  { 'ññ',              '``',                 'n'                                             },
+  { 'mñ',              'm`',                 'n'                                             },
 
   -- would be cool to make these work in insert mode and stay in their position
-  { '<C-CR>',          'm`o<ESC>``',            'n'                                     },
-  { '<C-S-CR>',        'm`O<ESC>``',            'n'                                     },
+  { '<C-CR>',          'm`o<ESC>``',         'n'                                             },
+  { '<C-CR>',          'm`o<ESC>``',         'i'                                             },
+  { '<C-S-CR>',        'm`O<ESC>``',         'n'                                             },
+
+  -- text objs
+  -- { 'i-',              [[\w\+\ze_]],        { 'x', 'o' }                                    },
 }
 
 -- so like, when typing in insert mode, these common punctuation marks also insert pseudo undo marks, that way undo doens't wipe out all the inserted text

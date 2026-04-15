@@ -118,7 +118,7 @@ function M.avail_exepath(exprs)
 end
 
 --- @param s string
---- @param sepr string
+--- @param sepr? string
 function M.split(s, sepr)
   if sepr == nil then sepr = ' ' end
 

@@ -4,6 +4,7 @@ return {
   dependencies = {
     require 'plugins.notify',
     require 'plugins.gitsigns',
+    require 'plugins.flash',
   },
   priority = 1000,
   opts = {
@@ -29,11 +30,15 @@ return {
         NeoTreeDirectoryIcon = { fg = C.red },
         NeoTreeRootName = { fg = C.red, style = { 'bold' } },
         NeoTreeTitleBar = { fg = C.mantle, bg = C.red },
+
+        FlashLabel = { fg = C.base, bg = C.pink },
+        FlashCurrent = { fg = C.base, bg = C.mauve },
       }
     end,
     integrations = {
-      notify = true,
+      flash = true,
       gitsigns = true,
+      notify = true,
 
       lualine = {
         all = function(colors)
@@ -51,7 +56,7 @@ return {
 
             inactive = {
               a = { fg = colors.red },
-            }
+            },
           }
         end,
       },

@@ -17,7 +17,9 @@ local function rustacean_init()
   -- https://github.com/mrcjkb/rustaceanvim#gear-advanced-configuration
   local ra_path = utils.exepath('rust-analyzer')
   vim.g.rustaceanvim = {
-    tools = {},
+    tools = {
+      code_actions = { ui_select_fallback = true },
+    },
     server = {
       cmd = ra_path and { ra_path } or { 'rustup', 'run', 'nightly', 'rust-analyzer' },
       standalone = true,
@@ -28,10 +30,14 @@ local function rustacean_init()
 
         local function action() vim.cmd.RustLsp('codeAction') end
         local function hover() vim.cmd.RustLsp({ 'hover', 'actions' }) end
+        local function down() vim.cmd.RustLsp({ 'moveItem', 'down' }) end
+        local function up() vim.cmd.RustLsp({ 'moveItem', 'up' }) end
 
         maps {
-          { '<leader>a', action, desc = 'LSP action (rustacean)' },
-          { '<leader>K', hover,  desc = 'LSP hover (rustacean)'  },
+          { '<leader>a', action, desc = 'LSP action (rustacean)'         },
+          { '<leader>K', hover,  desc = 'LSP hover (rustacean)'          },
+          { '<M-j>',     down,   desc = 'LSP move item down (rustacean)' },
+          { '<M-k>',     up,     desc = 'LSP move item up (rustacean)'   },
         }
       end,
       default_settings = { ['rust-analyzer'] = {} },
@@ -48,13 +54,11 @@ return {
     {
       'mrcjkb/rustaceanvim',
       lazy = false,
-      dependencies = { require 'plugins.which-key' },
       init = rustacean_init,
     },
 
     { 'saecki/crates.nvim', config = true },
     'b0o/schemastore.nvim',
-    require 'plugins.which-key',
   },
   config = function()
     local lspconfig_util = require 'lspconfig.util'
@@ -232,6 +236,9 @@ return {
     -- Prisma
     vim.lsp.enable('prismals')
 
+    -- Kotlin
+    vim.lsp.enable('kotlin_language_server')
+
     -- Qml
     local qmlls_path = utils.avail_exepath({ 'qmlls6', 'qmlls' })
     vim.lsp.config('qmlls', {
@@ -255,22 +262,26 @@ return {
       group = vim.api.nvim_create_augroup('UserLspConfig', {}),
       callback = function(ev)
         local wk = require 'which-key'
+        local tc = require 'telescope.builtin'
         local _, maps = utils.bufmap(wk, ev.buf)
 
         -- TODO: remove non LSP groupped once I get used
-        -- TODO: move onto some onattach
+        -- TODO: move onto some onattach (or maybe not, i usually trigger without lsp even)
         maps {
-          { '<leader>F',   vim.lsp.buf.format,        desc = 'LSP format'       },
+          -- { '<leader>F',   vim.lsp.buf.format,        desc = 'LSP format'       },
           { 'K',           vim.lsp.buf.hover,         desc = 'LSP hover'        },
           { 'Z',           vim.diagnostic.open_float, desc = 'Open diagnostic'  },
-          { 'gd',          vim.lsp.buf.definition,    desc = 'Go to definition' },
+          { 'gd',          tc.lsp_definitions,        desc = 'Go to definition' },
+          { 'gt',          tc.lsp_type_definitions,   desc = 'Go to definition' },
           { '<leader>r',   vim.lsp.buf.rename,        desc = 'LSP rename'       },
           { '<leader>l',   group = 'LSP / related'                              },
           { '<leader>lf',  vim.lsp.buf.format,        desc = 'LSP format'       },
           { '<leader>lk',  vim.lsp.buf.hover,         desc = 'LSP hover'        },
           { '<leader>lz',  vim.diagnostic.open_float, desc = 'Open diagnostic'  },
           { '<leader>lr',  vim.lsp.buf.rename,        desc = 'LSP rename'       },
-          { '<leader>lgd', vim.lsp.buf.definition,    desc = 'Go to definition' },
+          { '<leader>lR',  tc.lsp_references,         desc = 'References'       },
+          { '<leader>lgd', tc.lsp_definitions,        desc = 'Go to definition' },
+          { '<leader>lgt', tc.lsp_type_definitions,   desc = 'Go to definition' },
         }
       end,
     })
