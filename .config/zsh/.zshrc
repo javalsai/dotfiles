@@ -14,7 +14,6 @@ fi
 
 ### Basic env ###
 [ -f "$HOME/.profile" ] && . "$HOME/.profile" || :
-[ -f "$HOME/.sh-utls" ] && . "$HOME/.sh-utls" || :
 
 ZCFG="$HOME/.config/zsh"
 export HOSTNAME=$(hostname)

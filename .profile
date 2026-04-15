@@ -1,103 +1,78 @@
-# PATH
-# export PATH="$BUN_INSTALL/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.surrealdb:$PATH"
-export PATH="$PATH:$HOME/perl5/bin"
-
-if [[ -z "$LS_COLORS" ]]; then
-    eval "$(dircolors -b)"
-    # match nvim's catppuccin theme, use a dircolors db file if this gets more convoluted
-    export LS_COLORS="ma=3;4;30;46:${LS_COLORS//34/"38;2;236;134;150"}"
+# for when I wanna force env instead of re-login, though exports shouldn't
+# force normally though
+FORCE_SOURCE=0
+if [ "$FORCE_SOURCE" -eq 1 ]
+    then __export_ifn() { eval 'export "'"$1"'"="'"$2"'"'; }
+    else __export_ifn() { eval '[ -z "$'"$1"'" ] && export "'"$1"'"="'"$2"'"'; }
 fi
+unset FORCE_SOURCE
 
-# ADDITIONAL ENV
-if [[ "$(hostname)" != "laptop" ]]; then
-    export BROWSER="firefox";
-else
-    export BROWSER="librewolf";
-fi
-export WINEDEBUG="fixme-all";
+### Higene (custom homes ALWAYS first, trust me, EVEN before $BROWSER) ###
 
-export BUN_INSTALL="$HOME/.bun"
-export PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}";
-export PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}";
-export PERL_MB_OPT="--install_base \"$HOME/perl5\"";
-export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5";
-
-# higene
-export GOPATH="$HOME/.local/share/go/"
-export NODE_REPL_HISTORY="$HOME/.local/state/node_history"
-export R_PROFILE_USER="$HOME/.config/R/Rprofile"
-export R_HISTFILE="$HOME/.local/state/Rhistory"
-export R_LIBS_USER="$HOME/.local/share/R/%p-library/%v"
-
-# ffs, java & android (for tauri at least for now)
-# export JAVA_HOME="/opt/android-studio/jbr"
-export ANDROID_HOME="$HOME/Android/Sdk"
+__export_ifn ANDROID_HOME "$HOME/.local/share/Android/Sdk"
+__export_ifn BUN_INSTALL "$HOME/.local/share/bun" # TODO
+__export_ifn CARGO_HOME "$HOME/.local/share/cargo"
+__export_ifn GOPATH "$HOME/.local/share/go"
+__export_ifn NODE_REPL_HISTORY "$HOME/.local/state/node_history"
+__export_ifn RUSTUP_HOME "$HOME/.local/share/rustup"
+__export_ifn R_HISTFILE "$HOME/.local/state/Rhistory"
+__export_ifn R_LIBS_USER "$HOME/.local/share/R/%p-library/%v"
+__export_ifn R_PROFILE_USER "$HOME/.config/R/Rprofile"
+source "$HOME/.config/profile/perl.sh"
 
 if [[ -d "$ANDROID_HOME/ndk" ]]; then
-    NDK_HOME="$ANDROID_HOME/ndk/$(command ls -1 "$ANDROID_HOME/ndk" | head -1)"
-    export NDK_HOME
+    __export_ifn NDK_HOME "$ANDROID_HOME/ndk/$(command ls -1 "$ANDROID_HOME/ndk" | head -1)"
 fi
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+### Important Globals ###
 
-if [[ -z "$TERMUX_VERSION" ]]; then
-    if command -v wl-copy &> /dev/null; then
-        export CLIP_COPY="wl-copy"
-    else
-        export CLIP_COPY="xclip -sel clip"
-    fi
-    export SSH_ASKPASS='/usr/bin/ksshaskpass'
-    export SSH_ASKPASS_REQUIRE=prefer
-else
-    source "$PREFIX/libexec/source-ssh-agent.sh"
+__export_ifn HOSTNAME "$(hostname)"
 
-    source "$PREFIX/etc/profile.d/rust-nightly.sh"
-    export RUST_SRC_PATH="$PREFIX/opt/rust-nightly/lib/rustlib/rustc-src/rust/library"
-    # git cloned src there as `_` and symlinked `library` there
-    #
-    # also checked out the commit of nightly's `rustc -vV` commit hash
-    #
-    # if that whole opt dir was only there for the other pkgs i shouls move
-    # that out to avoid apt tracking conflicts
-
-
-    export CLIP_COPY=termux-clipboard-set
-    export STORAGE=/storage/emulated/0
-    export NVM_DIR=/data/data/com.termux/files/home/.nvm # idek if i still have nvm
-    export RSYNC_RSH=ssha
-    export GIT_SSH_COMMAND=ssha
-    export SSH_ASKPASS='termux-ssh-askpass'
-    export SSH_ASKPASS_REQUIRE=prefer
+if [[ "$HOSTNAME" != "laptop" ]]
+    then __export_ifn BROWSER "firefox"
+    else __export_ifn BROWSER "librewolf"
 fi
 
 export EDITOR=${EDITOR:-nvim}
 
-export LESS="-R --mouse"
-# mfw tput takes 60ms ._. (its basic ansi conventions anyways)
-# (still like 5ms tho... but meh)
-# Support colors in less
-TPUT_SGR0=$(tput sgr0)
-export LESS_TERMCAP_mb=$'\x1b''[1;31m' # $(tput bold; tput setaf 1)
-export LESS_TERMCAP_md=$'\x1b''[1;31m' # $(tput bold; tput setaf 1)
-export LESS_TERMCAP_me=$TPUT_SGR0 # $(tput sgr0)
-export LESS_TERMCAP_se=$TPUT_SGR0 # $(tput sgr0)
-export LESS_TERMCAP_so=$'\x1b''[1;33;44m' # $(tput bold; tput setaf 3; tput setab 4)
-export LESS_TERMCAP_ue=$TPUT_SGR0 # $(tput sgr0)
-export LESS_TERMCAP_us=$'\x1b''[1;4;32m' # $(tput smul; tput bold; tput setaf 2)
-export LESS_TERMCAP_mr=$'\x1b''[7m' # $(tput rev)
-export LESS_TERMCAP_mh=$'\x1b''[2m' # $(tput dim)
-# apparently not even supported in any of my terms
-export LESS_TERMCAP_ZN= # $(tput ssubm)
-export LESS_TERMCAP_ZV= # $(tput rsubm)
-export LESS_TERMCAP_ZO= # $(tput ssupm)
-export LESS_TERMCAP_ZW= # $(tput rsupm)
-export GROFF_NO_SGR=1
+if [ -z "$LS_COLORS" ]; then
+    eval "$(dircolors -b)"
+    # match nvim's catppuccin theme, use a dircolors db file if this gets more convoluted
+    export LS_COLORS="ma=3;4;30;46:${LS_COLORS//34/"38;2;236;134;150"}"
+    export CLICOLOR=${CLICOLOR:-1}
+fi
 
-# SOURCES
-[ -s "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env" || :
+unset -f __export_ifn
+
+### PATH ###
+
+__path_if() { [ -d "$1" ] && [ "$1" != "/bin" ] && PATH="$1:$PATH"; }
+__pathafter_if() { [ -d "$1" ] && [ "$1" != "/bin" ] && PATH="$PATH:$1"; }
+
+__path_if "$HOME/.local/bin"
+__path_if "$CARGO_HOME/bin"
+__path_if "$HOME/.surrealdb" #*unhigenic
+__path_if "$GOPATH/bin"
+__path_if "$BUN_INSTALL/bin"
+__pathafter_if "$PERL5_HOME/bin"
+
+unset -f __path_if __pathafter_if
+
+# ADDITIONAL ENV
+
+export WINEDEBUG=${WINEDEBUG:-"fixme-all"}
+
+[ -n "$TERMUX_VERSION" ] &&
+    source "$HOME/.config/profile/termux.sh"
+
+if [ -z "$CLIP_COPY" ] && command -v wl-copy &> /dev/null
+    then export CLIP_COPY=${CLIP_COPY:-"wl-copy"}
+    else export CLIP_COPY=${CLIP_COPY:-"xclip -sel clip"}
+fi
+export SSH_ASKPASS=${SSH_ASKPASS:-"/usr/bin/ksshaskpass"}
+export SSH_ASKPASS_REQUIRE=prefer
+
+source "$HOME/.config/profile/less.sh"
+
+### Shell Functions ###
+source "$HOME/.config/profile/shell-functions"

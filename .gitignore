@@ -8,7 +8,6 @@
 
 !/.profile
 !/.zshenv
-!/.sh-utls
 
 !/.github/
 !/.github/**
@@ -21,6 +20,7 @@
 !/.ssh/
 
 !/.config/.dotfiles.*
+!/.config/profile/**
 !/.config/logo.*
 !/logo.*
 
