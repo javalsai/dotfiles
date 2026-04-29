@@ -1,7 +1,21 @@
 POWERLEVEL9K_MODE="nerdfont-complete"
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%B%(?:%F{green}:%F{red})  ➜ %f"
+
+if ! command -v doas &> /dev/null; then
+  # 5; might be too much
+  # also idk if I should beusing zsh's %Format things
+  PROMPT_ADVICE=$'\033[2;9mado\033[0m '
+fi
+PROMPT_PREFIX="  $PROMPT_ADVICE%B"
+
+if [ -z "$IN_NIX_SHELL" ]; then
+  POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="$PROMPT_PREFIX%(?:%F{green}:%F{red})➜ %f"
+else
+  # inspired by https://mastodon.social/@IndigoPRNG@cathode.church/116410245776964008
+  export NIX_SHLVL="λ$NIX_SHLVL"
+  POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="$PROMPT_PREFIX%F{magenta}${IN_NIX_SHELL}|%(?::%F{red})${NIX_SHLVL}%F{magenta}⟩ %f"
+fi
 
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[alias]='fg=10,bold' # 10=lightgreen
