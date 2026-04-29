@@ -31,11 +31,14 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 source "$ZCFG/antidote.zsh"
 source "$ZCFG/pl10k.zsh"
 
-# dont wanna load allat if its nvim's `:!` for example, but still the same
-# command behavior (aliases, functions, etc)
+! [[ -s "$ZCFG/.zsh_plugins.zsh" ]] \
+  && rm "$ZCFG/.zsh_plugins.zsh" # sometimes, like `ns --pure`, or `PATH= zsh`,
+                                 # permanently fucks up antidote
 if [[ "$-" == *m* ]]; then
   antidote load
 else
+  # dont wanna load allat if its nvim's `:!` for example, but still the same
+  # command behavior (aliases, functions, etc)
   antidote load "${ZDOTDIR:-$HOME}"/.zsh_plugins_noninteractive.txt
 fi
 
