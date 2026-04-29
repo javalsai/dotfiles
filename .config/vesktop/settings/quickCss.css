@@ -55,3 +55,8 @@ label:has(span.hiddenVisually_b18fe2 > input:checked) .switchIndicator_a28278 {
     /* background-color: red !important; */
     display: none !important;
 }
+
+/* Hide "Invite to Voice" or whatev thing */
+.list_c3cd7d > .animation_f2170c {
+    display: none;
+}
