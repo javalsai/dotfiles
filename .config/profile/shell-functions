@@ -86,15 +86,15 @@ each() {
 
 
 # More like fixes but whatever...
-#_do_nvm_thingy() {
-#    [[ -n "$NVM_THINGY_DONE" ]] && return
-#    . /usr/share/nvm/init-nvm.sh
-#}
+# _do_nvm_thingy() {
+#     [[ -n "$NVM_THINGY_DONE" ]] && return
+#     . /usr/share/nvm/init-nvm.sh
+# }
 #
-#node() {
-#    . _do_nvm_thingy
-#    node "$@"
-#}
+# node() {
+#     . _do_nvm_thingy
+#     node "$@"
+# }
 
 y() {
     local tmp
