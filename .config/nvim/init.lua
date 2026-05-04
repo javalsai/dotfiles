@@ -60,6 +60,9 @@ vim.o.undofile = true
 -- Idk
 vim.opt.wildmode:append { 'longest', 'list' }
 vim.opt.clipboard:append { 'unnamedplus' }
+if vim.env.SSH_TTY ~= nil then
+  vim.g.clipboard = 'osc52'
+end
 
 -- To use a interactive shell on commands (I can use aliases)
 vim.o.shellcmdflag = '-ic'
