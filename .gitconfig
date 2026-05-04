@@ -2,8 +2,15 @@
 	email = jvssxxi@gmail.com
 	name = javalsai
 [core]
+	pager = delta
 	editor = $EDITOR
 	attributesfile = ~/.gitattributes
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	side-by-side = true
+	navigate = true
+	; dark = true
 [safe]
 	directory = /opt/WALC
 	directory = /opt/better-discord
