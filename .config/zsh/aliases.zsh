@@ -24,7 +24,8 @@ alias dn=dirname
 alias dps="docker ps --format 'table {{.ID }} \\t {{ .Names }} \\t {{ .Image }}'"
 alias ndk="PATH=\"\$NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/:\$PATH\" "
 alias tmp="cd \${TMPDIR:-/tmp}"
-alias ns='nix-shell --command "export SHELL=$SHELL; exec \$SHELL" '
+alias ns='nix-shell --command "export SHELL=\"$SHELL\"; exec \"\$SHELL\""'
+alias nd='nix develop --command bash -c "export SHELL=\"$SHELL\"; exec \"\$SHELL\""'
 alias m='man 1 ' # manual but alias expanded and shorter, making the savage 'm g' possible
 alias pm=pacman
 alias rs=rsync
@@ -44,9 +45,9 @@ alias ffmpeg='ffmpeg -hide_banner'
 alias ffprobe='ffprobe -hide_banner'
 alias wget="wget --hsts-file ~/.local/share/wget/hsts"
 alias R="R --silent --no-restore-data --no-save"
-# programs i sometime typo'd and cant ctrlc out or are annoying asf
-alias gs='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN TO USE GHOSTSCRIPT"'
-alias mf='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN TO USE METAFONT, WHATEVER TS IS"'
+# programs i sometime typo'd and cant ctrlc/ctrld out or are annoying asf
+alias gs='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN TO USE GHOSTSCRIPT" #'
+alias mf='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN TO USE METAFONT, WHATEVER TS IS" #'
 
 alias h="GIT_DIR=.dotfiles.git " # can put dotfiles in home with .git as .dotfiles.git
                                  # and manage with h alias
