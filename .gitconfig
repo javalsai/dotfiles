@@ -17,6 +17,8 @@
 	directory = /home/javalsai/tmp/web-root
 	directory = /var/www/tuxcord.net
 	directory = /var/tuxcord
+[advice]
+	detachedHead = false
 [gpg]
 	format = ssh
 [gpg "ssh"]
