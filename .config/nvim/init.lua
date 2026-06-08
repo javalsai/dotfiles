@@ -52,6 +52,8 @@ vim.o.mouse = 'a'
 -- Draws
 vim.o.ttyfast = true
 vim.o.lazyredraw = false
+vim.o.signcolumn = 'yes'
+vim.o.winborder = 'rounded'
 
 -- Persistent Undo
 vim.o.undofile = true
