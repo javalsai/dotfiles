@@ -60,6 +60,8 @@ unset -f __path_if __pathafter_if
 
 # ADDITIONAL ENV
 
+export DO_NOT_TRACK=1 # https://donottrack.sh
+
 export WINEDEBUG=${WINEDEBUG:-"fixme-all"}
 
 [ -n "$TERMUX_VERSION" ] &&
