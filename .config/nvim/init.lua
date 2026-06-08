@@ -80,33 +80,33 @@ vim.g.maplocalleader = ' '
 -- https://github.com/CppCXY/EmmyLuaCodeStyle/issues/223
 local escape_insert_seq = 'ḉ' -- pretty neat in latin keybd
 utils.keymaps_set {
-  { '<C-ESC>',         '<C-\\><C-n>',        't',         desc = 'Escape from terminal mode' },
-  { '<C-BACKSPACE>',   '<C-w>',              'i'                                             },
-  { '<C-DEL>',         '<C-o>"_de',          'i'                                             },
-  { '<Tab>',           '>gv',                'x'                                             },
-  { '<S-Tab>',         '<gv',                'x'                                             },
-  { escape_insert_seq, '<ESC>',              'i'                                             },
+  { '<C-ESC>',         '<C-\\><C-n>',        't', desc = 'Escape from terminal mode' },
+  { '<C-BACKSPACE>',   '<C-w>',              'i'                                     },
+  { '<C-DEL>',         '<C-o>"_de',          'i'                                     },
+  { '<Tab>',           '>gv',                'x'                                     },
+  { '<S-Tab>',         '<gv',                'x'                                     },
+  { escape_insert_seq, '<ESC>',              'i'                                     },
 
   -- { '<leader>p',     cmds.paste_over_visual_nocopy, 'x' },
-  { '<leader>p',       '"_c<C-r>+<ESC>',     'x'                                             },
-  { '<leader>P',       '"_c<C-r>+<ESC>',     'x'                                             },
-  { '<leader>c',       '"_c',                'x'                                             },
-  { '<leader>C',       '"_C',                'x'                                             },
-  { '<leader>C',       '"_C',                'n'                                             },
-  { '<leader>s',       '"_s',                'x'                                             },
-  { '<leader>s',       '"_s',                'n'                                             },
+  { '<leader>p',       '"_c<C-r>+<ESC>',     'x'                                     },
+  { '<leader>P',       '"_c<C-r>+<ESC>',     'x'                                     },
+  { '<leader>c',       '"_c',                'x'                                     },
+  { '<leader>C',       '"_C',                'x'                                     },
+  { '<leader>C',       '"_C',                'n'                                     },
+  { '<leader>s',       '"_s',                'x'                                     },
+  { '<leader>s',       '"_s',                'n'                                     },
 
-  { '<leader>Ff',      '<cmd>tab split<CR>', 'n'                                             },
+  { '<leader>Ff',      '<cmd>tab split<CR>', 'n'                                     },
 
   -- bcs ` in latin layout needs to be pressed for a sole one
-  { 'ñ',               '`',                  'n'                                             },
-  { 'ññ',              '``',                 'n'                                             },
-  { 'mñ',              'm`',                 'n'                                             },
+  { 'ñ',               '`',                  'n'                                     },
+  { 'ññ',              '``',                 'n'                                     },
+  { 'mñ',              'm`',                 'n'                                     },
 
   -- would be cool to make these work in insert mode and stay in their position
-  { '<C-CR>',          'm`o<ESC>``',         'n'                                             },
-  { '<C-CR>',          'm`o<ESC>``',         'i'                                             },
-  { '<C-S-CR>',        'm`O<ESC>``',         'n'                                             },
+  { '<C-CR>',          'm`o<ESC>``',         'n'                                     },
+  { '<C-CR>',          'm`o<ESC>``',         'i'                                     },
+  { '<C-S-CR>',        'm`O<ESC>``',         'n'                                     },
 
   -- text objs
   -- { 'i-',              [[\w\+\ze_]],        { 'x', 'o' }                                    },

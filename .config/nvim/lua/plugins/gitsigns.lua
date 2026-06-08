@@ -21,7 +21,7 @@ return {
         { '<leader>Gd',  gitsigns.diffthis,            desc = 'Show This Diff' },
 
         { '<leader>Gh',  group = 'Git Hunks' },
-        { '<leader>Ghs', gitsigns.stage_hunk,          desc = 'Stage Hunk' },
+        { '<leader>Ghs', gitsigns.stage_hunk,          desc = 'Un/Stage Hunk' },
         { '<leader>Ghr', gitsigns.reset_hunk,          desc = 'Reset hunk' },
         { '<leader>Ghp', gitsigns.preview_hunk_inline, desc = 'Preview Hunk' },
 

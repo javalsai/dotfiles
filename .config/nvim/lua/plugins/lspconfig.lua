@@ -257,6 +257,9 @@ return {
     })
     vim.lsp.enable('qmlls')
 
+    -- Ctags
+    -- vim.lsp.enable('ctags_lsp')
+
     -- Generic conf
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('UserLspConfig', {}),

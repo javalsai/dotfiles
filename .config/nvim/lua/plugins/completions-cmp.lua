@@ -102,17 +102,17 @@ return {
         },
         sources = cmp.config.sources {
           { name = 'nvim_lsp' },
-          { name = 'buffer' },
-          { name = 'path' },
-          { name = 'crates' },
-          { name = 'lazydev' },
-          { name = 'luasnip' },
+          { name = 'buffer'   },
+          { name = 'path'     },
+          { name = 'crates'   },
+          { name = 'lazydev'  },
+          { name = 'luasnip'  },
         },
       }
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
-          { name = 'path' },
+          { name = 'path'    },
           { name = 'cmdline' },
         },
       })
