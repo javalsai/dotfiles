@@ -10,6 +10,9 @@ autoload -Uz bracketed-paste-magic
 zle_bracketed_paste_magic() { zle bracketed-paste; }
 zle -N bracketed-paste-magic
 
+# cursor beam on startup (for ssh'ing in, or nvim builtin term)
+echo -ne '\e[6 q'
+
 # custom word boundaries
 WORDCHARS=${WORDCHARS//\//}
 WORDCHARS=${WORDCHARS//[_-]/}
