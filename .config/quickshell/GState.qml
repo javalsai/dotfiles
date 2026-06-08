@@ -36,6 +36,7 @@ Singleton {
       // based on .identity (from mpris)
       ["Spotify"]: ["", "#1DB954"],
       ["mpv"]: ["", "#420042"],
+      ["Mozilla firefox"]: ["", "#E66000"],
       ["Mozilla librewolf"]: ["", "#07ACFB"] // I mean, its firefox based
       ,
       ["Haruna"]: ["", "#E5E5E5"] // can't do better and really want this indicator
