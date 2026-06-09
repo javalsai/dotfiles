@@ -8,4 +8,5 @@ Default.Text {
   Layout.fillWidth: true
   horizontalAlignment: Text.AlignLeft
   wrapMode: Text.Wrap
+  elide: Text.ElideRight
 }

@@ -16,8 +16,8 @@ Default.PopupWindow {
 
   required property MprisPlayer player
 
-  implicitHeight: 250
-  implicitWidth: 500
+  implicitWidth: content.implicitWidth + 4 * HyprlandConfig.gaps_out
+  implicitHeight: content.implicitHeight + 3 * HyprlandConfig.gaps_out
 
   readonly property int maxImageSize: 150
   readonly property bool is_playerctld: player.dbusName == Constants.playerctldDbusName
@@ -31,9 +31,13 @@ Default.PopupWindow {
   }
 
   ColumnLayout {
+    id: content
+
     anchors.centerIn: parent
     height: parent.height - (GState.popup_padding * 2)
     width: parent.width - (GState.popup_padding * 2)
+
+    spacing: 1.5 * HyprlandConfig.gaps_out
 
     // ❮ ❯
     // ⟨ ⟩
@@ -62,11 +66,9 @@ Default.PopupWindow {
       }
     }
 
-    Util.Spacer {}
-
     RowLayout {
       Layout.fillWidth: true
-      spacing: 20
+      spacing: 2 * HyprlandConfig.gaps_out
 
       SafeLoadedImage {
         maxWidth: root.maxImageSize
@@ -75,7 +77,7 @@ Default.PopupWindow {
 
         readonly property string chosen_gif: {
           root.player.length;
-          GState.gifsList[Math.floor(Math.random() * GState.gifsList.length)]
+          GState.gifsList[Math.floor(Math.random() * GState.gifsList.length)];
         }
         source: root.player.trackArtUrl || Qt.resolvedUrl(`${Constants.assetsUrl}${chosen_gif}`)
         playing: root.player.isPlaying
@@ -86,10 +88,11 @@ Default.PopupWindow {
       }
 
       ColumnLayout {
-        Layout.fillWidth: true
+        Layout.maximumWidth: 300
 
         Default.WrapText {
           text: root.player.trackTitle
+          maximumLineCount: 3
         }
 
         Default.WrapText {
@@ -97,6 +100,7 @@ Default.PopupWindow {
           font.italic: !root.player.trackArtist
           font.pixelSize: GState.font_size * 0.75
           color: GState.theme.unimportant_text
+          maximumLineCount: 4
         }
 
         // "soft" spacer
@@ -108,11 +112,10 @@ Default.PopupWindow {
           text: root.player.trackAlbum || "<unknown album>"
           font.italic: !root.player.trackAlbum
           font.pixelSize: GState.font_size * 0.75
+          maximumLineCount: 4
         }
       }
     }
-
-    Util.Spacer {}
 
     RowLayout {
       Layout.fillWidth: true

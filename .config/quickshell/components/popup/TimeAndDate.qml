@@ -15,8 +15,8 @@ Default.PopupWindow {
   required property SystemClock clock
   property int daySeconds: (((clock.hours * 60) + clock.minutes) * 60) + clock.seconds
 
-  implicitWidth: content.implicitWidth + 2 * HyprlandConfig.gaps_out
-  implicitHeight: content.implicitHeight + 2 * HyprlandConfig.gaps_out
+  implicitWidth: content.implicitWidth + 4 * HyprlandConfig.gaps_out
+  implicitHeight: content.implicitHeight + 3 * HyprlandConfig.gaps_out
   alignment: Qt.AlignCenter
 
   RowLayout {

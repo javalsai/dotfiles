@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 
 import qs
 import qs.default as Default
@@ -52,11 +53,13 @@ Default.PopupButton {
   popup_window: Default.PopupWindow {
     anchored: root
 
-    implicitHeight: 100
-    implicitWidth: 100
-    alignment: Qt.AlignLeft | Qt.AlignTop
+    implicitWidth: content.implicitWidth + 4 * HyprlandConfig.gaps_out
+    implicitHeight: content.implicitHeight + 3 * HyprlandConfig.gaps_out
+    alignment: Qt.AlignCenter
 
     Default.Text {
+      id: content
+      anchors.centerIn: parent
       text: "test"
     }
   }
