@@ -25,7 +25,7 @@ Singleton {
     stdout: StdioCollector {
       onStreamFinished: {
         let output = JSON.parse(this.text);
-        let gaps_out = parseInt(output.custom.split(" ")[0]);
+        let gaps_out = parseInt(output.css.split(" ")[0]);
         cfg.gaps_out = gaps_out;
       }
     }

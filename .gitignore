@@ -52,9 +52,8 @@
 /.config/zsh/.zcompdump*
 
 !/.local/bin/androidtv-switch-user
-!/.local/bin/get-hypr-hover-window
+!/.local/bin/hypr-window-chooser
 !/.local/bin/local-ssh-key
-!/.local/bin/wfreeze
 !/.local/bin/shits/unipicker.sh
 
 !/.local/share/ZapZap/

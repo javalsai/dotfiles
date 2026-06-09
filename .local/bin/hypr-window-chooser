@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+hyprctl clients -j |
+    jq -r '.[] | "\(.address) \(.initialTitle) <b>ws\(.workspace.name)</b> <sup><i>\(.size[0])x\(.size[1])</i></sup>"' |
+    wofi -dr 'echo "%s" | cut -d" " -f2- | tr -d "\n"' |
+    cut -d' ' -f1
