@@ -73,6 +73,7 @@ Loader {
 
       implicitHeight: 100
       implicitWidth: 100
+      alignment: Qt.AlignLeft | Qt.AlignTop
 
       Default.Text {
         text: "test"

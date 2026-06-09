@@ -35,6 +35,7 @@ Default.PopupButton {
 
   popup_window: Popup.Player {
     player: root.player
+    alignment: Qt.AlignRight | Qt.AlignBottom
     anchored: root
   }
 }
