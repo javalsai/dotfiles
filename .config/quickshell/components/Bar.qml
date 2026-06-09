@@ -30,10 +30,10 @@ Scope {
       property list<var> toplevels: (hyprlandWorkspace?.toplevels?.values ?? []).filter(toplevel => "floating" in toplevel.lastIpcObject)
       property int tilingWindowCount: toplevels.filter(toplevel => !toplevel.lastIpcObject.floating).length ?? 1
 
-      // or better, see if the focused one is current workspace and if fullscreen
-      property bool focusedIsFullscreen: !!toplevels.find(toplevel => toplevel.lastIpcObject.focusHistoryID == '0' && toplevel.lastIpcObject.fullscreen != 0) ?? false
+      // or EVEN better, see if the workspace has any fullscreen so it also works if other window is partially fullscreen and not focused
+      property bool workspaceIsFullscreen: !!toplevels.find(toplevel => toplevel.lastIpcObject.fullscreen != 0) ?? false
 
-      property bool floatingBar: tilingWindowCount != 1 && !focusedIsFullscreen
+      property bool floatingBar: tilingWindowCount != 1 && !workspaceIsFullscreen
 
       property int margin: floatingBar ? HyprlandConfig.gaps_out : 0
 
