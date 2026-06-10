@@ -33,10 +33,9 @@ hl.bind(mainMod .. ' + Space', function()
   hl.dispatch(hl.dsp.focus({ window = 'address:' .. address }))
 end)
 
--- FIXME: idek how-to atp, one thing blocks or on other side I cannot get internal state
 -- might as well do this with a qs window picker and fancy methods
--- hl.bind(mainMod .. ' + s', hl.dsp.exec_cmd('scratchpad'))
--- hl.bind(mainMod .. ' + SHIFT + s', hl.dsp.exec_cmd('scratchpad -g'))
+hl.bind(mainMod .. ' + s', hl.dsp.exec_cmd('scratchpad'))
+hl.bind(mainMod .. ' + SHIFT + s', hl.dsp.exec_cmd('scratchpad -g'))
 
 ---- App Launchers
 for k, program in pairs({

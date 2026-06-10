@@ -54,6 +54,7 @@
 !/.local/bin/androidtv-switch-user
 !/.local/bin/hypr-window-chooser
 !/.local/bin/local-ssh-key
+!/.local/bin/scratchpad
 !/.local/bin/shits/unipicker.sh
 
 !/.local/share/ZapZap/
