@@ -379,6 +379,11 @@
 #    summary = "foobar"
 #    format = ""
 
+[ignore-instagram-fomotraps]
+    summary = "Instagram"
+    body = "You have unseen notifications."
+    format = ""
+
 #[history-ignore]
 #    # This notification will not be saved in history
 #    summary = "foobar"
