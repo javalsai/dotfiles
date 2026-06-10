@@ -17,35 +17,27 @@ Default.Button {
   readonly property bool isActive: workspace.active
   readonly property bool isFocused: workspace.focused
 
-  readonly property string mappedName: if (isSpecial) {
-    GState.special_ws_name;
-  } else
-    workspace.name
+  // TODO: I think I might disregard isFocused as I dont care that much, use underlining for activeness and just use white for text.
 
-  backgroundOpacity: hovered ? GState.hover_color_opac : 0
+  property bool inverted: isMain
+
   backgroundColor: GState.theme.primary
+  backgroundOpacity: inverted ? 0.5 : (hovered ? GState.hover_color_opac : 0)
+
   onClicked: root.workspace.activate()
   clickable: true
 
-  Item {
-    implicitWidth: GState.font_size * 1.7
-    implicitHeight: GState.font_size * 1.7
+  implicitWidth: GState.font_size * 1.7
+  implicitHeight: GState.font_size * 1.7
 
-    Default.Text {
-      anchors.fill: parent
+  Default.Text {
+    anchors.centerIn: parent
 
-      font.underline: root.isFocused
-      color: if (root.isActive) {
-        GState.theme.primary;
-      } else if (root.isSpecial) {
-        GState.theme.accent;
-      } else
-        GState.theme.text
+    font.underline: root.isFocused
 
-      text: if (root.isMain) {
-        `「${root.mappedName}」`;
-      } else
-        root.mappedName
-    }
+    color: root.isActive ? GState.theme.primary : root.isSpecial ? GState.theme.accent : GState.theme.text
+    opacity: root.inverted && root.hovered ? (1 - GState.hover_color_opac) : 1
+
+    text: root.isSpecial ? GState.special_ws_name : root.workspace.name
   }
 }

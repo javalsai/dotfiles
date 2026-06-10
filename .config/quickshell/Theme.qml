@@ -16,6 +16,7 @@ QtObject {
   required property color battery_group
   required property color volume_group
 
+  property int fastAnimationSpeed: animationSpeed / 3
   required property int animationSpeed
   required property Qt.Easing outEasing
 }
