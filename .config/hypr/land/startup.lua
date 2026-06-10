@@ -1,3 +1,6 @@
+local cfg = require 'land.mod.config'
+local programs = cfg.programs
+
 hl.on('hyprland.start', function()
   hl.exec_cmd('nm-applet')
   hl.exec_cmd('blueman-applet')
@@ -15,5 +18,5 @@ hl.on('hyprland.start', function()
   hl.exec_cmd('dbus-update-activation-environment --systemd --all')
 
   -- preload
-  hl.exec_cmd('kitty --start-as=hidden')
+  hl.exec_cmd(programs.terminal .. ' --start-as=hidden')
 end)

@@ -1,4 +1,7 @@
 local browser = os.getenv 'BROWSER' or 'firefox'
+local wlDsp = os.getenv('WAYLAND_DISPLAY')
+-- local hyprInstance = os.getenv('HYPRLAND_INSTANCE_SIGNATURE') or
+-- 'ffffffffffffffffffffffffffffffffffffffff_0000000000_0000000000'
 
 local handle = io.popen('hostname')
 if handle == nil then
@@ -48,8 +51,8 @@ return {
   },
 
   programs = {
-    terminal = 'kitty -1',
-    terminalFloat = 'kitty -1 --class kitty-float',
+    terminal = 'kitty -1 --instance-group=bg-' .. wlDsp,
+    terminalFloat = 'kitty -1 --class kitty-float --instance-group=bg-' .. wlDsp,
     browser = browser,
     privateBrowser = browser .. ' --private-window',
     fileManager = 'dolphin',
