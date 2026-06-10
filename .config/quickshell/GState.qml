@@ -111,6 +111,7 @@ Singleton {
     primary: "#dd5555"
     accent: "#dddd55"
     background: "#101010"
+    backgroundBorder: "#404040"
     text: "#eeeeee"
     unimportant_text: "#888888"
 
@@ -121,6 +122,9 @@ Singleton {
 
     battery_group: lowerOpac(positive_green)
     volume_group: lowerOpac(primary)
+
+    animationSpeed: HyprlandConfig.animationSpeed
+    outEasing: Easing.OutExpo
 
     function lowerOpac(color) {
       return Qt.rgba(color.r, color.g, color.b, 0.4);

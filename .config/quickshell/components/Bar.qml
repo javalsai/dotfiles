@@ -62,13 +62,31 @@ Scope {
 
         Behavior on radius {
           NumberAnimation {
-            duration: 200
-            easing.type: Easing.OutCubic
+            duration: GState.theme.animationSpeed
+            easing.type: GState.theme.outEasing
           }
         }
 
         clip: true
         color: GState.theme.background
+        border.width: bar.floatingBar ? 1 : 0
+        border.color: GState.theme.backgroundBorder
+
+        Rectangle {
+          visible: !GState.vertical_layout && !bar.floatingBar
+          anchors.bottom: parent.bottom
+          width: parent.width
+          height: 1
+          color: GState.theme.backgroundBorder
+        }
+
+        Rectangle {
+          visible: GState.vertical_layout && !bar.floatingBar
+          anchors.right: parent.right
+          width: 1
+          height: parent.height
+          color: GState.theme.backgroundBorder
+        }
 
         BarCenter {
           anchors.centerIn: parent

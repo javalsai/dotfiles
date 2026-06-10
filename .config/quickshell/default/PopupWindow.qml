@@ -29,8 +29,8 @@ PopupWindow {
   anchor {
     item: anchored
 
-    rect.y: GState.vertical_layout ? root.anchorYOffset + root.offsetY : (GState.bar_height + HyprlandConfig.gaps_out)
-    rect.x: GState.vertical_layout ? (GState.bar_width + HyprlandConfig.gaps_out) : root.anchorXOffset + root.offsetX
+    rect.y: GState.vertical_layout ? root.anchorYOffset + root.offsetY : (root.anchorYOffset + GState.bar_height / 2 + HyprlandConfig.gaps_out / 2)
+    rect.x: GState.vertical_layout ? (root.anchorXOffset + GState.bar_width / 2 + HyprlandConfig.gaps_out / 2) : root.anchorXOffset + root.offsetX
   }
 
   default property alias contents: rectangle.data
@@ -44,5 +44,7 @@ PopupWindow {
     clip: true
 
     color: GState.theme.background
+    border.width: 1
+    border.color: GState.theme.backgroundBorder
   }
 }

@@ -13,4 +13,11 @@ Text {
   font.hintingPreference: Font.PreferFullHinting
 
   color: GState.theme.text
+
+  Behavior on opacity {
+    NumberAnimation {
+      duration: GState.theme.fastAnimationSpeed
+      easing.type: GState.theme.outEasing
+    }
+  }
 }

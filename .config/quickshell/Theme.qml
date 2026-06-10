@@ -4,6 +4,7 @@ QtObject {
   required property color primary
   required property color accent
   required property color background
+  required property color backgroundBorder
   required property color text
   required property color unimportant_text
 
@@ -14,4 +15,7 @@ QtObject {
 
   required property color battery_group
   required property color volume_group
+
+  required property int animationSpeed
+  required property Qt.Easing outEasing
 }

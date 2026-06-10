@@ -8,12 +8,14 @@ Singleton {
 
   property int gaps_out
   property int rounding
+  property int animationSpeed
 
   signal reload
 
   onReload: {
     get_gaps_out.running = true;
     get_rounding.running = true;
+    get_anim_speed.running = true;
   }
 
   Process {
@@ -42,6 +44,20 @@ Singleton {
         let output = JSON.parse(this.text);
         let rounding = output.int;
         cfg.rounding = rounding;
+      }
+    }
+  }
+
+  Process {
+    id: get_anim_speed
+    command: ["hyprctl", "-j", "animations"]
+
+    running: true
+
+    stdout: StdioCollector {
+      onStreamFinished: {
+        let output = JSON.parse(this.text);
+        cfg.animationSpeed = output[0].find(e => e.name === "windows").speed * 100;
       }
     }
   }

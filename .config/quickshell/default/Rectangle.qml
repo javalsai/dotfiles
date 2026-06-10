@@ -7,8 +7,8 @@ Rectangle {
 
   Behavior on opacity {
     NumberAnimation {
-      duration: 200
-      easing.type: Easing.OutCubic
+      duration: GState.theme.fastAnimationSpeed
+      easing.type: GState.theme.outEasing
     }
   }
 }
