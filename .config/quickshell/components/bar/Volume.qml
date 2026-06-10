@@ -24,7 +24,7 @@ Default.PopupButton {
 
       readonly property bool is_muted: root.pw_audio?.muted ?? false
       readonly property real vol_over_one: Number.isNaN(root.pw_audio?.volume) ? 0 : (root.pw_audio?.volume ?? 0)
-      readonly property real vol_over_one_clamped: Math.min(vol_over_one, 1) // I'm not sure it cannot be +100%
+      readonly property real vol_over_one_clamped: Math.min(vol_over_one, 1) // Could be over 1, like pwctl allows
       readonly property int vol_perc: Math.round(vol_over_one * 100)
 
       readonly property string vol_icon: is_muted ? GState.volume_muted_icon : icon_set[Math.max(Math.ceil(vol_over_one_clamped * icon_set.length) - 1, 0)]

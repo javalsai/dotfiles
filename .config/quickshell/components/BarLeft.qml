@@ -35,7 +35,7 @@ Default.DLayout {
   }
 
   Repeater {
-    model: Hyprland.workspaces
+    model: Hyprland.workspaces.values.filter(item => item !== null)
 
     Bar.WsButton {
       Layout.alignment: Qt.AlignCenter
@@ -51,7 +51,9 @@ Default.DLayout {
 
       Layout.alignment: Qt.AlignCenter
 
-      Bar.Player { player: GState.current_player }
+      Bar.Player {
+        player: GState.current_player
+      }
     }
   }
 }
