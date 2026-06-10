@@ -28,14 +28,18 @@ return {
           s = s .. ' center;'
         end
 
-        s = s .. ' size ' .. self.width .. ' ' .. self.width
+        s = s .. ' size ' .. self.width .. ' ' .. self.height
 
         return s .. ']'
       end,
 
       --- @param otherProps table|HL.WindowRuleSpec
       asWindowRule = function(self, otherProps)
-        local o = otherProps
+        local o = {}
+        for k, v in pairs(otherProps) do
+          o[k] = v
+        end
+
         o.float, o.center, o.size = true, self.center, { self.width, self.height }
 
         return o
