@@ -38,6 +38,7 @@ red="\033[0;31m"
 blue="\033[0;34m"
 nocolor="\033[0m"
 default_scratchpad_name="${HYPRLAND_SCRATCHPAD_NAME:-scratchpad}"
+_fancy_picker=(hypr-window-chooser)
 
 check() {
   command -v "$1" 1>/dev/null
@@ -102,10 +103,6 @@ help() {
     -l: Forces to display list even if only one window is on scratchpad.
         (Usefull if u don't remember which single window is at scratchpad)
     -t: Takes you to the scratchpad
-    -m: Sets the menu program. e.g 'scratchpad -m "wofi -E -dmenu -i"'
-                                   'scratchpad -m "bemenu"'
-        This program will be used to display list of clients present on scratchpad with there address.
-        default is (${_menu_cmd[@]})
 
   Usage:
     bind = SUPER, s, exec, /path/to/scratchpad/binary
@@ -125,8 +122,6 @@ takes() {
 getBack() {
   _ifs="$IFS"
   IFS=$'\n'$'\n'
-
-  if pgrep "${_menu_cmd%% *}" >/dev/null; then killall -q "${_menu_cmd%% *}"; fi # Menu running already? → exit
 
   _current_workspace="$(hyprctl monitors -j | jq '.[] | select(.focused == true)' | jq -j '.activeWorkspace.name')"
 
@@ -156,7 +151,7 @@ getBack() {
       _selected_client="${_clients_on_spad[0]}"
     }
   }
-  [ -z "$_selected_client" ] && _selected_client="$(echo "${_clients_on_spad[*]}" | eval "${_menu_cmd[*]}")"
+  [ -z "$_selected_client" ] && _selected_client="$("${_fancy_picker[@]}" "special:$default_scratchpad_name")"
   _address="$(echo "$_selected_client" | awk '{print $NF}')"
   # hyprctl dispatch movetoworkspace "$_current_workspace,address:$_address"
   echo $_address
@@ -190,10 +185,6 @@ getArgs() {
       ;;
     -t)
       _action="takes"
-      ;;
-    -m)
-      _menu_cmd=("$2")
-      shift
       ;;
     -c)
       _action="checkUtils"
