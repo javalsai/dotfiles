@@ -10,6 +10,8 @@ import Quickshell.Services.Mpris
 Singleton {
   id: singleton
 
+  readonly property real phi: (1 + Math.sqrt(5)) / 2
+
   readonly property list<string> volume_icons: ["", "", ""]
   readonly property string volume_muted_icon: ""
 

@@ -3,10 +3,13 @@ import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Services.Pipewire
 
+import qs.ipc as Ipc
 import qs.components as Components
 
 ShellRoot {
   Components.Bar {}
+
+  Ipc.IpcHandlers {}
 
   Connections {
     target: Hyprland

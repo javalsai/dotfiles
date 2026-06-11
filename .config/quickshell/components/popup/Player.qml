@@ -34,8 +34,6 @@ Default.PopupWindow {
     id: content
 
     anchors.centerIn: parent
-    height: parent.height - (GState.popup_padding * 2)
-    width: parent.width - (GState.popup_padding * 2)
 
     spacing: 1.5 * HyprlandConfig.gaps_out
 

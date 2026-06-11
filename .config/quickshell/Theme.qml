@@ -18,5 +18,5 @@ QtObject {
 
   property int fastAnimationSpeed: animationSpeed / 3
   required property int animationSpeed
-  required property Qt.Easing outEasing
+  required property int outEasing // Qt.Easing
 }
