@@ -9,7 +9,7 @@ Rectangle {
 
   required property int maxWidth
   required property int maxHeight
-  property int radius: 0
+  radius: 0
 
   required property bool playing
   required property url source

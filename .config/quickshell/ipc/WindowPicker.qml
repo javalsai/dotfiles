@@ -15,10 +15,14 @@ import qs.components.reusable as Reusable
 Scope {
   id: root
 
-  property string title: ""
   property HyprlandMonitor targetMonitor
   property ObjectModel toplevels
   property var callbackData: null
+  property var nameFormatter
+
+  function open() {
+    pickerLoader.active = true;
+  }
 
   // address: string|undefined
   function close(address: var) {
@@ -28,7 +32,6 @@ Scope {
       ipc.windowPicked(null);
 
     pickerLoader.active = false;
-    title = "";
     toplevels = null;
   }
 
@@ -45,6 +48,9 @@ Scope {
     PanelWindow {
       id: pickerWindow
 
+      readonly property int tlCols: 3
+
+      focusable: true
       WlrLayershell.layer: WlrLayer.Overlay
       exclusionMode: ExclusionMode.Ignore
 
@@ -70,10 +76,6 @@ Scope {
         }
       }
 
-      Keys.onEscapePressed: {
-        root.close();
-      }
-
       Rectangle {
         anchors.centerIn: parent
 
@@ -88,73 +90,116 @@ Scope {
         ColumnLayout {
           id: layout
 
-          property int columns: 3
-          spacing: HyprlandConfig.gaps_out
+          property bool selectingTl: false
+          property int selectedTlIdx: 0
+          property var filteredToplevels: filter.text ? root.toplevels.values.filter(tl => {
+            let extraInfo = '';
+            if (tl.lastIpcObject.class) {
+              extraInfo = `class:${tl.lastIpcObject.class} `;
+            }
+            let name = root.nameFormatter(tl);
 
-          anchors.centerIn: parent
+            let searchString = extraInfo + name;
+            return searchString.toLowerCase().indexOf(filter.text.toLowerCase()) != -1;
+          }) : root.toplevels.values
 
-          Default.Text {
-            Layout.alignment: Qt.AlignHCenter
+          // if (selectingTl)
+          //   filteredToplevels[selectedTlIdx]
+          // else
+          //   null
 
-            text: root.title
-            font.pixelSize: GState.font_size * 2
+          // Euclidean mod
+          function mod(n, m) {
+            return ((n % m) + m) % m;
           }
 
-          Repeater {
-            model: Math.ceil(root.toplevels.values.length / layout.columns)
+          function selectNext(n: int) {
+            selectingTl = true;
+            selectedTlIdx += n;
+            selectedTlIdx = mod(selectedTlIdx, filteredToplevels.length);
+          }
 
-            RowLayout {
-              id: row
+          anchors.centerIn: parent
+          spacing: HyprlandConfig.gaps_out
 
-              required property int modelData
-              readonly property int chunkIndex: modelData
-              readonly property int elemIndex: chunkIndex * layout.columns
+          Default.TextInput {
+            id: filter
 
-              spacing: HyprlandConfig.gaps_out
-              Layout.alignment: Qt.AlignHCenter
+            Layout.preferredHeight: implicitHeight
+            Layout.fillWidth: true
+            Layout.minimumWidth: 300
+            Layout.alignment: Qt.AlignHCenter
 
-              Repeater {
-                model: root.toplevels.values.slice(row.elemIndex, row.elemIndex + layout.columns)
+            startFocused: true
 
-                Default.Button {
-                  id: wsButton
-                  required property HyprlandToplevel modelData
+            text: ""
+            placeholderText: "Search"
+            onTextChanged: {
+              layout.selectingTl = false;
+              layout.selectedTlIdx = 0;
+            }
 
-                  Layout.alignment: Qt.AlignVCenter
+            textField.Keys.onTabPressed: layout.selectNext(1)
+            textField.Keys.onBacktabPressed: layout.selectNext(-1)
+            textField.Keys.onReturnPressed: root.close('0x' + layout.filteredToplevels[layout.selectedTlIdx].address)
 
-                  backgroundColor: GState.theme.hover_color
-                  backgroundOpacity: hovered ? GState.hover_opac : 0
+            textField.Keys.onUpPressed: layout.selectNext(-pickerWindow.tlCols)
+            textField.Keys.onDownPressed: layout.selectNext(pickerWindow.tlCols)
 
-                  onClicked: {
-                    root.close('0x' + modelData.address);
-                  }
+            Keys.onEscapePressed: root.close()
+          }
 
-                  clickable: true
+          Default.FlowLayout {
+            Layout.alignment: Qt.AlignHCenter
 
-                  property int margin: HyprlandConfig.gaps_out
-                  implicitWidth: tl.implicitWidth + margin
-                  // so with a given height I get big button which I think is better for clickability
-                  implicitHeight: Math.max(300, tl.implicitHeight + margin)
+            model: layout.filteredToplevels
 
-                  content: Item {
-                    implicitWidth: tl.implicitWidth
-                    implicitHeight: tl.implicitHeight
+            columns: pickerWindow.tlCols
+            spacing: HyprlandConfig.gaps_out
+            maxHeight: 800
 
-                    anchors.centerIn: parent
+            delegate: Default.Button {
+              id: wsButton
 
-                    Reusable.TopLevelView {
-                      id: tl
-                      anchors.centerIn: parent
+              required property HyprlandToplevel modelData
+              property bool isSelected: layout.selectingTl && (modelData === layout.filteredToplevels[layout.selectedTlIdx])
+              property bool virtualFocus: isSelected || hovered
 
-                      toplevel: wsButton.modelData.wayland
-                      live: true
-                      constraintWidth: constraintHeight * GState.phi
-                      constraintHeight: 250
+              Layout.alignment: Qt.AlignVCenter
 
-                      radius: HyprlandConfig.rounding
-                      spacing: HyprlandConfig.gaps_out
-                    }
-                  }
+              backgroundColor: GState.theme.hover_color
+              backgroundOpacity: virtualFocus ? GState.hover_opac : 0
+
+              onClicked: {
+                root.close('0x' + modelData.address);
+              }
+
+              clickable: true
+
+              property int margin: HyprlandConfig.gaps_out
+              implicitWidth: tl.implicitWidth + margin
+              // so with a given height I get big button which I think is better for clickability
+              implicitHeight: Math.max(300, tl.implicitHeight + margin)
+
+              content: Item {
+                implicitWidth: tl.implicitWidth
+                implicitHeight: tl.implicitHeight
+
+                anchors.centerIn: parent
+
+                Reusable.TopLevelView {
+                  id: tl
+                  anchors.centerIn: parent
+
+                  toplevel: wsButton.modelData.wayland
+                  description: root.nameFormatter(wsButton.modelData)
+
+                  live: true
+                  constraintWidth: constraintHeight * GState.phi
+                  constraintHeight: 250
+
+                  radius: HyprlandConfig.rounding
+                  spacing: HyprlandConfig.gaps_out
                 }
               }
             }
@@ -164,19 +209,38 @@ Scope {
     }
   }
 
+  function ipcChoosePrelude() {
+    if (pickerLoader.active)
+      close();
+
+    // Display in focused monitor
+    root.targetMonitor = Hyprland.focusedMonitor;
+
+    Hyprland.refreshToplevels();
+  }
+
   IpcHandler {
     id: ipc
     target: "picker"
 
     signal windowPicked(windowAddress: string)
 
-    // TODO: add formatting and title
-    function chooseWindowInWorkspace(workspace: string) {
-      if (pickerLoader.active)
-        root.close();
+    function chooseWindow() {
+      root.ipcChoosePrelude();
 
-      // Display in focused monitor
-      root.targetMonitor = Hyprland.focusedMonitor;
+      // And the chosen monitors
+      root.toplevels = Hyprland.toplevels;
+
+      // Pretty props
+      root.nameFormatter = function (tl: HyprlandToplevel): string {
+        return `${tl.title} <b><u>ws:${tl.workspace.name}</u></b> <sup><i>${tl.lastIpcObject.size?.[0]}x${tl.lastIpcObject.size?.[1]}</i></sup>`;
+      };
+
+      root.open();
+    }
+
+    function chooseWindowInWorkspace(workspace: string) {
+      root.ipcChoosePrelude();
 
       // And the chosen monitors
       let ws = Hyprland.workspaces.values.find(ws => ws.name === workspace);
@@ -184,10 +248,12 @@ Scope {
         throw new Error("No such workspace");
       root.toplevels = ws.toplevels;
 
-      // Pretty title
-      root.title = `Workspace ${workspace}`;
+      // Pretty props
+      root.nameFormatter = function (tl: HyprlandToplevel): string {
+        return `${tl.title}`;
+      };
 
-      pickerLoader.active = true;
+      root.open();
     }
   }
 }

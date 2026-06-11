@@ -2,7 +2,35 @@
 
 set -euo pipefail
 
-hyprctl clients -j |
-    jq -r '.[] | "\(.address) \(.initialTitle) <b>ws\(.workspace.name)</b> <sup><i>\(.size[0])x\(.size[1])</i></sup>"' |
-    wofi -dr 'echo "%s" | cut -d" " -f2- | tr -d "\n"' |
-    cut -d' ' -f1
+qsIpc=(qs ipc)
+
+function choose::callWs() {
+    "${qsIpc[@]}" call picker chooseWindowInWorkspace "$1"
+}
+
+function choose::callAny() {
+    "${qsIpc[@]}" call picker chooseWindow
+}
+
+function wait::result() {
+    result=$("${qsIpc[@]}" wait picker windowPicked)
+    if [ -n "$result" ]; then
+        echo "$result"
+    else
+        >&2 echo "No result returned"
+        return 1
+    fi
+}
+
+if [ -n "${1:-}" ]; then
+    choose::callWs "$1"
+else
+    choose::callAny
+fi
+
+wait::result
+
+# hyprctl clients -j |
+#     jq -r '.[] | "\(.address) \(.initialTitle) <b>ws\(.workspace.name)</b> <sup><i>\(.size[0])x\(.size[1])</i></sup>"' |
+#     wofi -dr 'echo "%s" | cut -d" " -f2- | tr -d "\n"' |
+#     cut -d' ' -f1

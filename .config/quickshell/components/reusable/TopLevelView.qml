@@ -15,6 +15,8 @@ Column {
   property bool live: false
   property int radius: 0
 
+  required property string description
+
   property int viewWidth: scrcpy.implicitWidth
 
   // logging ._.
@@ -53,7 +55,7 @@ Column {
     horizontalAlignment: Text.AlignHCenter
     width: scrcpy.implicitWidth
 
-    text: root.toplevel.title
+    text: root.description
 
     font.pixelSize: GState.font_size * 0.75
     maximumLineCount: 2
