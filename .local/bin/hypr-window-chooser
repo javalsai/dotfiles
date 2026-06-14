@@ -5,15 +5,15 @@ set -euo pipefail
 qsIpc=(qs ipc)
 
 function choose::callWs() {
-    "${qsIpc[@]}" call picker chooseWindowInWorkspace "$1"
+    "${qsIpc[@]}" call windowPicker chooseInWorkspace "$1"
 }
 
 function choose::callAny() {
-    "${qsIpc[@]}" call picker chooseWindow
+    "${qsIpc[@]}" call windowPicker chooseAny
 }
 
 function wait::result() {
-    result=$("${qsIpc[@]}" wait picker windowPicked)
+    result=$("${qsIpc[@]}" wait windowPicker picked)
     if [ -n "$result" ]; then
         echo "$result"
     else

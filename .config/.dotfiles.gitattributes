@@ -5,3 +5,4 @@
 *.webp filter=lfs diff=lfs merge=lfs -text
 *.avif filter=lfs diff=lfs merge=lfs -text
 *.xcf filter=lfs diff=lfs merge=lfs -text
+*.qsb filter=lfs diff=lfs merge=lfs -text

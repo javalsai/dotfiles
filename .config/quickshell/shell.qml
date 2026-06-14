@@ -1,36 +1,33 @@
-import QtQuick
 import Quickshell
 import Quickshell.Hyprland
-import Quickshell.Services.Pipewire
+
+import qs
+import qs.screens as Screens
+import qs.screens.overlays as Overlays
 
 import qs.ipc as Ipc
-import qs.components as Components
 
 ShellRoot {
-  Components.Bar {}
+  Screens.Bar {
+    readonly property var cfg: Global.services.persistentConfig
 
-  Ipc.IpcHandlers {}
+    vertical: cfg.verticalLayout
+    onRotate: cfg.verticalLayout = !cfg.verticalLayout
+    summaryGroups: cfg.summarizeGroups
+    onSwitchSummaries: cfg.summarizeGroups = !cfg.summarizeGroups
 
-  Connections {
-    target: Hyprland
-    // https://github.com/hyprwm/Hyprland/discussions/13721 😭
-    function onRawEvent(event) {
-      // console.log(`${event.name}: ${event.data}`);
+    barWidth: Global.theme.barWidth
+    barHeight: Global.theme.barHeight
 
-      if (event.name == "configreloaded")
-        HyprlandConfig.reload();
-
-      if (event.name.startsWith("monitor"))
-        Hyprland.refreshMonitors();
-
-      Hyprland.refreshWorkspaces();
-
-      if (["changefloatingmode", "activewindow", "activewindowv2", "fullscreen", "movewindow", "movewindowv2"].some(event_name => event_name = event.name))
-        Hyprland.refreshToplevels();
-    }
+    floatingGap: Global.services.hyprlandConfig.gaps_out
   }
 
-  PwObjectTracker {
-    objects: [Pipewire.defaultAudioSink]
+  Overlays.WindowPicker {
+    id: windowPickerOverlay
+    monitor: Hyprland.focusedMonitor
+  }
+
+  Ipc.WindowPicker {
+    windowPickerOverlay: windowPickerOverlay
   }
 }
