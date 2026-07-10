@@ -124,6 +124,9 @@ return {
     -- Toml...
     vim.lsp.enable('taplo')
 
+    -- Python
+    vim.lsp.enable('pylsp')
+
     -- JSON
     vim.lsp.config('jsonls', {
       commands = {
