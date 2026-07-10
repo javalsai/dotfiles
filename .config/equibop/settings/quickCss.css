@@ -18,7 +18,7 @@
     --text-link: #d55;
 }
 
-label:has(span.hiddenVisually_b18fe2 > input:checked) .switchIndicator_a28278 {
+label:has(> span.hiddenVisually_b18fe2 > input:checked) .switchIndicator_a28278 {
     background-color: #d55 !important;
 }
 
@@ -38,15 +38,30 @@ label:has(span.hiddenVisually_b18fe2 > input:checked) .switchIndicator_a28278 {
 .theme-dark,
 .theme-darker,
 .theme-midnight {
-    --custom-app-top-bar-height: 0;
+    --custom-app-top-bar-height: 5;
 }
 
 .itemsContainer_ef3116 {
     margin-top: 10px;
 }
 
+/** Disable bar if not at home */
+/* This actually **kills** events processing
+html:has([data-list-item-id="guildsnav___home"][aria-selected=false]) {
+    --bar-disabler: none;
+}*/
+/** Hide bar unless hovered */
 .bar_c38106 {
-    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 99999;
+
+    opacity: 0;
+    transition: ease-out 1s;
+}
+.bar_c38106:hover {
+    opacity: 1;
 }
 
 /** Hide nitro, shop and quests */
@@ -56,7 +71,7 @@ label:has(span.hiddenVisually_b18fe2 > input:checked) .switchIndicator_a28278 {
     display: none !important;
 }
 
-/* Hide "Invite to Voice" or whatev thing */
+/** Hide "Invite to Voice" or whatev thing */
 .list_c3cd7d > .animation_f2170c {
     display: none;
 }

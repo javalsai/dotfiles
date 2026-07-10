@@ -42,8 +42,8 @@
 .config/nvim/lazy-lock.json
 !/.config/quickshell/**
 !/.config/R/**
-!/.config/vesktop/settings/
-!/.config/vesktop/settings/quickCss.css
+!/.config/equibop/settings/
+!/.config/equibop/settings/quickCss.css
 !/.config/wezterm/**
 !/.config/waybar/**
 !/.config/wofi/**
