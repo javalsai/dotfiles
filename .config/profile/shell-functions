@@ -60,3 +60,11 @@ show() {
         array:string:"file://$(realpath "$1")" \
         string:""
 }
+
+man() {
+    command man "$@" | bat -pl man
+}
+
+man1() {
+    command man "$1" | bat -pl man
+}

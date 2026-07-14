@@ -26,7 +26,7 @@ alias ndk="PATH=\"\$NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/:\$PATH\"
 alias tmp="cd \${TMPDIR:-/tmp}"
 alias ns='nix-shell --command "export SHELL=\"$SHELL\"; exec \"\$SHELL\""'
 alias nd='nix develop --command bash -c "export SHELL=\"$SHELL\"; exec \"\$SHELL\""'
-alias m='man 1 ' # manual but alias expanded and shorter, making the savage 'm g' possible
+alias m='man1 ' # manual but alias expanded and shorter, making the savage 'm g' possible
 alias pm=pacman
 alias rs=rsync
 alias cgo=cargo
