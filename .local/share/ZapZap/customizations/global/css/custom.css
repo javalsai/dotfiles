@@ -46,6 +46,11 @@ body.dark {
     --WDS-systems-bubble-surface-overlay: rgba(0, 0, 0, 0.4);
     --WDS-systems-bubble-surface-overlay-RGB: 0, 0, 0;
 
+    /* idk what this was for, careful as it can break stuff like list checkmark view */
+    /* color: var(--text-primary); */
+}
+
+p, span {
     color: var(--text-primary);
 }
 
@@ -53,6 +58,15 @@ body.dark {
     background: var(--WDS-accent);
 }
 
-.x14ug900 {
-    color: var(--message-primary);
+div[role="gridcell"]>div[tabindex="0"]>div[data-testid] {
+    background-color: #f447;
+    border-radius: 5px;
 }
+
+/* span[data-testid="status-dblcheck"], span[data-testid="msg-dblcheck"] { */
+/*     color: var(--message-primary); */
+/* } */
+
+/* span[data-testid="msg-dblcheck"][aria-label*="Read"] { */
+/*     color: var(--WDS-content-read); */
+/* } */
