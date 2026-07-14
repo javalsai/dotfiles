@@ -384,6 +384,11 @@
     body = "You have unseen notifications."
     format = ""
 
+[ignore-instagram-omfgitshostilenow]
+    summary = "Instagram"
+    body = "*mutuals with*"
+    format = ""
+
 #[history-ignore]
 #    # This notification will not be saved in history
 #    summary = "foobar"
