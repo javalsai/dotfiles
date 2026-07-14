@@ -1,79 +1,35 @@
 #!/bin/bash
 
-cut-colons() {
-    sed 's/:/\n/g'
-}
-
 xxdp() {
-    xxd -R always "$@" | "$PAGER"
-}
-
-up() {
-  TIMES="${1:-1}";
-  for ((;TIMES>0;TIMES--)); do
-    cd ..
-  done
+    xxd -R always "$@" | "${PAGER:-less}"
 }
 
 touchp() {
-  mkdir -p "$(dirname "$1")";
-  touch "$1";
+  while [ "$#" -gt 0 ]; do
+    mkdir -p "$(dirname "$1")"
+    touch "$1"
+    shift
+  done
 }
 
+# TODO: I think I would still use a command that pops directory contents in one
+# go.
 # popdir() {
-#     # Parse Flags
-#     RENAME="";
-#     TMPDIR="${TMPDIR:-/tmp}";
-#     while getopts "rn:" opt; do
-#         case "$opt" in 
-#             r) RENAME=true      ;;
-#             n) RENAME="$OPTARG" ;;
-#             *) printf "Error on CLI argument parsing\n" >&2 && return 1
-#         esac
-#     done
-#
-#     # Get dir to pop
-#     shift "$(( OPTIND - 1 ))";
-#     POPDIR="${1:-$PWD}";
-#     [[ ! -e "$POPDIR" ]] && printf "No such directory\n" >&2 && return 1; 
-#
-#     # Verify dir to pop has ONLY ONE subdirectory
-#     SUBDIRS="$(ls -lA "$POPDIR" | wc -l)";
-#     [[ "$SUBDIRS" != 2 ]] && printf "\"$POPDIR\" doesn't have one subdirectory\n" >&2 && return 2;
-#     SUBDIR="$(ls -A "$POPDIR" | head -n2)"; # And get its name
-#
-#     # Expand rename to full path
-#     [[ "$RENAME" == true ]] && RENAME=$(basename "$SUBDIR");
-#     [[ -n "$RENAME" ]] && RENAME="$(dirname "$POPDIR")/$RENAME";
-#
-#     # Cancel if rename exists or make rename directory
-#     OBJDIR="$POPDIR";
-#     [[ -e "$RENAME" ]] \
-#         && ( printf "\"$RENAME\" exists\n" >&2 && return 2 );
-#     [[ -n "$RENAME" ]] && [[ ! -e "$RENAME" ]] && ( mkdir "$RENAME" && OBJDIR="$RENAME" );
-#
-#     # Move contents to objective directory
-#     mv "$SUBDIR" "$TMPDIR/popdir.$SUBDIR";
-#     mv "$TMPDIR/popdir.$SUBDIR/"* "$OBJDIR";   # Join theese
-#     mv "$TMPDIR/popdir.$SUBDIR/".* "$OBJDIR";  # two in one line
-#
-#     # Remove trailing directory
-#     rmdir "$TMPDIR/popdir.$SUBDIR";
-#     [[ -n "$RENAME" ]] && rmdir "$POPDIR";
+#   [...]
 # }
 
 copyf() {
-    $CLIP_COPY < "$1";
+    $CLIP_COPY < "$1" # CLIP_COPY spread intentional
 }
 
 cdp() {
-    ! [[ -e "$1" ]] && mkdir -p "$1";
-    cd "$1" || :;
+    # shellcheck disable=SC2164
+    mkdir -p "$1" && cd "$1"
 }
 
 egpg() {
-    FILE_PATH=$(mktemp)
-    $EDITOR "$FILE_PATH"
+    FILE_PATH=$(mktemp -t "egpg.XXXXXX")
+    $EDITOR "$FILE_PATH" # EDITOR spread intentional
     gpg "$@" < "$FILE_PATH"
     rm -f "$FILE_PATH"
 }
@@ -84,18 +40,6 @@ each() {
     done
 }
 
-
-# More like fixes but whatever...
-# _do_nvm_thingy() {
-#     [[ -n "$NVM_THINGY_DONE" ]] && return
-#     . /usr/share/nvm/init-nvm.sh
-# }
-#
-# node() {
-#     . _do_nvm_thingy
-#     node "$@"
-# }
-
 y() {
     local tmp
     tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
@@ -105,6 +49,8 @@ y() {
     rm -f -- "$tmp"
 }
 
+# should do the thing of showing a file in the file explorer (cd into dirname
+# and highlight such file), but its quite frail
 show() {
     dbus-send --session \
         --dest=org.freedesktop.FileManager1 \
