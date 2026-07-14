@@ -41,7 +41,11 @@ label:has(> span.hiddenVisually_b18fe2 > input:checked) .switchIndicator_a28278 
     --custom-app-top-bar-height: 5;
 }
 
-.itemsContainer_ef3116 {
+/* I think only the last will prevail, first seems legacy now and second is as redudant. */
+/* might do false-positives though, none rn though */
+.itemsContainer_ef3116,
+.tree_ef3116,
+div[role="tree"] {
     margin-top: 10px;
 }
 
