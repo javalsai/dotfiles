@@ -1,0 +1,16 @@
+[meta]
+name = "Javalsai's Theme"
+description = "Javalsai's theme overrides to fit with my desktop."
+variant = "dark"
+inherits = "vicinae-dark"
+icon = "/home/javalsai/logo.png"
+
+[colors.core]
+background = "#101010"
+secondary_background = "#1a1a1a"
+foreground = "#eeeeee"
+accent = "#dd5555"
+
+[colors.text]
+default = "#eeeeee"
+muted = "#888888"

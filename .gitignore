@@ -44,6 +44,7 @@
 !/.config/R/**
 !/.config/equibop/settings/
 !/.config/equibop/settings/quickCss.css
+!/.config/vicinae/**
 !/.config/wezterm/**
 !/.config/waybar/**
 !/.config/wofi/**
@@ -61,6 +62,9 @@
 !/.local/share/ZapZap/customizations/
 !/.local/share/ZapZap/customizations/global/
 !/.local/share/ZapZap/customizations/global/**
+!/.local/share/vicinae/
+!/.local/share/vicinae/themes/
+!/.local/share/vicinae/themes/*
 
 !/.ssh/authorized_keys
 !/.ssh/allowed_signers
