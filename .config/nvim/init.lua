@@ -12,6 +12,8 @@ vim.o.virtualedit = 'block'
 vim.o.hlsearch = true
 vim.o.showmatch = true
 vim.o.incsearch = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
 
 -- Line Behaviour
 vim.o.linebreak = true
