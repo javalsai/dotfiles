@@ -46,5 +46,10 @@ return {
   build = ':TSUpdate',
   config = function()
     require 'nvim-treesitter'.install(globals.ts_langs)
+
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = { 'wgsl', 'gitcommit' },
+      callback = function() vim.treesitter.start() end,
+    })
   end,
 }

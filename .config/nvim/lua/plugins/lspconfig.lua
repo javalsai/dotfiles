@@ -260,6 +260,9 @@ return {
     })
     vim.lsp.enable('qmlls')
 
+    -- WGSL
+    vim.lsp.enable('wgsl_analyzer')
+
     -- Ctags
     -- vim.lsp.enable('ctags_lsp')
 

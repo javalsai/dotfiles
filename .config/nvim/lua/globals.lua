@@ -15,18 +15,20 @@ return {
   --- cd .local/share/nvim/site/parser
   --- # check ldd of the new one and a natively compiled one for reference (made them vars for know what to tweak)
   ts_langs = {
-    'c',
-    'lua',
     'bash',
-    'vim',
+    'c',
     'diff',
-    'vimdoc',
+    'gitcommit',
     'html',
     'latex',
-    'qmljs',
-    'query',
+    'lua',
     'markdown',
     'markdown_inline',
+    'qmljs',
+    'query',
+    'vim',
+    'vimdoc',
+    'wgsl',
 
     -- for R (some may be repeated but whatev)
     'markdown',
