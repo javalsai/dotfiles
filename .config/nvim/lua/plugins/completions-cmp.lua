@@ -2,10 +2,10 @@ local globals = require 'globals'
 
 local luasnip_spec = {
   'L3MON4D3/LuaSnip',
+  build = 'make install_jsregexp',
   dependencies = {
     'saadparwaiz1/cmp_luasnip',
     'rafamadriz/friendly-snippets',
-
   },
   keys = function()
     local function luasnip_next() require 'luasnip'.jump(1) end
@@ -49,7 +49,19 @@ return {
       local luasnip = require 'luasnip'
       local lspkind = require 'lspkind'
 
-      cmp.setup {
+      local common_mappings = {
+        ['<Up>'] = cmp.mapping.select_prev_item(),
+        ['<M-k>'] = cmp.mapping.select_prev_item(),
+        ['<Down>'] = cmp.mapping.select_next_item(),
+        ['<M-j>'] = cmp.mapping.select_next_item(),
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<M-K>'] = cmp.mapping.scroll_docs(-1),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<M-J>'] = cmp.mapping.scroll_docs(1),
+        ['<C-Space>'] = cmp.mapping.complete(),
+      }
+
+      cmp.setup({
         formatting = {
           format = lspkind.cmp_format({
             mode = 'symbol',
@@ -74,12 +86,7 @@ return {
             follow_cursor = true,
           },
         },
-        mapping = {
-          ['<Up>'] = cmp.mapping.select_prev_item(),
-          ['<Down>'] = cmp.mapping.select_next_item(),
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
+        mapping = vim.tbl_deep_extend('force', common_mappings, {
           ['<Esc>'] = cmp.mapping.abort(),
           ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
@@ -99,7 +106,7 @@ return {
               fallback()
             end
           end, { 'i', 's' }),
-        },
+        }),
         sources = cmp.config.sources {
           { name = 'nvim_lsp' },
           { name = 'buffer'   },
@@ -108,9 +115,23 @@ return {
           { name = 'lazydev'  },
           { name = 'luasnip'  },
         },
-      }
+      })
+
+      local mapped_common_mappings = {}
+      for k, v in pairs(common_mappings) do
+        mapped_common_mappings[k] = { c = v }
+      end
+      local cmdline_preset_mapping = cmp.mapping.preset.cmdline(mapped_common_mappings)
+
+      cmp.setup.cmdline({ '/', '?' }, {
+        mapping = cmdline_preset_mapping,
+        sources = {
+          { name = 'buffer' },
+        },
+      })
+
       cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = cmdline_preset_mapping,
         sources = {
           { name = 'path'    },
           { name = 'cmdline' },

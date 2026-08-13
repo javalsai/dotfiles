@@ -26,6 +26,8 @@ return {
     'markdown_inline',
     'qmljs',
     'query',
+    'regex',
+    'typst',
     'vim',
     'vimdoc',
     'wgsl',

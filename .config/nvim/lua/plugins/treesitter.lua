@@ -19,7 +19,7 @@ return {
       'nvim-treesitter/nvim-treesitter-textobjects',
       branch = 'main',
       lazy = false,
-      config = {
+      opts = {
         select = {
           lookahead = true,
           include_surroundings_whitespace = true,

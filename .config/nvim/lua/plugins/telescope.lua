@@ -15,7 +15,8 @@ return {
     -- Remember, <Tab> selects stuff, you can <M-q> to send to quickfix list (:copen, :cclose, :cn, :cp) or <C-q> to send all.
     return utils.lazy_wkeys(wk, {
       { '<leader>f',  group = 'Find / Telescope'                                  },
-      { '<leader>ff', require 'telescope.builtin'.find_files, desc = 'Find Files' },
+      { '<leader>fF', require 'telescope.builtin'.find_files, desc = 'Find Files' },
+      { '<leader>ff', require 'telescope.builtin'.git_files,  desc = 'Find Files' },
       { '<leader>fg', require 'telescope.builtin'.live_grep,  desc = 'Live Grep'  },
       { '<leader>fb', require 'telescope.builtin'.buffers,    desc = 'Buffers'    },
       { '<leader>fh', require 'telescope.builtin'.help_tags,  desc = 'Help Tags'  },
@@ -27,6 +28,16 @@ return {
     require 'telescope'.load_extension('ui-select')
   end,
   opts = {
+    defaults = {
+      mappings = {
+        i = {
+          ['<M-j>'] = require 'telescope.actions'.move_selection_next,
+          ['<M-k>'] = require 'telescope.actions'.move_selection_previous,
+          ['<M-K>'] = require 'telescope.actions'.preview_scrolling_up,
+          ['<M-J>'] = require 'telescope.actions'.preview_scrolling_down,
+        },
+      },
+    },
     extensions = {
       ['ui-select'] = {
         require 'telescope.themes'.get_dropdown {},
