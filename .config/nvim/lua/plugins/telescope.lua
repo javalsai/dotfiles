@@ -27,21 +27,23 @@ return {
   init = function(_)
     require 'telescope'.load_extension('ui-select')
   end,
-  opts = {
-    defaults = {
-      mappings = {
-        i = {
-          ['<M-j>'] = require 'telescope.actions'.move_selection_next,
-          ['<M-k>'] = require 'telescope.actions'.move_selection_previous,
-          ['<M-K>'] = require 'telescope.actions'.preview_scrolling_up,
-          ['<M-J>'] = require 'telescope.actions'.preview_scrolling_down,
+  opts = function()
+    return {
+      defaults = {
+        mappings = {
+          i = {
+            ['<M-j>'] = require 'telescope.actions'.move_selection_next,
+            ['<M-k>'] = require 'telescope.actions'.move_selection_previous,
+            ['<M-K>'] = require 'telescope.actions'.preview_scrolling_up,
+            ['<M-J>'] = require 'telescope.actions'.preview_scrolling_down,
+          },
         },
       },
-    },
-    extensions = {
-      ['ui-select'] = {
-        require 'telescope.themes'.get_dropdown {},
+      extensions = {
+        ['ui-select'] = {
+          require 'telescope.themes'.get_dropdown {},
+        },
       },
-    },
-  },
+    }
+  end,
 }
