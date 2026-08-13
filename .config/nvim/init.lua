@@ -1,5 +1,7 @@
 -- To disable formatter: `--- @diagnostic disable: codestyle-check`
 
+vim.loader.enable()
+
 local globals = require 'globals'
 local utils = require 'utils'
 
@@ -62,11 +64,15 @@ vim.o.undofile = true
 -- vim.o.undodir = '.cache/nvim/undodir/'
 
 -- Idk
-vim.opt.wildmode:append { 'longest', 'list' }
-vim.opt.clipboard:append { 'unnamedplus' }
-if vim.env.SSH_TTY ~= nil then
-  vim.g.clipboard = 'osc52'
-end
+vim.schedule(function()
+  vim.opt.wildmode:append { 'longest', 'list' }
+  vim.opt.clipboard:append { 'unnamedplus' }
+  if vim.env.SSH_TTY ~= nil then
+    vim.g.clipboard = 'osc52'
+  end
+end)
+vim.o.splitright = true
+vim.o.splitbelow = true
 
 -- To use a interactive shell on commands (I can use aliases)
 vim.o.shellcmdflag = '-ic'
