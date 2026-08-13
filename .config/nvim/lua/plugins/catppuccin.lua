@@ -33,8 +33,16 @@ return {
 
         FlashLabel = { fg = C.base, bg = C.pink },
         FlashCurrent = { fg = C.base, bg = C.mauve },
+
+        -- linked to TelescopeBorder
+        FloatBorder = { fg = C.red },
+
+        -- `https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/groups/integrations/telescope.lua`
+        TelescopeMatching = { fg = C.red },
       }
     end,
+
+    auto_integrations = true,
     integrations = {
       flash = true,
       gitsigns = true,
