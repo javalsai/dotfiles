@@ -5,7 +5,7 @@ POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
 if ! command -v doas &> /dev/null; then
   # 5; might be too much
   # also idk if I should beusing zsh's %Format things
-  PROMPT_ADVICE=$'\033[2;9mado\033[0m '
+  PROMPT_ADVICE=$'%{\033[2;9m%}ado%{\033[0m%} '
 fi
 PROMPT_PREFIX="  $PROMPT_ADVICE%B"
 
