@@ -1,4 +1,4 @@
-source "$PREFIX/libexec/source-ssh-agent.sh"
+# source "$PREFIX/libexec/source-ssh-agent.sh"
 
 # isnt this already /etc/profile.d anyways?
 # source "$PREFIX/etc/profile.d/rust-nightly.sh"
