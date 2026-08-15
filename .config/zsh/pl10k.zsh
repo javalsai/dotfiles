@@ -75,7 +75,7 @@ POWERLEVEL9K_STATUS_HIDE_SIGNAME=false
     POWERLEVEL9K_OS_ICON_FOREGROUND=203
     POWERLEVEL9K_OS_ICON_BACKGROUND=235
   else
-    source "/etc/os-release"
+    [ -f "/etc/os-release" ] && source "/etc/os-release"
     if [[ "$LOGO" == "artixlinux-logo" ]]; then
       POWERLEVEL9K_LINUX_ICON=$'\uF31F'
       POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION="$POWERLEVEL9K_LINUX_ICON"
