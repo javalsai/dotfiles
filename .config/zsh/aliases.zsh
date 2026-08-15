@@ -49,8 +49,9 @@ alias R="R --silent --no-restore-data --no-save"
 alias gs='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN TO USE GHOSTSCRIPT" #'
 alias mf='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN TO USE METAFONT, WHATEVER TS IS" #'
 
-alias h="GIT_DIR=.dotfiles.git " # can put dotfiles in home with .git as .dotfiles.git
-                                 # and manage with h alias
+alias h='GIT_DIR="$HOME/.dotfiles.git" GIT_WORK_TREE="$HOME" '
+# can put dotfiles in home with .git as .dotfiles.git and manage with h
+# alias
 
 # Non-Override Whoopsies
 alias :qa=exit
