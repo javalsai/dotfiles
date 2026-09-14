@@ -4,7 +4,6 @@
 !/LICENSE
 
 !/.gitignore
-!/.gitconfig
 
 !/.profile
 !/.zshenv
@@ -33,6 +32,7 @@
 !/.config/VSCodium/User/settings.json
 !/.config/dunst/**
 !/.config/fastfetch/**
+!/.config/git/**
 !/.config/hypr/**
 /.config/hypr/hyprlandd.conf
 !/.config/kitty/**
