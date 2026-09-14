@@ -68,3 +68,18 @@ man() {
 man1() {
     command man "$1" | bat -pl man
 }
+
+# 🖕
+laliga() {
+    local SHUTTLEHOST=${SHUTTLEHOST:-tuxcord.net}
+    local -a HOSTS=("api.spicylyrics.org")
+
+    sshuttle -r "$SHUTTLEHOST" $(
+        dog "${HOSTS[@]}" A -J | \
+            jq -j '[
+                .responses[].answers.[].address | "\(.)/32"
+            ] | join(" ")'
+    )
+}
+fucklaliga() { laliga; }
+hayfutbol() { laliga; }
