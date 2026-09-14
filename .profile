@@ -18,6 +18,9 @@ __export_ifn RUSTUP_HOME "$HOME/.local/share/rustup"
 __export_ifn R_HISTFILE "$HOME/.local/state/Rhistory"
 __export_ifn R_LIBS_USER "$HOME/.local/share/R/%p-library/%v"
 __export_ifn R_PROFILE_USER "$HOME/.config/R/Rprofile"
+mkdir -pm=600 "$HOME/.local/state/gnupg"
+__export_ifn GNUPGHOME "$HOME/.local/state/gnupg"
+__export_ifn PASSWORD_STORE_DIR "$HOME/.local/state/pass"
 source "$HOME/.config/profile/perl.sh"
 
 if [[ -d "$ANDROID_HOME/ndk" ]]; then
