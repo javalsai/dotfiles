@@ -42,7 +42,7 @@
 
 # this one works on ssh
 [includeIf "hasconfig:remote.*.url:**javalsai**/**dotfiles"]
-    path = .config/.dotfiles.gitconfig
+    path = ~/.config/dotfiles/gitconfig
 # and this one on http/s
 [includeIf "hasconfig:remote.*.url:https://*/javalsai/dotfiles"]
-    path = .config/.dotfiles.gitconfig
+    path = ~/.config/dotfiles/gitconfig

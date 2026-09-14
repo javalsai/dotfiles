@@ -18,7 +18,8 @@
 !/.local/share/
 !/.ssh/
 
-!/.config/.dotfiles.*
+!/.config/dotfiles/**
+/.config/dotfiles/bare.git
 !/.config/profile/**
 !/.config/logo.*
 !/logo.*
