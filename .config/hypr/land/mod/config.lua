@@ -1,7 +1,10 @@
 local browser = os.getenv 'BROWSER' or 'firefox'
-local wlDsp = os.getenv('WAYLAND_DISPLAY')
--- local hyprInstance = os.getenv('HYPRLAND_INSTANCE_SIGNATURE') or
--- 'ffffffffffffffffffffffffffffffffffffffff_0000000000_0000000000'
+-- WAYLAND_DISPLAY stopped being available at the first load of the lua config, instance signature seems to be
+-- its important it doesnt change, otherwise bg kitty grouped id will differ from the new spawning and be completely
+-- useless
+-- local wlDsp = os.getenv 'WAYLAND_DISPLAY' or 'wl-1'
+local hyprInstance = os.getenv 'HYPRLAND_INSTANCE_SIGNATURE' or 'ffffffffffffffffffffffffffffffffffffffff_0000000000_0000000000'
+local idLike = hyprInstance and hyprInstance:sub(1, 8)
 
 local handle = io.popen('hostname')
 if handle == nil then
@@ -51,8 +54,8 @@ return {
   },
 
   programs = {
-    terminal = 'kitty -1 --instance-group=bg-' .. wlDsp,
-    terminalFloat = 'kitty -1 --class kitty-float --instance-group=bg-' .. wlDsp,
+    terminal = 'kitty -1 --instance-group=bg-' .. idLike,
+    terminalFloat = 'kitty -1 --class kitty-float --instance-group=bg-' .. idLike,
     browser = browser,
     privateBrowser = browser .. ' --private-window',
     fileManager = 'dolphin',
