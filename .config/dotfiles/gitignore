@@ -2,14 +2,13 @@
 **
 
 !/LICENSE
+!/README.md
 
 !/.gitignore
 
 !/.profile
 !/.zshenv
 
-!/.github/
-!/.github/**
 !/.config/
 !/.config/*/
 !/.local/
