@@ -50,6 +50,8 @@ alias gs='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN T
 alias mf='printf "\x1b[1;31m%s\x1b[0m\n" "OMFG WE BOTH KNOW YOU DIDN'\''T MEAN TO USE METAFONT, WHATEVER TS IS" #'
 
 alias h='GIT_DIR="$HOME/.config/dotfiles/bare.git" GIT_WORK_TREE="$HOME" '
+alias h-messy='h g sparse-checkout set "/*"'
+alias h-higene='h g sparse-checkout set "/*" "!LICENSE" "!README.md"'
 # can put dotfiles in home with .git as .dotfiles.git and manage with h
 # alias
 
