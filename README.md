@@ -24,6 +24,12 @@ alias h='GIT_DIR=~/.config/dotfiles/bare.git GIT_WORK_TREE=~ '
 h git reset --hard # WILL delete whatever matches a file in the dotfiles without warning
 
 # the following is not required but neat
+
+# tracks origin correctly
+h git branch -u origin master
+h git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+
+# cleans stuff
 h git sparse-checkout init --no-cone && \
   h git sparse-checkout set '/*' '!LICENSE' '!README.md'
 ```
