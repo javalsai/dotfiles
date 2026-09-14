@@ -11,7 +11,6 @@ hl.on('hyprland.start', function()
   hl.exec_cmd('hyprpaper')
   hl.exec_cmd('dunst')
   hl.exec_cmd('playerctld daemon')
-  hl.exec_cmd('/usr/lib/xdg-desktop-portal-hyprland')
 
   hl.exec_cmd('hyprpm reload')
 
