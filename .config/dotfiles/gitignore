@@ -4,13 +4,11 @@
 !/LICENSE
 !/README.md
 
-!/.gitignore
-
 !/.profile
 !/.zshenv
+!/logo.*
 
 !/.config/
-!/.config/*/
 !/.local/
 !/.local/bin/
 !/.local/bin/shits/
@@ -20,13 +18,12 @@
 !/.config/dotfiles/**
 /.config/dotfiles/bare.git
 !/.config/profile/**
-!/.config/logo.*
-!/logo.*
 
 !/.config/dolphinrc
 !/.config/kdeglobals
 !/.config/user-dirs.dirs
 
+!/.config/*/
 !/.config/VSCodium/product.json
 !/.config/VSCodium/User/keybindings.json
 !/.config/VSCodium/User/settings.json
@@ -71,6 +68,7 @@
 !/.ssh/config
 
 !/pictures/
+!/pictures/logo.*
 !/pictures/wallpapers/
 !/pictures/wallpapers/sync/
 !/pictures/wallpapers/sync/**
