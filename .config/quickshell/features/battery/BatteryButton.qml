@@ -72,6 +72,7 @@ Item {
 
     description: Style.Text {
       text: `${root.batPerc.toFixed(0)} %`
+      onTextChanged: button.textContentChanged()
       color: root.color
     }
 

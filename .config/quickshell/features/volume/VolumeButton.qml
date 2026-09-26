@@ -71,6 +71,8 @@ Item {
 
     description: Style.Text {
       text: `${(root.volUnit * 100).toFixed(0)} %`
+      // TODO: only trigger after complete initialization
+      onTextChanged: button.textContentChanged()
       color: root.color
     }
 

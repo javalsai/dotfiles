@@ -19,10 +19,18 @@ Style.Button {
 
   readonly property int magicPadding: 14
 
+  property bool recentlyChanged: false
+
   backgroundColor: Global.theme.hoverColor
 
   implicitWidth: layout.implicitWidth + (vertical || !textItem.isVisible ? 0 : magicPadding)
   implicitHeight: layout.implicitHeight + (!vertical || !textItem.isVisible ? 0 : magicPadding)
+
+  signal textContentChanged
+  onTextContentChanged: {
+    recentlyChanged = true;
+    hideTimer.restart();
+  }
 
   Widgets.DirectionLayout {
     id: layout
@@ -35,7 +43,7 @@ Style.Button {
     Item {
       id: textItem
 
-      property bool isVisible: !root.summaryGroups || root.hasAnyFocus
+      property bool isVisible: !root.summaryGroups || root.recentlyChanged || root.hasAnyFocus
       opacity: isVisible ? 1 : 0
 
       implicitWidth: description.implicitWidth
@@ -54,6 +62,16 @@ Style.Button {
 
       Behavior on opacity {
         Style.Animation {}
+      }
+
+      Timer {
+        id: hideTimer
+        interval: Global.constants.phi * Global.theme.animationSpeed
+        repeat: false
+
+        onTriggered: {
+          root.recentlyChanged = false;
+        }
       }
 
       Item {
